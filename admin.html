@@ -453,7 +453,7 @@ body {
 .three-chart-container {
   position: relative;
   width: 100%;
-  height: 300px;
+  height: 420px;
   border-radius: var(--radius-sm);
   overflow: hidden;
 }
@@ -694,6 +694,687 @@ tbody td {
 }
 
 /* ═══════════════════════════════════════
+   LAWYER PROFILE DASHBOARD
+   ═══════════════════════════════════════ */
+.lp-back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  cursor: pointer;
+  padding: 6px 14px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: var(--surface);
+  transition: all 0.2s;
+  margin-bottom: 20px;
+}
+.lp-back-btn:hover { color: var(--gold); border-color: var(--gold); }
+.lp-back-btn svg { width: 16px; height: 16px; }
+
+.lp-hero {
+  background: var(--surface);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+.lp-hero-banner {
+  height: 100px;
+  position: relative;
+  overflow: hidden;
+}
+.lp-hero-banner::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: 
+    radial-gradient(ellipse at 20% 50%, rgba(184,146,47,0.15) 0%, transparent 60%),
+    radial-gradient(ellipse at 80% 50%, rgba(59,125,221,0.10) 0%, transparent 60%);
+}
+.lp-hero-banner-pattern {
+  position: absolute;
+  inset: 0;
+  opacity: 0.04;
+  background-image: 
+    repeating-linear-gradient(45deg, transparent, transparent 20px, currentColor 20px, currentColor 21px),
+    repeating-linear-gradient(-45deg, transparent, transparent 20px, currentColor 20px, currentColor 21px);
+}
+.lp-hero-body {
+  display: flex;
+  align-items: flex-start;
+  gap: 24px;
+  padding: 0 28px 24px;
+  margin-top: -40px;
+  position: relative;
+  z-index: 1;
+}
+.lp-avatar {
+  width: 88px;
+  height: 88px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 30px;
+  color: #fff;
+  flex-shrink: 0;
+  border: 4px solid var(--surface);
+  box-shadow: var(--shadow-md);
+  letter-spacing: 1px;
+}
+.lp-info { flex: 1; padding-top: 46px; }
+.lp-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--text-primary);
+  line-height: 1.2;
+}
+.lp-role-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  padding: 4px 12px;
+  border-radius: 20px;
+  margin-top: 6px;
+}
+.lp-role-badge.admin { background: var(--gold-bg); color: var(--gold); border: 1px solid var(--gold-border); }
+.lp-role-badge.lawyer { background: #EBF2FE; color: var(--accent-blue); border: 1px solid #D0E0FC; }
+.lp-role-badge.secretary { background: #F3EDFA; color: var(--accent-purple); border: 1px solid #E2D5F0; }
+.lp-contact-row {
+  display: flex;
+  gap: 20px;
+  margin-top: 10px;
+  flex-wrap: wrap;
+}
+.lp-contact-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+.lp-contact-item svg { width: 14px; height: 14px; color: var(--text-muted); flex-shrink: 0; }
+.lp-hero-actions {
+  display: flex;
+  gap: 8px;
+  padding-top: 46px;
+  flex-shrink: 0;
+}
+
+/* KPI row */
+.lp-kpi-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+  margin-bottom: 20px;
+}
+.lp-kpi {
+  background: var(--surface);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius);
+  padding: 18px 20px;
+  box-shadow: var(--shadow-sm);
+  position: relative;
+  overflow: hidden;
+}
+.lp-kpi::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 100%;
+  border-radius: 0 4px 4px 0;
+}
+.lp-kpi.kpi-active::after { background: var(--accent-blue); }
+.lp-kpi.kpi-completed::after { background: var(--accent-green); }
+.lp-kpi.kpi-avg::after { background: var(--gold); }
+.lp-kpi.kpi-pending::after { background: var(--accent-orange); }
+.lp-kpi-value {
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1.1;
+  color: var(--text-primary);
+}
+.lp-kpi-label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--text-muted);
+  font-weight: 600;
+  margin-top: 4px;
+}
+
+/* Two column layout */
+.lp-grid {
+  display: grid;
+  grid-template-columns: 1fr 380px;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+.lp-panel {
+  background: var(--surface);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+}
+.lp-panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--border-light);
+}
+.lp-panel-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+.lp-panel-body { padding: 0; }
+.lp-panel-body.padded { padding: 20px; }
+
+/* Cases table within profile */
+.lp-case-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 20px;
+  border-bottom: 1px solid var(--border-light);
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.lp-case-row:last-child { border-bottom: none; }
+.lp-case-row:hover { background: var(--surface-hover); }
+.lp-case-stage-indicator {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+.lp-case-stage-indicator.active { background: #EBF2FE; color: var(--accent-blue); }
+.lp-case-stage-indicator.completed { background: var(--accent-green-bg); color: var(--accent-green); }
+.lp-case-stage-indicator.pending { background: var(--accent-orange-bg); color: var(--accent-orange); }
+.lp-case-info { flex: 1; min-width: 0; }
+.lp-case-title {
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.lp-case-meta {
+  font-size: 11.5px;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+.lp-case-status-tag {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 20px;
+  flex-shrink: 0;
+}
+.lp-case-status-tag.active { background: #EBF2FE; color: var(--accent-blue); }
+.lp-case-status-tag.completed { background: var(--accent-green-bg); color: var(--accent-green); }
+
+/* Activity timeline */
+.lp-timeline { padding: 16px 20px; }
+.lp-timeline-item {
+  display: flex;
+  gap: 12px;
+  padding-bottom: 16px;
+  position: relative;
+}
+.lp-timeline-item:last-child { padding-bottom: 0; }
+.lp-timeline-item:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  left: 15px;
+  top: 28px;
+  bottom: 0;
+  width: 1px;
+  background: var(--border-light);
+}
+.lp-timeline-dot {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-size: 14px;
+  background: var(--surface-alt);
+  border: 1px solid var(--border-light);
+  position: relative;
+  z-index: 1;
+}
+.lp-timeline-content { flex: 1; padding-top: 5px; }
+.lp-timeline-text { font-size: 13px; color: var(--text-primary); line-height: 1.4; }
+.lp-timeline-text strong { font-weight: 600; }
+.lp-timeline-date { font-size: 11px; color: var(--text-muted); margin-top: 3px; }
+
+/* Donut chart in profile */
+.lp-donut-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 24px 20px;
+}
+.lp-donut-svg-wrap {
+  width: 140px;
+  height: 140px;
+  position: relative;
+  margin-bottom: 16px;
+}
+.lp-donut-svg-wrap svg { width: 100%; height: 100%; transform: rotate(-90deg); }
+.lp-donut-svg-wrap .track { fill: none; stroke: var(--border-light); stroke-width: 10; }
+.lp-donut-svg-wrap .fill-ring {
+  fill: none;
+  stroke-width: 10;
+  stroke-linecap: round;
+  transition: stroke-dashoffset 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.lp-donut-center {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.lp-donut-percent { font-size: 32px; font-weight: 700; line-height: 1; }
+.lp-donut-sublabel { font-size: 10px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; margin-top: 2px; }
+.lp-donut-legend {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.lp-donut-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+.lp-donut-legend-item .dot { width: 8px; height: 8px; border-radius: 50%; }
+
+/* Stage breakdown bar */
+.lp-stage-bar-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 0;
+}
+.lp-stage-bar-label {
+  font-size: 11.5px;
+  color: var(--text-secondary);
+  width: 110px;
+  flex-shrink: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.lp-stage-bar-track {
+  flex: 1;
+  height: 8px;
+  background: var(--surface-alt);
+  border-radius: 4px;
+  overflow: hidden;
+}
+.lp-stage-bar-fill {
+  height: 100%;
+  border-radius: 4px;
+  transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.lp-stage-bar-count { font-size: 12px; font-weight: 600; color: var(--text-primary); width: 24px; text-align: right; }
+
+/* Empty state for profile */
+.lp-empty {
+  text-align: center;
+  padding: 32px 20px;
+  color: var(--text-muted);
+  font-size: 13px;
+}
+.lp-empty-icon { font-size: 28px; margin-bottom: 8px; }
+
+@media (max-width: 1100px) {
+  .lp-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 768px) {
+  .lp-kpi-row { grid-template-columns: repeat(2, 1fr); }
+  .lp-hero-body { flex-direction: column; align-items: center; text-align: center; padding: 0 20px 20px; }
+  .lp-info { padding-top: 12px; }
+  .lp-contact-row { justify-content: center; }
+  .lp-hero-actions { padding-top: 8px; }
+  .lp-avatar { margin-top: -36px; }
+}
+@media (max-width: 480px) {
+  .lp-kpi-row { grid-template-columns: 1fr 1fr; }
+}
+
+/* ═══════════════════════════════════════
+   SETTINGS PAGE
+   ═══════════════════════════════════════ */
+.settings-layout {
+  max-width: 860px;
+}
+.settings-nav {
+  display: flex;
+  gap: 4px;
+  background: var(--surface);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius);
+  padding: 4px;
+  margin-bottom: 24px;
+  box-shadow: var(--shadow-sm);
+  overflow-x: auto;
+}
+.settings-nav-btn {
+  padding: 9px 18px;
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  cursor: pointer;
+  border: none;
+  background: transparent;
+  font-family: 'DM Sans', sans-serif;
+  transition: all 0.15s;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+.settings-nav-btn:hover { color: var(--text-primary); background: var(--surface-alt); }
+.settings-nav-btn.active {
+  background: var(--navy);
+  color: #fff;
+  box-shadow: 0 2px 6px rgba(27,42,74,0.25);
+}
+.settings-section { display: none; }
+.settings-section.active { display: block; }
+.settings-card {
+  background: var(--surface);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+  margin-bottom: 20px;
+  overflow: hidden;
+}
+.settings-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 24px;
+  border-bottom: 1px solid var(--border-light);
+}
+.settings-card-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+.settings-card-desc {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+.settings-card-body { padding: 24px; }
+
+/* Settings form elements */
+.s-form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+.s-form-row.single { grid-template-columns: 1fr; }
+.s-field { display: flex; flex-direction: column; gap: 5px; }
+.s-field label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+}
+.s-field input, .s-field select, .s-field textarea {
+  padding: 10px 14px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13.5px;
+  color: var(--text-primary);
+  background: var(--surface);
+  transition: border-color 0.2s;
+  outline: none;
+}
+.s-field input:focus, .s-field select:focus, .s-field textarea:focus {
+  border-color: var(--gold);
+  box-shadow: 0 0 0 3px rgba(184,146,47,0.08);
+}
+.s-field textarea { resize: vertical; min-height: 70px; }
+
+/* Logo upload area */
+.s-logo-area {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 14px;
+  border: 2px dashed var(--border);
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.s-logo-area:hover { border-color: var(--gold); background: var(--gold-bg); }
+.s-logo-preview {
+  width: 64px;
+  height: 64px;
+  border-radius: var(--radius-sm);
+  background: var(--surface-alt);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  overflow: hidden;
+  flex-shrink: 0;
+  border: 1px solid var(--border-light);
+}
+.s-logo-preview img { width: 100%; height: 100%; object-fit: contain; }
+.s-logo-text { font-size: 13px; color: var(--text-secondary); }
+.s-logo-text strong { display: block; color: var(--text-primary); margin-bottom: 2px; }
+
+/* Toggle switch */
+.s-toggle-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--border-light);
+}
+.s-toggle-row:last-child { border-bottom: none; }
+.s-toggle-info { flex: 1; }
+.s-toggle-label { font-size: 13.5px; font-weight: 500; color: var(--text-primary); }
+.s-toggle-desc { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
+.s-toggle {
+  position: relative;
+  width: 44px;
+  height: 24px;
+  flex-shrink: 0;
+  margin-left: 16px;
+}
+.s-toggle input { opacity: 0; width: 0; height: 0; position: absolute; }
+.s-toggle-track {
+  position: absolute;
+  inset: 0;
+  background: var(--border);
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.25s;
+}
+.s-toggle-track::after {
+  content: '';
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  background: #fff;
+  border-radius: 50%;
+  top: 3px;
+  left: 3px;
+  transition: transform 0.25s;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+}
+.s-toggle input:checked + .s-toggle-track { background: var(--accent-green); }
+.s-toggle input:checked + .s-toggle-track::after { transform: translateX(20px); }
+
+/* Case types list */
+.s-type-list { list-style: none; }
+.s-type-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border-light);
+}
+.s-type-item:last-child { border-bottom: none; }
+.s-type-color {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.s-type-name { flex: 1; font-size: 13.5px; font-weight: 500; color: var(--text-primary); }
+.s-type-count { font-size: 12px; color: var(--text-muted); margin-right: 8px; }
+.s-type-actions { display: flex; gap: 4px; }
+.s-type-btn {
+  width: 28px;
+  height: 28px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: var(--surface);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  transition: all 0.15s;
+}
+.s-type-btn:hover { border-color: var(--gold); background: var(--gold-bg); }
+.s-type-btn.danger:hover { border-color: var(--accent-red); background: var(--accent-red-bg); color: var(--accent-red); }
+.s-type-add-row {
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
+}
+.s-type-add-row input {
+  flex: 1;
+  padding: 9px 12px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  outline: none;
+}
+.s-type-add-row input:focus { border-color: var(--gold); }
+
+/* Danger zone */
+.settings-card.danger {
+  border-color: #FECACA;
+}
+.settings-card.danger .settings-card-header {
+  background: #FEF2F2;
+  border-bottom-color: #FECACA;
+}
+.settings-card.danger .settings-card-title { color: var(--accent-red); }
+.danger-action-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--border-light);
+}
+.danger-action-row:last-child { border-bottom: none; }
+.danger-action-info { flex: 1; }
+.danger-action-label { font-size: 13.5px; font-weight: 500; color: var(--text-primary); }
+.danger-action-desc { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
+.btn-danger {
+  padding: 8px 16px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--accent-red);
+  background: transparent;
+  color: var(--accent-red);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s;
+  white-space: nowrap;
+}
+.btn-danger:hover { background: var(--accent-red); color: #fff; }
+.btn-export {
+  padding: 8px 16px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--accent-blue);
+  background: transparent;
+  color: var(--accent-blue);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s;
+  white-space: nowrap;
+}
+.btn-export:hover { background: var(--accent-blue); color: #fff; }
+
+/* Security: password strength */
+.s-password-strength {
+  height: 4px;
+  border-radius: 2px;
+  background: var(--border-light);
+  margin-top: 6px;
+  overflow: hidden;
+}
+.s-password-strength-bar {
+  height: 100%;
+  border-radius: 2px;
+  transition: width 0.3s, background 0.3s;
+}
+
+/* Save bar */
+.settings-save-bar {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  padding-top: 8px;
+}
+
+@media (max-width: 600px) {
+  .s-form-row { grid-template-columns: 1fr; }
+  .settings-nav { flex-wrap: nowrap; }
+  .settings-nav-btn { padding: 8px 12px; font-size: 12px; }
+  .danger-action-row { flex-direction: column; gap: 10px; align-items: flex-start; }
+}
+
+/* ═══════════════════════════════════════
    MODAL / SLIDE PANEL
    ═══════════════════════════════════════ */
 .modal-overlay {
@@ -832,13 +1513,13 @@ tbody td {
 }
 
 /* ═══════════════════════════════════════
-   CASE DETAIL PANEL (slide-over)
+   CASE DETAIL PANEL (fullscreen-within-main)
    ═══════════════════════════════════════ */
 .slide-panel {
   display: none;
   position: fixed;
   top: 0;
-  left: 0;
+  left: var(--sidebar-width);
   right: 0;
   bottom: 0;
   background: var(--bg);
@@ -853,217 +1534,283 @@ tbody td {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 20px 32px;
+  padding: 16px 32px;
   border-bottom: 1px solid var(--border-light);
   position: sticky;
   top: 0;
   background: var(--surface);
   z-index: 2;
   box-shadow: var(--shadow-sm);
+  gap: 16px;
 }
 
-.slide-panel-body {
-  padding: 28px 32px;
-  max-width: 760px;
-  margin: 0 auto;
-}
-
-.detail-section {
-  margin-bottom: 28px;
-}
-
-.detail-section-title {
-  font-size: 11px;
-  text-transform: uppercase;
-  letter-spacing: 1.5px;
-  color: var(--text-muted);
-  font-weight: 600;
-  margin-bottom: 14px;
-  padding-bottom: 8px;
-  border-bottom: 1px solid var(--border-light);
-}
-
-.detail-row {
+.sp-header-left {
   display: flex;
-  align-items: flex-start;
-  padding: 6px 0;
-  font-size: 13.5px;
-  gap: 12px;
+  align-items: center;
+  gap: 16px;
+  flex: 1;
+  min-width: 0;
 }
 
-.detail-row .label {
-  color: var(--text-muted);
-  font-weight: 500;
-  min-width: 150px;
+.sp-back-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.15s;
   flex-shrink: 0;
 }
+.sp-back-btn:hover { border-color: var(--gold); background: var(--gold-bg); }
+.sp-back-btn svg { width: 18px; height: 18px; color: var(--text-secondary); }
 
-.detail-row .value {
+.sp-header-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 22px;
+  font-weight: 700;
   color: var(--text-primary);
-  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.sp-header-code {
+  font-size: 12px;
+  color: var(--text-muted);
+  letter-spacing: 1px;
+  margin-top: 1px;
 }
 
-/* Stage Progress — Horizontal 3D */
-.stage-progress-wrapper {
-  padding: 20px 0 10px;
+.sp-header-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 5px 14px;
+  border-radius: 20px;
+  flex-shrink: 0;
+}
+.sp-header-status.active { background: var(--accent-green-bg); color: var(--accent-green); }
+.sp-header-status.completed { background: var(--surface-alt); color: var(--text-muted); }
+.sp-header-status.pending { background: var(--accent-orange-bg); color: var(--accent-orange); }
+.sp-header-status::before { content: ''; width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
+
+.slide-panel-body {
+  padding: 24px 32px 40px;
 }
 
-.stage-progress-bar {
-  position: relative;
+/* Info cards grid */
+.cp-info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 12px;
+  margin-bottom: 28px;
+}
+.cp-info-card {
+  background: var(--surface);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius);
+  padding: 14px 18px;
+  box-shadow: var(--shadow-sm);
+}
+.cp-info-label {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  color: var(--text-muted);
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+.cp-info-value {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+  line-height: 1.4;
+}
+.cp-info-value.highlight {
+  color: var(--accent-orange);
+}
+
+/* Action required banner */
+.cp-action-banner {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 20px;
+  background: linear-gradient(135deg, #FFF8EC 0%, #FEF0EE 100%);
+  border: 1px solid #F5D89A;
+  border-radius: var(--radius);
+  margin-bottom: 24px;
+}
+.cp-action-banner-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--accent-orange);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  flex-shrink: 0;
+}
+.cp-action-banner-text { flex: 1; }
+.cp-action-banner-title { font-size: 14px; font-weight: 700; color: var(--accent-orange); }
+.cp-action-banner-desc { font-size: 13px; color: var(--text-secondary); margin-top: 2px; }
+
+/* ── STAGE PROGRESS — REDESIGNED ── */
+.cp-stage-section {
+  background: var(--surface);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  padding: 28px 32px 24px;
+  margin-bottom: 24px;
+  overflow: hidden;
+}
+
+.cp-stage-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0;
+  margin-bottom: 24px;
+}
+.cp-stage-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+.cp-stage-edit-btn {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--gold);
+  cursor: pointer;
+  padding: 5px 12px;
+  border: 1px solid var(--gold-border);
+  border-radius: var(--radius-sm);
+  background: var(--gold-bg);
+  transition: all 0.15s;
+}
+.cp-stage-edit-btn:hover { background: var(--gold); color: #fff; }
+
+/* Stage horizontal track */
+.cp-stage-track {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: 0 4px;
 }
 
-.stage-progress-bar::before {
-  content: '';
+.cp-stage-track-line {
   position: absolute;
-  top: 20px;
-  left: 24px;
-  right: 24px;
-  height: 6px;
-  background: var(--border);
-  border-radius: 3px;
+  top: 22px;
+  left: 28px;
+  right: 28px;
+  height: 4px;
+  background: var(--border-light);
+  border-radius: 2px;
   z-index: 0;
-  box-shadow: inset 0 1px 3px rgba(0,0,0,0.08);
 }
 
-.stage-progress-fill {
+.cp-stage-track-fill {
   position: absolute;
-  top: 20px;
-  left: 24px;
-  height: 6px;
-  border-radius: 3px;
-  z-index: 1;
+  top: 22px;
+  left: 28px;
+  height: 4px;
+  border-radius: 2px;
   background: linear-gradient(90deg, var(--accent-green) 0%, var(--gold) 100%);
-  box-shadow: 0 2px 8px rgba(46,173,107,0.3), 0 0 12px rgba(212,175,55,0.15);
-  transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 2px 8px rgba(46,173,107,0.25);
+  z-index: 1;
+  transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.stage-node {
+.cp-stage-node {
   position: relative;
   z-index: 2;
   display: flex;
   flex-direction: column;
   align-items: center;
-  flex: 1;
+  width: 80px;
   cursor: default;
   transition: transform 0.2s;
 }
+.cp-stage-node.clickable { cursor: pointer; }
+.cp-stage-node.clickable:hover { transform: translateY(-3px); }
 
-.stage-node.clickable { cursor: pointer; }
-.stage-node.clickable:hover { transform: translateY(-2px); }
-
-.stage-node-circle {
-  width: 40px;
-  height: 40px;
+.cp-stage-circle {
+  width: 44px;
+  height: 44px;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 13px;
+  font-size: 15px;
   font-weight: 700;
   transition: all 0.3s;
-  position: relative;
+  margin-bottom: 10px;
 }
 
-.stage-node.completed .stage-node-circle {
+.cp-stage-node.completed .cp-stage-circle {
   background: linear-gradient(135deg, #2EAD6B 0%, #27ae60 100%);
   color: #fff;
-  box-shadow: 0 3px 10px rgba(46,173,107,0.35), inset 0 -2px 4px rgba(0,0,0,0.1), inset 0 2px 4px rgba(255,255,255,0.2);
+  box-shadow: 0 3px 10px rgba(46,173,107,0.35);
 }
-
-.stage-node.active .stage-node-circle {
+.cp-stage-node.active .cp-stage-circle {
   background: linear-gradient(135deg, var(--gold) 0%, #D4AF37 100%);
   color: #fff;
-  box-shadow: 0 3px 14px rgba(184,146,47,0.45), inset 0 -2px 4px rgba(0,0,0,0.1), inset 0 2px 4px rgba(255,255,255,0.25);
+  box-shadow: 0 3px 14px rgba(184,146,47,0.45);
   animation: stagePulse 2s ease-in-out infinite;
 }
-
-.stage-node.upcoming .stage-node-circle {
+.cp-stage-node.upcoming .cp-stage-circle {
   background: var(--surface);
   color: var(--text-muted);
   border: 2px solid var(--border);
-  box-shadow: 0 1px 4px rgba(0,0,0,0.06);
 }
 
-.stage-node-label {
-  margin-top: 8px;
-  font-size: 10px;
+.cp-stage-label {
+  font-size: 11px;
   font-weight: 600;
   color: var(--text-muted);
   text-align: center;
-  max-width: 90px;
   line-height: 1.3;
-  transition: color 0.2s;
+  max-width: 80px;
+  word-wrap: break-word;
 }
+.cp-stage-node.active .cp-stage-label { color: var(--gold); font-weight: 700; }
+.cp-stage-node.completed .cp-stage-label { color: var(--accent-green); }
 
-.stage-node.active .stage-node-label {
-  color: var(--gold);
-  font-weight: 700;
-}
-
-.stage-node.completed .stage-node-label {
-  color: var(--accent-green);
-}
-
-.stage-node-date {
+.cp-stage-date {
   font-size: 9px;
   color: var(--text-muted);
-  margin-top: 2px;
+  margin-top: 3px;
   font-weight: 500;
-  opacity: 0.8;
 }
+.cp-stage-node.active .cp-stage-date { color: var(--gold); font-weight: 600; }
+.cp-stage-node.completed .cp-stage-date { color: var(--accent-green); }
 
-.stage-node.active .stage-node-date {
-  color: var(--gold);
-  opacity: 1;
-  font-weight: 600;
-}
-
-.stage-node.completed .stage-node-date {
-  color: var(--accent-green);
-  opacity: 0.8;
-}
-
-.stage-percent {
-  text-align: center;
-  margin-top: 16px;
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 28px;
-  font-weight: 700;
-  background: linear-gradient(90deg, var(--accent-green), var(--gold));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-.stage-percent-sub {
-  text-align: center;
-  font-size: 12px;
-  color: var(--text-muted);
-  margin-top: 2px;
-}
-
-/* Tooltip on hover */
-.stage-node-tooltip {
+/* Stage tooltip */
+.cp-stage-tip {
   display: none;
   position: absolute;
-  bottom: calc(100% + 10px);
+  bottom: calc(100% + 8px);
   left: 50%;
   transform: translateX(-50%);
   background: var(--navy);
   color: #fff;
-  padding: 8px 12px;
+  padding: 10px 14px;
   border-radius: var(--radius-sm);
-  font-size: 11px;
+  font-size: 12px;
   white-space: nowrap;
   box-shadow: var(--shadow-md);
   z-index: 10;
+  line-height: 1.5;
 }
-
-.stage-node-tooltip::after {
+.cp-stage-tip::after {
   content: '';
   position: absolute;
   top: 100%;
@@ -1072,8 +1819,110 @@ tbody td {
   border: 5px solid transparent;
   border-top-color: var(--navy);
 }
+.cp-stage-node:hover .cp-stage-tip { display: block; }
 
-.stage-node:hover .stage-node-tooltip { display: block; }
+/* Stage percent display */
+.cp-stage-percent-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border-light);
+}
+.cp-stage-big-percent {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 48px;
+  font-weight: 700;
+  line-height: 1;
+  background: linear-gradient(135deg, var(--accent-green), var(--gold));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.cp-stage-percent-info {
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+.cp-stage-percent-info strong {
+  display: block;
+  font-size: 14px;
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+/* ── BOTTOM TWO-COLUMN LAYOUT ── */
+.cp-bottom-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+.cp-bottom-panel {
+  background: var(--surface);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+.cp-bottom-panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 20px;
+  border-bottom: 1px solid var(--border-light);
+  flex-shrink: 0;
+}
+.cp-bottom-panel-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+.cp-bottom-panel-body {
+  flex: 1;
+  overflow-y: auto;
+  max-height: 500px;
+}
+
+/* Panel tab variant inside bottom panels */
+.cp-sub-tabs {
+  display: flex;
+  border-bottom: 1px solid var(--border-light);
+}
+.cp-sub-tab {
+  padding: 10px 16px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-muted);
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  transition: all 0.15s;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.cp-sub-tab:hover { color: var(--text-primary); }
+.cp-sub-tab.active { color: var(--gold); border-bottom-color: var(--gold); }
+
+@media (max-width: 1100px) {
+  .cp-bottom-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 768px) {
+  .slide-panel { left: 0; }
+  .slide-panel-header { padding: 14px 16px; }
+  .slide-panel-body { padding: 16px; }
+  .cp-stage-section { padding: 20px 16px; }
+  .cp-stage-node { width: 56px; }
+  .cp-stage-circle { width: 34px; height: 34px; font-size: 12px; }
+  .cp-stage-label { font-size: 9px; max-width: 56px; }
+  .cp-stage-big-percent { font-size: 36px; }
+  .cp-info-grid { grid-template-columns: 1fr 1fr; }
+  .cp-stage-track-line { left: 18px; right: 18px; }
+  .cp-stage-track-fill { left: 18px; }
+}
 
 @keyframes stagePulse {
   0%, 100% { box-shadow: 0 3px 14px rgba(184,146,47,0.45), inset 0 -2px 4px rgba(0,0,0,0.1), inset 0 2px 4px rgba(255,255,255,0.25); }
@@ -1915,6 +2764,356 @@ tbody td {
       </div>
     </div>
 
+    <!-- ═══ LAWYER PROFILE DASHBOARD ═══ -->
+    <div class="page" id="page-lawyer-profile">
+      <div class="page-content" id="lawyerProfileContent">
+        <!-- Dynamically rendered -->
+      </div>
+    </div>
+
+    <!-- ═══ SETTINGS PAGE ═══ -->
+    <div class="page" id="page-settings">
+      <div class="page-content">
+        <div class="settings-layout">
+
+          <!-- Settings Tab Nav -->
+          <div class="settings-nav">
+            <button class="settings-nav-btn active" onclick="switchSettingsTab('profile', this)">🏛️ Προφίλ Γραφείου</button>
+            <button class="settings-nav-btn" onclick="switchSettingsTab('notifications', this)">🔔 Ειδοποιήσεις</button>
+            <button class="settings-nav-btn" onclick="switchSettingsTab('casetypes', this)">📂 Τύποι Υποθέσεων</button>
+            <button class="settings-nav-btn" onclick="switchSettingsTab('security', this)">🔒 Ασφάλεια</button>
+            <button class="settings-nav-btn" onclick="switchSettingsTab('data', this)">💾 Δεδομένα</button>
+          </div>
+
+          <!-- ═══ TAB: Office Profile ═══ -->
+          <div class="settings-section active" id="settings-profile">
+            <div class="settings-card">
+              <div class="settings-card-header">
+                <div>
+                  <div class="settings-card-title">Στοιχεία Γραφείου</div>
+                  <div class="settings-card-desc">Εμφανίζονται στο client portal και τα email</div>
+                </div>
+              </div>
+              <div class="settings-card-body">
+                <!-- Logo -->
+                <div style="margin-bottom:18px">
+                  <label style="font-size:12px;font-weight:600;color:var(--text-secondary);text-transform:uppercase;letter-spacing:0.8px;display:block;margin-bottom:6px">Λογότυπο</label>
+                  <div class="s-logo-area" onclick="document.getElementById('settingsLogoInput').click()">
+                    <div class="s-logo-preview" id="settingsLogoPreview">🏛️</div>
+                    <div class="s-logo-text">
+                      <strong>Ανεβάστε λογότυπο</strong>
+                      PNG ή SVG, μέχρι 500KB
+                    </div>
+                    <input type="file" id="settingsLogoInput" accept="image/*" style="display:none" onchange="previewSettingsLogo(this)">
+                  </div>
+                </div>
+                <div class="s-form-row">
+                  <div class="s-field">
+                    <label>Επωνυμία Γραφείου</label>
+                    <input type="text" id="sOfficeName" placeholder="π.χ. ZK LAW">
+                  </div>
+                  <div class="s-field">
+                    <label>Υπότιτλος / Περιγραφή</label>
+                    <input type="text" id="sOfficeSubtitle" placeholder="π.χ. Δικηγορικό Γραφείο">
+                  </div>
+                </div>
+                <div class="s-form-row">
+                  <div class="s-field">
+                    <label>Email Γραφείου</label>
+                    <input type="email" id="sOfficeEmail" placeholder="info@zklaw.gr">
+                  </div>
+                  <div class="s-field">
+                    <label>Τηλέφωνο</label>
+                    <input type="text" id="sOfficePhone" placeholder="2310 XXXXXX">
+                  </div>
+                </div>
+                <div class="s-form-row single">
+                  <div class="s-field">
+                    <label>Διεύθυνση</label>
+                    <input type="text" id="sOfficeAddress" placeholder="Οδός, Αριθμός, ΤΚ, Πόλη">
+                  </div>
+                </div>
+                <div class="s-form-row single">
+                  <div class="s-field">
+                    <label>Website</label>
+                    <input type="url" id="sOfficeWebsite" placeholder="https://www.zklaw.gr">
+                  </div>
+                </div>
+                <div class="settings-save-bar">
+                  <button class="btn btn-primary" onclick="saveOfficeProfile()">💾 Αποθήκευση</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ═══ TAB: Email Notifications ═══ -->
+          <div class="settings-section" id="settings-notifications">
+            <div class="settings-card">
+              <div class="settings-card-header">
+                <div>
+                  <div class="settings-card-title">Email Ειδοποιήσεις προς Πελάτες</div>
+                  <div class="settings-card-desc">Επιλέξτε ποιες ειδοποιήσεις αποστέλλονται αυτόματα</div>
+                </div>
+              </div>
+              <div class="settings-card-body">
+                <div class="s-toggle-row">
+                  <div class="s-toggle-info">
+                    <div class="s-toggle-label">Αλλαγή Σταδίου Υπόθεσης</div>
+                    <div class="s-toggle-desc">Ειδοποίηση όταν η υπόθεση αλλάζει στάδιο (π.χ. από "Έλεγχος" σε "Επεξεργασία")</div>
+                  </div>
+                  <label class="s-toggle">
+                    <input type="checkbox" id="sNotifStageChange" checked>
+                    <span class="s-toggle-track"></span>
+                  </label>
+                </div>
+                <div class="s-toggle-row">
+                  <div class="s-toggle-info">
+                    <div class="s-toggle-label">Απαιτείται Ενέργεια Πελάτη</div>
+                    <div class="s-toggle-desc">Ειδοποίηση όταν σημειώνεται εκκρεμότητα από πλευράς πελάτη</div>
+                  </div>
+                  <label class="s-toggle">
+                    <input type="checkbox" id="sNotifActionRequired" checked>
+                    <span class="s-toggle-track"></span>
+                  </label>
+                </div>
+                <div class="s-toggle-row">
+                  <div class="s-toggle-info">
+                    <div class="s-toggle-label">Νέο Έγγραφο</div>
+                    <div class="s-toggle-desc">Ειδοποίηση όταν ανεβαίνει νέο client-visible έγγραφο</div>
+                  </div>
+                  <label class="s-toggle">
+                    <input type="checkbox" id="sNotifNewDocument" checked>
+                    <span class="s-toggle-track"></span>
+                  </label>
+                </div>
+                <div class="s-toggle-row">
+                  <div class="s-toggle-info">
+                    <div class="s-toggle-label">Νέο Μήνυμα (Admin → Client)</div>
+                    <div class="s-toggle-desc">Ειδοποίηση πελάτη όταν ο admin απαντά σε μήνυμα</div>
+                  </div>
+                  <label class="s-toggle">
+                    <input type="checkbox" id="sNotifNewMessage">
+                    <span class="s-toggle-track"></span>
+                  </label>
+                </div>
+                <div class="settings-save-bar">
+                  <button class="btn btn-primary" onclick="saveNotificationSettings()">💾 Αποθήκευση</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="settings-card">
+              <div class="settings-card-header">
+                <div>
+                  <div class="settings-card-title">Ειδοποιήσεις προς Admin</div>
+                  <div class="settings-card-desc">Ενημέρωση γραφείου για ενέργειες πελατών</div>
+                </div>
+              </div>
+              <div class="settings-card-body">
+                <div class="s-toggle-row">
+                  <div class="s-toggle-info">
+                    <div class="s-toggle-label">Νέο Μήνυμα Πελάτη</div>
+                    <div class="s-toggle-desc">Email στον admin όταν πελάτης στέλνει μήνυμα</div>
+                  </div>
+                  <label class="s-toggle">
+                    <input type="checkbox" id="sNotifAdminClientMsg" checked>
+                    <span class="s-toggle-track"></span>
+                  </label>
+                </div>
+                <div class="s-toggle-row">
+                  <div class="s-toggle-info">
+                    <div class="s-toggle-label">Upload Εγγράφου από Πελάτη</div>
+                    <div class="s-toggle-desc">Email στον admin όταν πελάτης ανεβάζει αρχείο</div>
+                  </div>
+                  <label class="s-toggle">
+                    <input type="checkbox" id="sNotifAdminClientUpload" checked>
+                    <span class="s-toggle-track"></span>
+                  </label>
+                </div>
+                <div class="settings-save-bar">
+                  <button class="btn btn-primary" onclick="saveNotificationSettings()">💾 Αποθήκευση</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ═══ TAB: Case Types ═══ -->
+          <div class="settings-section" id="settings-casetypes">
+            <div class="settings-card">
+              <div class="settings-card-header">
+                <div>
+                  <div class="settings-card-title">Τύποι Υποθέσεων</div>
+                  <div class="settings-card-desc">Οι κατηγορίες που εμφανίζονται στη δημιουργία υπόθεσης</div>
+                </div>
+              </div>
+              <div class="settings-card-body">
+                <ul class="s-type-list" id="sCaseTypesList">
+                  <!-- Dynamically rendered -->
+                </ul>
+                <div class="s-type-add-row">
+                  <input type="text" id="sNewCaseType" placeholder="Νέος τύπος υπόθεσης...">
+                  <input type="color" id="sNewCaseTypeColor" value="#1B2A4A" style="width:40px;height:36px;padding:2px;border:1px solid var(--border);border-radius:var(--radius-sm);cursor:pointer">
+                  <button class="btn btn-primary btn-sm" onclick="addCaseType()">+ Προσθήκη</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ═══ TAB: Security ═══ -->
+          <div class="settings-section" id="settings-security">
+            <div class="settings-card">
+              <div class="settings-card-header">
+                <div>
+                  <div class="settings-card-title">Αλλαγή Κωδικού</div>
+                  <div class="settings-card-desc">Ενημερώστε τον κωδικό πρόσβασης του admin λογαριασμού</div>
+                </div>
+              </div>
+              <div class="settings-card-body">
+                <div class="s-form-row single">
+                  <div class="s-field">
+                    <label>Τρέχων Κωδικός</label>
+                    <input type="password" id="sCurrentPassword" placeholder="••••••••">
+                  </div>
+                </div>
+                <div class="s-form-row">
+                  <div class="s-field">
+                    <label>Νέος Κωδικός</label>
+                    <input type="password" id="sNewPassword" placeholder="Ελάχιστο 8 χαρακτήρες" oninput="checkPasswordStrength(this.value)">
+                    <div class="s-password-strength"><div class="s-password-strength-bar" id="sPasswordBar"></div></div>
+                  </div>
+                  <div class="s-field">
+                    <label>Επιβεβαίωση Νέου Κωδικού</label>
+                    <input type="password" id="sConfirmPassword" placeholder="Πληκτρολογήστε ξανά">
+                  </div>
+                </div>
+                <div class="settings-save-bar">
+                  <button class="btn btn-primary" onclick="changeAdminPassword()">🔐 Αλλαγή Κωδικού</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="settings-card">
+              <div class="settings-card-header">
+                <div>
+                  <div class="settings-card-title">Ρυθμίσεις Συνεδρίας</div>
+                  <div class="settings-card-desc">Χρόνος αδράνειας μέχρι αυτόματη αποσύνδεση</div>
+                </div>
+              </div>
+              <div class="settings-card-body">
+                <div class="s-form-row single">
+                  <div class="s-field">
+                    <label>Session Timeout (λεπτά)</label>
+                    <select id="sSessionTimeout">
+                      <option value="15">15 λεπτά</option>
+                      <option value="30" selected>30 λεπτά</option>
+                      <option value="60">1 ώρα</option>
+                      <option value="120">2 ώρες</option>
+                      <option value="480">8 ώρες (εργάσιμο)</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="settings-save-bar">
+                  <button class="btn btn-primary" onclick="saveSecuritySettings()">💾 Αποθήκευση</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="settings-card">
+              <div class="settings-card-header">
+                <div>
+                  <div class="settings-card-title">Two-Factor Authentication (2FA)</div>
+                  <div class="settings-card-desc">Πρόσθετο επίπεδο ασφάλειας για admin λογαριασμούς</div>
+                </div>
+              </div>
+              <div class="settings-card-body">
+                <div class="s-toggle-row" style="border-bottom:none">
+                  <div class="s-toggle-info">
+                    <div class="s-toggle-label">Ενεργοποίηση 2FA</div>
+                    <div class="s-toggle-desc">Απαιτεί κωδικό μιας χρήσης κατά τη σύνδεση (προσεχώς)</div>
+                  </div>
+                  <label class="s-toggle">
+                    <input type="checkbox" id="s2FAToggle" disabled>
+                    <span class="s-toggle-track" style="opacity:0.5"></span>
+                  </label>
+                </div>
+                <div style="font-size:11px;color:var(--text-muted);padding:8px 12px;background:var(--surface-alt);border-radius:var(--radius-sm);margin-top:4px">
+                  ℹ️ Η λειτουργία 2FA θα είναι διαθέσιμη σε επόμενη ενημέρωση.
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ═══ TAB: Data / Danger Zone ═══ -->
+          <div class="settings-section" id="settings-data">
+            <div class="settings-card">
+              <div class="settings-card-header">
+                <div>
+                  <div class="settings-card-title">📦 Εξαγωγή / Backup</div>
+                  <div class="settings-card-desc">Λήψη αντιγράφου ασφαλείας των δεδομένων σας</div>
+                </div>
+              </div>
+              <div class="settings-card-body">
+                <div class="danger-action-row">
+                  <div class="danger-action-info">
+                    <div class="danger-action-label">Εξαγωγή Πελατών (JSON)</div>
+                    <div class="danger-action-desc">Λήψη λίστας πελατών με στοιχεία επικοινωνίας</div>
+                  </div>
+                  <button class="btn-export" onclick="exportData('clients')">📥 Εξαγωγή</button>
+                </div>
+                <div class="danger-action-row">
+                  <div class="danger-action-info">
+                    <div class="danger-action-label">Εξαγωγή Υποθέσεων (JSON)</div>
+                    <div class="danger-action-desc">Λήψη όλων των υποθέσεων με στάδια και ιστορικό</div>
+                  </div>
+                  <button class="btn-export" onclick="exportData('cases')">📥 Εξαγωγή</button>
+                </div>
+                <div class="danger-action-row" style="border-bottom:none">
+                  <div class="danger-action-info">
+                    <div class="danger-action-label">Πλήρες Backup (JSON)</div>
+                    <div class="danger-action-desc">Πελάτες, υποθέσεις, δικηγόροι, μηνύματα — όλα σε ένα αρχείο</div>
+                  </div>
+                  <button class="btn-export" onclick="exportData('all')">📥 Πλήρες Backup</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="settings-card danger">
+              <div class="settings-card-header">
+                <div>
+                  <div class="settings-card-title">⚠️ Danger Zone</div>
+                  <div class="settings-card-desc">Μη αναστρέψιμες ενέργειες — προχωρήστε με προσοχή</div>
+                </div>
+              </div>
+              <div class="settings-card-body">
+                <div class="danger-action-row">
+                  <div class="danger-action-info">
+                    <div class="danger-action-label">Διαγραφή Ολοκληρωμένων Υποθέσεων</div>
+                    <div class="danger-action-desc">Αφαιρεί μόνιμα τις υποθέσεις με στάδιο 8 (Ολοκληρώθηκε)</div>
+                  </div>
+                  <button class="btn-danger" onclick="dangerDeleteCompleted()">🗑️ Διαγραφή</button>
+                </div>
+                <div class="danger-action-row">
+                  <div class="danger-action-info">
+                    <div class="danger-action-label">Διαγραφή Όλων των Μηνυμάτων</div>
+                    <div class="danger-action-desc">Αφαιρεί μόνιμα τα μηνύματα από όλες τις υποθέσεις</div>
+                  </div>
+                  <button class="btn-danger" onclick="dangerDeleteMessages()">🗑️ Διαγραφή</button>
+                </div>
+                <div class="danger-action-row" style="border-bottom:none">
+                  <div class="danger-action-info">
+                    <div class="danger-action-label">Επαναφορά Συστήματος</div>
+                    <div class="danger-action-desc">Διαγράφει ΟΛΑ τα δεδομένα — πελάτες, υποθέσεις, δικηγόρους, μηνύματα</div>
+                  </div>
+                  <button class="btn-danger" onclick="dangerResetAll()">☢️ Πλήρης Επαναφορά</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
   </div>
 </div>
 
@@ -2101,15 +3300,7 @@ tbody td {
         <div class="form-group">
           <label>Τύπος Υπόθεσης</label>
           <select id="caseType">
-            <option value="Αστικό Δίκαιο">Αστικό Δίκαιο</option>
-            <option value="Ποινικό Δίκαιο">Ποινικό Δίκαιο</option>
-            <option value="Εμπορικό Δίκαιο">Εμπορικό Δίκαιο</option>
-            <option value="Εργατικό Δίκαιο">Εργατικό Δίκαιο</option>
-            <option value="Διοικητικό Δίκαιο">Διοικητικό Δίκαιο</option>
-            <option value="Οικογενειακό Δίκαιο">Οικογενειακό Δίκαιο</option>
-            <option value="IT Transactions">IT Transactions</option>
-            <option value="Ακίνητα">Ακίνητα</option>
-            <option value="Άλλο">Άλλο</option>
+            <option value="">— Επιλέξτε —</option>
           </select>
         </div>
         <div class="form-group">
@@ -2166,63 +3357,78 @@ tbody td {
 <div class="modal-overlay" id="caseDetailOverlay" style="display:none!important"></div>
 <div class="slide-panel" id="caseDetailPanel">
   <div class="slide-panel-header">
-    <div>
-      <h2 id="panelTitle" style="font-family:'Cormorant Garamond',serif;font-size:20px;">—</h2>
-      <div id="panelCode" style="font-size:12px;color:var(--text-muted);margin-top:2px;">—</div>
+    <div class="sp-header-left">
+      <div class="sp-back-btn" onclick="closeCasePanel()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
+      </div>
+      <div>
+        <div class="sp-header-title" id="panelTitle">—</div>
+        <div class="sp-header-code" id="panelCode">—</div>
+      </div>
     </div>
+    <div id="panelHeaderStatus"></div>
     <div style="display:flex;gap:8px;">
-      <button class="btn btn-sm btn-outline" onclick="editCurrentCase()">Επεξεργασία</button>
-      <button class="modal-close" onclick="closeCasePanel()">&times;</button>
+      <button class="btn btn-sm btn-outline" onclick="editCurrentCase()">✏️ Επεξεργασία</button>
     </div>
   </div>
   <div class="slide-panel-body">
-    <!-- Info Section -->
-    <div class="detail-section">
-      <div class="detail-section-title">Πληροφορίες Υπόθεσης</div>
-      <div id="panelInfo"></div>
-    </div>
+    <!-- Action required banner -->
+    <div id="panelActionBanner"></div>
+
+    <!-- Info cards grid -->
+    <div id="panelInfo" class="cp-info-grid"></div>
 
     <!-- Stage Section -->
-    <div class="detail-section">
-      <div class="detail-section-title">Στάδιο Υπόθεσης — <span style="font-size:11px;cursor:pointer;color:var(--gold);" onclick="toggleStageEdit()">Αλλαγή</span></div>
-      <div class="stage-selector" id="panelStages"></div>
-    </div>
-
-    <!-- Tabs: Documents / Messages / History -->
-    <div class="panel-tabs">
-      <div class="panel-tab active" onclick="switchPanelTab('docs', this)">Έγγραφα</div>
-      <div class="panel-tab" onclick="switchPanelTab('msgs', this)">Μηνύματα</div>
-      <div class="panel-tab" onclick="switchPanelTab('history', this)">Ιστορικό</div>
-    </div>
-
-    <!-- Documents Tab -->
-    <div class="panel-tab-content active" id="tab-docs">
-      <div class="upload-area" onclick="document.getElementById('fileUploadInput').click()">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-        <p>Κάντε κλικ ή σύρετε αρχείο για upload</p>
+    <div class="cp-stage-section">
+      <div class="cp-stage-header">
+        <span class="cp-stage-title">Στάδιο Υπόθεσης</span>
+        <span class="cp-stage-edit-btn" onclick="toggleStageEdit()">✏️ Αλλαγή Σταδίου</span>
       </div>
-      <input type="file" id="fileUploadInput" style="display:none" onchange="uploadDocument(this)" multiple>
-      <div style="margin-top:8px;margin-bottom:12px;">
-        <label class="form-check" style="font-size:12px;">
-          <input type="checkbox" id="docVisibleToClient" checked>
-          <span>Ορατό στον πελάτη</span>
-        </label>
-      </div>
-      <div id="panelDocs"></div>
+      <div id="panelStages"></div>
     </div>
 
-    <!-- Messages Tab -->
-    <div class="panel-tab-content" id="tab-msgs">
-      <div id="panelMessages"></div>
-      <div class="reply-box">
-        <input type="text" id="adminReplyInput" placeholder="Απάντηση...">
-        <button class="btn btn-sm btn-primary" onclick="sendAdminReply()">Αποστολή</button>
+    <!-- Two-column bottom: Docs + Messages/History -->
+    <div class="cp-bottom-grid">
+      <!-- LEFT: Documents -->
+      <div class="cp-bottom-panel">
+        <div class="cp-bottom-panel-header">
+          <span class="cp-bottom-panel-title">📄 Έγγραφα</span>
+        </div>
+        <div class="cp-bottom-panel-body" style="padding:16px">
+          <div class="upload-area" onclick="document.getElementById('fileUploadInput').click()" style="padding:20px;margin-bottom:12px">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:28px;height:28px;color:var(--text-muted);margin-bottom:6px"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+            <p style="font-size:12px">Κλικ ή drag για upload</p>
+          </div>
+          <input type="file" id="fileUploadInput" style="display:none" onchange="uploadDocument(this)" multiple>
+          <div style="margin-bottom:10px;">
+            <label class="form-check" style="font-size:11px;">
+              <input type="checkbox" id="docVisibleToClient" checked>
+              <span>Ορατό στον πελάτη</span>
+            </label>
+          </div>
+          <div id="panelDocs"></div>
+        </div>
       </div>
-    </div>
 
-    <!-- History Tab -->
-    <div class="panel-tab-content" id="tab-history">
-      <div id="panelHistory"></div>
+      <!-- RIGHT: Messages + History -->
+      <div class="cp-bottom-panel">
+        <div class="cp-sub-tabs" id="cpRightTabs">
+          <div class="cp-sub-tab active" onclick="switchCPRightTab('msgs', this)">💬 Μηνύματα</div>
+          <div class="cp-sub-tab" onclick="switchCPRightTab('history', this)">📋 Ιστορικό</div>
+        </div>
+        <div class="cp-bottom-panel-body">
+          <div id="cpTab-msgs" style="padding:16px">
+            <div id="panelMessages"></div>
+            <div class="reply-box">
+              <input type="text" id="adminReplyInput" placeholder="Απάντηση...">
+              <button class="btn btn-sm btn-primary" onclick="sendAdminReply()">Αποστολή</button>
+            </div>
+          </div>
+          <div id="cpTab-history" style="padding:16px;display:none">
+            <div id="panelHistory"></div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
@@ -2234,10 +3440,12 @@ tbody td {
      FIREBASE & APP LOGIC
      ═══════════════════════════════════════ -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://unpkg.com/docx@8.5.0/build/index.umd.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-storage-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-functions-compat.js"></script>
 <script>
 /* ═══════════════════════════════════════
    FIREBASE INIT
@@ -2423,6 +3631,9 @@ function initApp() {
 
   // Calendar
   initCalendar();
+
+  // Settings
+  initSettingsPage();
 }
 
 /* ═══════════════════════════════════════
@@ -2442,13 +3653,14 @@ function renderLawyersTable() {
     const roleLabel = l.role === 'admin' ? 'Διαχειριστής' : l.role === 'secretary' ? 'Γραμματεία' : 'Δικηγόρος';
     const colorDot = l.color ? `<span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:${l.color};margin-right:6px"></span>` : '';
     return `
-      <tr>
+      <tr onclick="openLawyerProfile('${l.id}')" style="cursor:pointer">
         <td>${colorDot}<strong>${l.name || '—'}</strong></td>
         <td style="color:var(--text-secondary)">${l.email || '—'}</td>
         <td><span style="font-size:12px;font-weight:500">${roleLabel}</span></td>
         <td>${caseCount}</td>
         <td>
-          <button class="btn btn-sm btn-outline" onclick="editLawyer('${l.id}')">Επεξεργασία</button>
+          <button class="btn btn-sm btn-outline" onclick="event.stopPropagation();openLawyerProfile('${l.id}')">Προφίλ</button>
+          <button class="btn btn-sm btn-outline" onclick="event.stopPropagation();editLawyer('${l.id}')" style="margin-left:4px">✏️</button>
         </td>
       </tr>
     `;
@@ -2539,7 +3751,9 @@ const pageTitles = {
   cases: 'Υποθέσεις',
   messages: 'Μηνύματα',
   calendar: 'Ημερολόγιο',
-  lawyers: 'Δικηγόροι'
+  lawyers: 'Δικηγόροι',
+  'lawyer-profile': '⚖️ Προφίλ Δικηγόρου',
+  settings: '⚙️ Ρυθμίσεις'
 };
 
 function navigateTo(page) {
@@ -2568,6 +3782,12 @@ function navigateTo(page) {
   if (page === 'dashboard') {
     chartsInitialized = false;
     initDashboard3DCharts();
+  }
+  
+  // Init settings when navigating to settings
+  if (page === 'settings') {
+    loadOfficeProfile();
+    renderCaseTypesList();
   }
 }
 
@@ -2933,13 +4153,24 @@ document.getElementById('caseActionRequired').addEventListener('change', functio
   document.getElementById('actionTextGroup').style.display = this.checked ? 'block' : 'none';
 });
 
+function populateCaseTypeDropdown() {
+  const sel = document.getElementById('caseType');
+  if (!sel) return;
+  const currentVal = sel.value;
+  const types = settingsCaseTypes.length > 0 ? settingsCaseTypes : defaultCaseTypes;
+  sel.innerHTML = types.map(t => `<option value="${t.name}">${t.name}</option>`).join('');
+  // Restore previous value if still valid
+  if (currentVal && [...sel.options].some(o => o.value === currentVal)) sel.value = currentVal;
+}
+
 function openCaseModal(editId) {
+  populateCaseTypeDropdown();
   document.getElementById('caseEditId').value = '';
   document.getElementById('caseModalTitle').textContent = 'Νέα Υπόθεση';
   document.getElementById('caseCode').value = generateCaseCode();
   document.getElementById('caseClient').value = '';
   document.getElementById('caseTitle').value = '';
-  document.getElementById('caseType').value = 'Αστικό Δίκαιο';
+  document.getElementById('caseType').value = settingsCaseTypes.length > 0 ? settingsCaseTypes[0].name : '';
   document.getElementById('caseStage').value = '1';
   document.getElementById('caseSummary').value = '';
   document.getElementById('caseLastUpdate').value = '';
@@ -2953,6 +4184,7 @@ function openCaseModal(editId) {
 
 function editCurrentCase() {
   if (!currentPanelCase) return;
+  populateCaseTypeDropdown();
   const c = currentPanelCase;
   document.getElementById('caseEditId').value = c.id;
   document.getElementById('caseModalTitle').textContent = 'Επεξεργασία Υπόθεσης';
@@ -3144,8 +4376,9 @@ function openCasePanel(caseId) {
     renderPanelHistory(updates);
   });
 
-  // Reset to first tab
-  switchPanelTab('docs', document.querySelector('.panel-tab'));
+  // Reset right panel to messages tab
+  const firstTab = document.querySelector('#cpRightTabs .cp-sub-tab');
+  if (firstTab) switchCPRightTab('msgs', firstTab);
 }
 
 function closeCasePanel() {
@@ -3160,17 +4393,49 @@ function renderPanelInfo(c) {
   document.getElementById('panelTitle').textContent = c.title || '—';
   document.getElementById('panelCode').textContent = c.case_code || '—';
 
+  // Header status badge
+  const isCompleted = c.status === 'completed' || c.current_stage === 8;
+  const isPending = c.action_required;
+  const statusClass = isCompleted ? 'completed' : isPending ? 'pending' : 'active';
+  const statusLabel = isCompleted ? 'Ολοκληρωμένη' : isPending ? 'Εκκρεμεί Ενέργεια' : 'Ενεργή';
+  document.getElementById('panelHeaderStatus').innerHTML = `<span class="sp-header-status ${statusClass}">${statusLabel}</span>`;
+
+  // Action required banner
+  const bannerEl = document.getElementById('panelActionBanner');
+  if (c.action_required) {
+    bannerEl.innerHTML = `
+      <div class="cp-action-banner">
+        <div class="cp-action-banner-icon">⚡</div>
+        <div class="cp-action-banner-text">
+          <div class="cp-action-banner-title">Απαιτείται Ενέργεια Πελάτη</div>
+          <div class="cp-action-banner-desc">${c.action_text || 'Ο πελάτης πρέπει να προβεί σε ενέργεια.'}</div>
+        </div>
+      </div>`;
+  } else {
+    bannerEl.innerHTML = '';
+  }
+
   const stage = STAGES.find(s => s.id === c.current_stage) || STAGES[0];
   document.getElementById('panelInfo').innerHTML = `
-    <div class="detail-row"><span class="label">Πελάτης</span><span class="value">${getClientName(c.client_id)}</span></div>
-    <div class="detail-row"><span class="label">Τύπος</span><span class="value">${c.case_type || '—'}</span></div>
-    <div class="detail-row"><span class="label">Κατάσταση</span><span class="value"><span class="status-dot ${c.status === 'completed' || c.current_stage === 8 ? 'completed' : 'active'}">${c.status === 'completed' || c.current_stage === 8 ? 'Ολοκληρωμένη' : 'Ενεργή'}</span></span></div>
-    <div class="detail-row"><span class="label">Στάδιο</span><span class="value">${c.current_stage}/8 — ${stage.title}</span></div>
-    ${c.assigned_lawyer ? `<div class="detail-row"><span class="label">Δικηγόρος</span><span class="value">⚖️ ${getLawyerName(c.assigned_lawyer)}</span></div>` : ''}
-    ${c.short_summary ? `<div class="detail-row"><span class="label">Περιγραφή</span><span class="value">${c.short_summary}</span></div>` : ''}
-    ${c.last_update ? `<div class="detail-row"><span class="label">Τελευταία ενημέρωση</span><span class="value">${c.last_update}</span></div>` : ''}
-    ${c.next_step ? `<div class="detail-row"><span class="label">Επόμενο βήμα</span><span class="value">${c.next_step}</span></div>` : ''}
-    ${c.action_required ? `<div class="detail-row"><span class="label">Εκκρεμότητα</span><span class="value" style="color:var(--accent-orange);font-weight:600">⚡ ${c.action_text || 'Απαιτείται ενέργεια'}</span></div>` : ''}
+    <div class="cp-info-card">
+      <div class="cp-info-label">Πελάτης</div>
+      <div class="cp-info-value">${getClientName(c.client_id)}</div>
+    </div>
+    <div class="cp-info-card">
+      <div class="cp-info-label">Τύπος Υπόθεσης</div>
+      <div class="cp-info-value">${c.case_type || '—'}</div>
+    </div>
+    <div class="cp-info-card">
+      <div class="cp-info-label">Δικηγόρος</div>
+      <div class="cp-info-value">${c.assigned_lawyer ? '⚖️ ' + getLawyerName(c.assigned_lawyer) : '—'}</div>
+    </div>
+    <div class="cp-info-card">
+      <div class="cp-info-label">Στάδιο</div>
+      <div class="cp-info-value">${c.current_stage}/8 — ${stage.title}</div>
+    </div>
+    ${c.last_update ? `<div class="cp-info-card"><div class="cp-info-label">Τελευταία Ενημέρωση</div><div class="cp-info-value">${c.last_update}</div></div>` : ''}
+    ${c.next_step ? `<div class="cp-info-card"><div class="cp-info-label">Επόμενο Βήμα</div><div class="cp-info-value">${c.next_step}</div></div>` : ''}
+    ${c.short_summary ? `<div class="cp-info-card" style="grid-column:1/-1"><div class="cp-info-label">Περιγραφή</div><div class="cp-info-value">${c.short_summary}</div></div>` : ''}
   `;
 }
 
@@ -3190,30 +4455,32 @@ function renderPanelStages(c) {
   const completedAt = c.completed_at ? formatDate(c.completed_at) : (stageDates[8] ? formatStageDate(stageDates[8]) : '');
 
   container.innerHTML = `
-    <div class="stage-progress-wrapper">
-      <div class="stage-progress-bar">
-        <div class="stage-progress-fill" style="width: calc(${fillPercent}% - 24px)"></div>
-        ${STAGES.map(s => {
-          let cls = 'upcoming';
-          if (s.id < c.current_stage) cls = 'completed';
-          else if (s.id === c.current_stage) cls = 'active';
-          const clickHandler = stageEditMode ? `onclick="changeStage(${s.id})"` : '';
-          const clickClass = stageEditMode ? 'clickable' : '';
-          const dateStr = stageDates[s.id] ? formatStageDate(stageDates[s.id]) : '';
-          return `
-            <div class="stage-node ${cls} ${clickClass}" ${clickHandler}>
-              <div class="stage-node-tooltip">${s.title}<br><span style="opacity:0.7">${s.desc}</span>${dateStr ? '<br>📅 ' + dateStr : ''}</div>
-              <div class="stage-node-circle">${cls === 'completed' ? '✓' : s.id}</div>
-              <div class="stage-node-label">${s.title.split(' ').slice(0, 3).join(' ')}</div>
-              ${dateStr ? `<div class="stage-node-date">${dateStr}</div>` : ''}
-            </div>
-          `;
-        }).join('')}
-      </div>
-      <div class="stage-percent">${percent}%</div>
-      <div class="stage-percent-sub">
-        Στάδιο ${c.current_stage}/8 — ${activeStage ? activeStage.title : ''}
-        ${c.current_stage === 8 && completedAt ? ' · Ολοκληρώθηκε: <strong>' + completedAt + '</strong>' : ''}
+    <div class="cp-stage-track">
+      <div class="cp-stage-track-line"></div>
+      <div class="cp-stage-track-fill" style="width: calc(${fillPercent}% - 28px)"></div>
+      ${STAGES.map(s => {
+        let cls = 'upcoming';
+        if (s.id < c.current_stage) cls = 'completed';
+        else if (s.id === c.current_stage) cls = 'active';
+        const clickHandler = stageEditMode ? `onclick="changeStage(${s.id})"` : '';
+        const clickClass = stageEditMode ? 'clickable' : '';
+        const dateStr = stageDates[s.id] ? formatStageDate(stageDates[s.id]) : '';
+        return `
+          <div class="cp-stage-node ${cls} ${clickClass}" ${clickHandler}>
+            <div class="cp-stage-tip">${s.title}<br><span style="opacity:0.7;font-size:11px">${s.desc}</span>${dateStr ? '<br>📅 ' + dateStr : ''}</div>
+            <div class="cp-stage-circle">${cls === 'completed' ? '✓' : s.id}</div>
+            <div class="cp-stage-label">${s.title}</div>
+            ${dateStr ? `<div class="cp-stage-date">${dateStr}</div>` : ''}
+          </div>
+        `;
+      }).join('')}
+    </div>
+    <div class="cp-stage-percent-row">
+      <div class="cp-stage-big-percent">${percent}%</div>
+      <div class="cp-stage-percent-info">
+        <strong>Στάδιο ${c.current_stage} / 8</strong>
+        ${activeStage ? activeStage.title : ''}
+        ${c.current_stage === 8 && completedAt ? '<br>Ολοκληρώθηκε: ' + completedAt : ''}
       </div>
     </div>
   `;
@@ -3297,6 +4564,7 @@ function renderPanelDocs(docs) {
             <span class="doc-visibility ${d.visible_to_client ? 'client' : 'internal'}">${d.visible_to_client ? 'Πελάτης' : 'Εσωτερικό'}</span>
             ${canAnalyze ? `<button class="btn btn-sm btn-gold" onclick="generateAISummary('${d.id}', '${d.file_path}', '${(d.filename || '').replace(/'/g, '')}')" id="ai-btn-${d.id}" title="AI Ανάλυση">🤖 AI</button>` : ''}
             ${hasSummary ? `<button class="btn btn-sm btn-outline" onclick="toggleSummary('${d.id}')" title="Εμφάνιση summary">📋</button>` : ''}
+            ${hasSummary ? `<button class="btn btn-sm btn-outline" onclick="downloadSummaryAsWord('${d.id}', '${(d.filename || '').replace(/'/g, '')}')" title="Λήψη Word" style="color:var(--accent-blue)">📄 Word</button>` : ''}
             <button class="btn btn-sm btn-outline" onclick="downloadFile('${d.file_path}', '${d.filename}')">↓</button>
             <button class="btn btn-sm btn-outline" onclick="toggleDocVisibility('${d.id}', ${!d.visible_to_client})" title="Αλλαγή ορατότητας">👁</button>
             <button class="btn btn-sm btn-outline" onclick="deleteDocument('${d.id}', '${d.file_path}')" title="Διαγραφή" style="color:var(--accent-red)">✕</button>
@@ -3306,7 +4574,10 @@ function renderPanelDocs(docs) {
           <div class="ai-summary-panel" id="summary-${d.id}" style="display:none">
             <div class="ai-summary-header">
               <span>🤖 AI Νομική Ανάλυση</span>
-              <span class="ai-summary-badge">Εσωτερικό</span>
+              <div style="display:flex;align-items:center;gap:8px">
+                <button class="btn btn-sm btn-outline" onclick="downloadSummaryAsWord('${d.id}', '${(d.filename || '').replace(/'/g, '')}')" style="font-size:11px;padding:3px 10px">📄 Λήψη Word</button>
+                <span class="ai-summary-badge">Εσωτερικό</span>
+              </div>
             </div>
             <div class="ai-summary-content">${formatAISummary(d.ai_summary)}</div>
           </div>
@@ -3327,13 +4598,12 @@ function renderPanelDocs(docs) {
 
 function formatAISummary(summary) {
   if (!summary) return '';
-  // Convert markdown-like formatting
   return summary
     .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-    .replace(/\n\n/g, '</p><p>')
-    .replace(/\n- /g, '<br>• ')
+    .replace(/\n\n/g, '</p><p style="margin:10px 0 6px">')
+    .replace(/\n- /g, '<br><span style="display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--gold);margin:0 8px 2px 4px;vertical-align:middle"></span>')
     .replace(/\n/g, '<br>')
-    .replace(/^/, '<p>').replace(/$/, '</p>');
+    .replace(/^/, '<p style="margin:0 0 6px">').replace(/$/, '</p>');
 }
 
 function toggleSummary(docId) {
@@ -3341,43 +4611,196 @@ function toggleSummary(docId) {
   if (el) el.style.display = el.style.display === 'none' ? 'block' : 'none';
 }
 
+async function downloadSummaryAsWord(docId, filename) {
+  // Find the summary text from Firestore cache or DOM
+  let summaryText = '';
+  
+  try {
+    const docSnap = await db.collection('cases').doc(currentPanelCaseId).collection('documents').doc(docId).get();
+    if (docSnap.exists) {
+      summaryText = docSnap.data().ai_summary || '';
+    }
+  } catch (e) {
+    // Fallback: get from DOM
+    const el = document.getElementById('summary-' + docId);
+    if (el) summaryText = el.querySelector('.ai-summary-content')?.innerText || '';
+  }
+  
+  if (!summaryText) {
+    showToast('⚠️ Δεν βρέθηκε AI ανάλυση.');
+    return;
+  }
+  
+  try {
+    const { Document, Packer, Paragraph, TextRun, HeadingLevel, AlignmentType, BorderStyle, Tab, TabStopPosition, TabStopType } = docx;
+    
+    // Parse the summary into structured paragraphs
+    const lines = summaryText.split('\n');
+    const docChildren = [];
+    
+    // Title
+    const caseTitle = currentPanelCase?.title || 'Υπόθεση';
+    const caseCode = currentPanelCase?.case_code || '';
+    
+    docChildren.push(
+      new Paragraph({
+        children: [new TextRun({ text: 'ZK LAW — AI Νομική Ανάλυση', bold: true, size: 32, font: 'Calibri', color: '1B2A4A' })],
+        alignment: AlignmentType.CENTER,
+        spacing: { after: 100 }
+      }),
+      new Paragraph({
+        children: [new TextRun({ text: `Υπόθεση: ${caseTitle}`, size: 24, font: 'Calibri', color: '5A5F72' })],
+        alignment: AlignmentType.CENTER,
+        spacing: { after: 50 }
+      }),
+      new Paragraph({
+        children: [new TextRun({ text: `Κωδικός: ${caseCode} · Έγγραφο: ${filename}`, size: 20, font: 'Calibri', color: '8B90A0' })],
+        alignment: AlignmentType.CENTER,
+        spacing: { after: 50 }
+      }),
+      new Paragraph({
+        children: [new TextRun({ text: `Ημερομηνία ανάλυσης: ${new Date().toLocaleDateString('el-GR')}`, size: 20, font: 'Calibri', color: '8B90A0' })],
+        alignment: AlignmentType.CENTER,
+        spacing: { after: 200 }
+      }),
+      new Paragraph({
+        border: { bottom: { style: BorderStyle.SINGLE, size: 1, color: 'CCCCCC' } },
+        spacing: { after: 200 }
+      })
+    );
+    
+    // Parse content lines
+    lines.forEach(line => {
+      const trimmed = line.trim();
+      if (!trimmed) {
+        docChildren.push(new Paragraph({ spacing: { after: 80 } }));
+        return;
+      }
+      
+      // Check if it's a heading (bold with **)
+      const headingMatch = trimmed.match(/^\*\*(.*?)\*\*:?\s*(.*)/);
+      if (headingMatch) {
+        const headingText = headingMatch[1].replace(/[📄👥📌⚖️📅⚠️🎯📝]/g, '').trim();
+        const rest = headingMatch[2] || '';
+        
+        docChildren.push(new Paragraph({
+          children: [
+            new TextRun({ text: headingText, bold: true, size: 24, font: 'Calibri', color: '1B2A4A' })
+          ],
+          spacing: { before: 200, after: 80 },
+          heading: HeadingLevel.HEADING_2
+        }));
+        
+        if (rest) {
+          docChildren.push(new Paragraph({
+            children: [new TextRun({ text: rest, size: 22, font: 'Calibri', color: '333333' })],
+            spacing: { after: 60 }
+          }));
+        }
+        return;
+      }
+      
+      // Bullet point
+      if (trimmed.startsWith('- ') || trimmed.startsWith('• ')) {
+        const bulletText = trimmed.replace(/^[-•]\s*/, '');
+        docChildren.push(new Paragraph({
+          children: [new TextRun({ text: bulletText, size: 22, font: 'Calibri', color: '333333' })],
+          bullet: { level: 0 },
+          spacing: { after: 40 }
+        }));
+        return;
+      }
+      
+      // Normal paragraph
+      // Handle inline bold
+      const parts = trimmed.split(/\*\*(.*?)\*\*/);
+      const runs = [];
+      parts.forEach((part, i) => {
+        if (i % 2 === 0) {
+          if (part) runs.push(new TextRun({ text: part, size: 22, font: 'Calibri', color: '333333' }));
+        } else {
+          runs.push(new TextRun({ text: part, bold: true, size: 22, font: 'Calibri', color: '1B2A4A' }));
+        }
+      });
+      
+      if (runs.length > 0) {
+        docChildren.push(new Paragraph({
+          children: runs,
+          spacing: { after: 60 }
+        }));
+      }
+    });
+    
+    // Footer
+    docChildren.push(
+      new Paragraph({ spacing: { before: 300 }, border: { bottom: { style: BorderStyle.SINGLE, size: 1, color: 'CCCCCC' } } }),
+      new Paragraph({
+        children: [new TextRun({ text: 'Αυτή η ανάλυση δημιουργήθηκε αυτόματα από AI και δεν αποτελεί νομική συμβουλή.', italics: true, size: 18, font: 'Calibri', color: '999999' })],
+        alignment: AlignmentType.CENTER,
+        spacing: { before: 100 }
+      }),
+      new Paragraph({
+        children: [new TextRun({ text: 'ZK LAW — Δικηγορικό Γραφείο', italics: true, size: 18, font: 'Calibri', color: '999999' })],
+        alignment: AlignmentType.CENTER
+      })
+    );
+    
+    const doc = new Document({
+      sections: [{
+        properties: {
+          page: {
+            margin: { top: 1440, right: 1440, bottom: 1440, left: 1440 }
+          }
+        },
+        children: docChildren
+      }]
+    });
+    
+    const blob = await Packer.toBlob(doc);
+    const safeName = filename.replace(/\.[^.]+$/, '');
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `AI_Ανάλυση_${safeName}.docx`;
+    a.click();
+    URL.revokeObjectURL(url);
+    
+    showToast('✅ Το Word αρχείο κατέβηκε!');
+  } catch (err) {
+    console.error('Word export error:', err);
+    showToast('❌ Σφάλμα δημιουργίας Word: ' + err.message);
+  }
+}
+
 async function generateAISummary(docId, filePath, filename) {
   if (!currentPanelCaseId) return;
   
-  // Ask user to select the file locally (avoids CORS)
-  const fileInput = document.createElement('input');
-  fileInput.type = 'file';
-  fileInput.accept = '.pdf,.txt,.png,.jpg,.jpeg';
+  const btn = document.getElementById('ai-btn-' + docId);
+  const loadingEl = document.getElementById('summary-loading-' + docId);
   
-  fileInput.onchange = async (e) => {
-    const file = e.target.files[0];
-    if (!file) return;
-    
-    const btn = document.getElementById('ai-btn-' + docId);
-    if (btn) { btn.disabled = true; btn.innerHTML = '⏳'; }
-    
-    const loadingEl = document.getElementById('summary-loading-' + docId);
+  // Check if we have cached file data from recent upload
+  const cached = window._uploadedFileCache && window._uploadedFileCache[docId];
+  
+  async function processFile(base64, mediaType, fname) {
+    if (btn) { btn.disabled = true; btn.innerHTML = '<span style="display:inline-flex;align-items:center;gap:4px"><span class="ai-loading-spinner" style="width:14px;height:14px;border-width:2px;display:inline-block"></span> Ανάλυση...</span>'; }
     if (loadingEl) loadingEl.style.display = 'block';
-
+    
     try {
-      // 1. Convert to base64
-      const base64 = await new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.onload = () => resolve(reader.result.split(',')[1]);
-        reader.onerror = reject;
-        reader.readAsDataURL(file);
-      });
+      // Build case context for better analysis
+      const caseCtx = currentPanelCase ? `
+Πληροφορίες υπόθεσης:
+- Τίτλος: ${currentPanelCase.title || '—'}
+- Τύπος: ${currentPanelCase.case_type || '—'}
+- Στάδιο: ${currentPanelCase.current_stage}/8
+- Πελάτης: ${getClientName(currentPanelCase.client_id)}
+- Περιγραφή: ${currentPanelCase.short_summary || '—'}
+` : '';
 
-      // 2. Determine media type
-      const ext = file.name.split('.').pop().toLowerCase();
-      let mediaType = 'application/pdf';
-      if (ext === 'txt') mediaType = 'text/plain';
-      if (ext === 'png') mediaType = 'image/png';
-      if (ext === 'jpg' || ext === 'jpeg') mediaType = 'image/jpeg';
-      
-      // 3. Build content blocks
+      // Build content blocks
       const contentBlocks = [];
-      if (['png','jpg','jpeg'].includes(ext)) {
+      const ext = fname.split('.').pop().toLowerCase();
+      
+      if (['png','jpg','jpeg','webp'].includes(ext)) {
         contentBlocks.push({
           type: 'image',
           source: { type: 'base64', media_type: mediaType, data: base64 }
@@ -3388,55 +4811,62 @@ async function generateAISummary(docId, filePath, filename) {
           source: { type: 'base64', media_type: mediaType, data: base64 }
         });
       }
+      
       contentBlocks.push({
         type: 'text',
-        text: `Αναλύσε αυτό το νομικό έγγραφο και δώσε ένα λεπτομερές summary στα Ελληνικά. Χρησιμοποίησε αυτή τη δομή:
+        text: `Είσαι νομικός βοηθός AI σε ελληνικό δικηγορικό γραφείο. Αναλύσε το παρακάτω έγγραφο ("${fname}") και δώσε μια ολοκληρωμένη νομική ανάλυση στα Ελληνικά.
 
-**Τύπος Εγγράφου:** [τι είδους έγγραφο είναι]
+${caseCtx}
 
-**Εμπλεκόμενα Μέρη:** [ποιοι αναφέρονται]
+Χρησιμοποίησε ΑΚΡΙΒΩΣ αυτή τη δομή (με ** για bold):
 
-**Βασικά Σημεία:**
-- [κύρια σημεία του εγγράφου]
+**📄 Τύπος Εγγράφου:**
+[Τι είδους έγγραφο είναι - π.χ. σύμβαση, εξώδικο, δικαστική απόφαση, πληρεξούσιο κλπ]
 
-**Νομικές Υποχρεώσεις:**
-- [υποχρεώσεις κάθε μέρους]
+**👥 Εμπλεκόμενα Μέρη:**
+[Ποιοι αναφέρονται και ο ρόλος τους]
 
-**Σημαντικές Ημερομηνίες/Προθεσμίες:**
-- [ημερομηνίες αν υπάρχουν]
+**📌 Βασικά Σημεία:**
+- [Κύρια σημεία του εγγράφου - τουλάχιστον 3]
 
-**Κρίσιμες Παρατηρήσεις:**
-- [σημεία που χρειάζουν προσοχή]
+**⚖️ Νομικές Υποχρεώσεις & Δικαιώματα:**
+- [Τι υποχρεούται κάθε μέρος]
+- [Τι δικαιώματα απορρέουν]
 
-**Σύνοψη:** [2-3 προτάσεις σύνοψη]
+**📅 Σημαντικές Ημερομηνίες / Προθεσμίες:**
+- [Ημερομηνίες, deadlines, ημερομηνίες λήξης]
 
-Αν δεν μπορείς να διαβάσεις το έγγραφο, πες ακριβώς γιατί.`
+**⚠️ Κρίσιμες Παρατηρήσεις & Ρίσκα:**
+- [Σημεία που χρειάζουν ιδιαίτερη προσοχή]
+- [Πιθανά νομικά ρίσκα]
+- [Ασάφειες ή κενά]
+
+**🎯 Προτεινόμενες Ενέργειες:**
+- [Τι πρέπει να κάνει το γραφείο]
+- [Τι πρέπει να ενημερωθεί ο πελάτης]
+
+**📝 Σύνοψη:**
+[3-4 προτάσεις συνοπτική αξιολόγηση του εγγράφου και η σημασία του για την υπόθεση]
+
+Αν δεν μπορείς να διαβάσεις το έγγραφο, εξήγησε γιατί και πρότεινε εναλλακτική.`
       });
 
-      // 4. Call Claude API
-      const aiResponse = await fetch('https://api.anthropic.com/v1/messages', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          model: 'claude-sonnet-4-20250514',
-          max_tokens: 2000,
-          messages: [{ role: 'user', content: contentBlocks }]
-        })
-      });
-
-      const aiData = await aiResponse.json();
+      // Call AI via Firebase Cloud Function (avoids CORS)
+      const aiSummaryFn = firebase.functions().httpsCallable('aiSummary');
+      const result = await aiSummaryFn({ contentBlocks });
       
-      if (aiData.error) {
-        throw new Error(aiData.error.message || 'API error');
-      }
-      
-      const summaryText = aiData.content?.map(c => c.text || '').join('') || 'Δεν ήταν δυνατή η ανάλυση.';
+      const summaryText = result.data.summary || 'Δεν ήταν δυνατή η ανάλυση.';
 
-      // 5. Save to Firestore
+      // Save to Firestore
       await db.collection('cases').doc(currentPanelCaseId).collection('documents').doc(docId).update({
         ai_summary: summaryText,
         ai_summary_date: firebase.firestore.FieldValue.serverTimestamp()
       });
+
+      // Clean up cache
+      if (window._uploadedFileCache && window._uploadedFileCache[docId]) {
+        delete window._uploadedFileCache[docId];
+      }
 
       showToast('✅ AI Ανάλυση ολοκληρώθηκε!');
     } catch (err) {
@@ -3446,11 +4876,58 @@ async function generateAISummary(docId, filePath, filename) {
       if (btn) { btn.disabled = false; btn.innerHTML = '🤖 AI'; }
       if (loadingEl) loadingEl.style.display = 'none';
     }
-  };
+  }
   
-  // Trigger file picker
-  showToast('📂 Επιλέξτε το αρχείο από τον υπολογιστή σας');
-  fileInput.click();
+  // Try cached data first (from recent upload)
+  if (cached) {
+    const ext = cached.name.split('.').pop().toLowerCase();
+    let mediaType = cached.type || getMimeFromExt(cached.name);
+    await processFile(cached.base64, mediaType, cached.name);
+    return;
+  }
+  
+  // Try downloading from Firebase Storage
+  try {
+    showToast('📥 Λήψη αρχείου για ανάλυση...');
+    const url = await storage.ref(filePath).getDownloadURL();
+    const response = await fetch(url);
+    const blob = await response.blob();
+    
+    const base64 = await new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => resolve(reader.result.split(',')[1]);
+      reader.onerror = reject;
+      reader.readAsDataURL(blob);
+    });
+    
+    const mediaType = blob.type || getMimeFromExt(filename);
+    await processFile(base64, mediaType, filename);
+  } catch (downloadErr) {
+    console.warn('Direct download failed, falling back to file picker:', downloadErr);
+    
+    // Fallback: ask user to select file
+    const fileInput = document.createElement('input');
+    fileInput.type = 'file';
+    fileInput.accept = '.pdf,.txt,.png,.jpg,.jpeg,.webp';
+    
+    fileInput.onchange = async (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+      
+      const base64 = await new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(reader.result.split(',')[1]);
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
+      });
+      
+      const mediaType = file.type || getMimeFromExt(file.name);
+      await processFile(base64, mediaType, file.name);
+    };
+    
+    showToast('📂 Επιλέξτε το αρχείο από τον υπολογιστή σας');
+    fileInput.click();
+  }
 }
 
 async function uploadDocument(input) {
@@ -3464,16 +4941,28 @@ async function uploadDocument(input) {
     }
 
     try {
+      // Cache file data for AI analysis
+      const fileBase64 = await new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(reader.result.split(',')[1]);
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
+      });
+      
       const filePath = `cases/${currentPanelCaseId}/documents/${Date.now()}_${file.name}`;
       await storage.ref(filePath).put(file);
       
-      await db.collection('cases').doc(currentPanelCaseId).collection('documents').add({
+      const docRef = await db.collection('cases').doc(currentPanelCaseId).collection('documents').add({
         filename: file.name,
         file_path: filePath,
         visible_to_client: visible,
         uploaded_by: 'admin',
         created_at: firebase.firestore.FieldValue.serverTimestamp()
       });
+
+      // Cache for immediate AI use (avoid re-picking)
+      if (!window._uploadedFileCache) window._uploadedFileCache = {};
+      window._uploadedFileCache[docRef.id] = { base64: fileBase64, name: file.name, type: file.type || getMimeFromExt(file.name) };
 
       // History entry
       await db.collection('cases').doc(currentPanelCaseId).collection('updates').add({
@@ -3485,6 +4974,16 @@ async function uploadDocument(input) {
       });
 
       showToast('✅ Το αρχείο ανέβηκε: ' + file.name);
+      
+      // Offer AI analysis for supported file types
+      const ext = file.name.split('.').pop().toLowerCase();
+      if (['pdf','txt','png','jpg','jpeg','webp'].includes(ext)) {
+        setTimeout(() => {
+          if (confirm('🤖 Θέλετε AI Ανάλυση του εγγράφου "' + file.name + '";')) {
+            generateAISummary(docRef.id, filePath, file.name);
+          }
+        }, 500);
+      }
     } catch (err) {
       console.error(err);
       showToast('❌ Σφάλμα upload: ' + err.message);
@@ -3492,6 +4991,12 @@ async function uploadDocument(input) {
   }
   
   input.value = '';
+}
+
+function getMimeFromExt(filename) {
+  const ext = filename.split('.').pop().toLowerCase();
+  const map = { pdf:'application/pdf', txt:'text/plain', png:'image/png', jpg:'image/jpeg', jpeg:'image/jpeg', webp:'image/webp' };
+  return map[ext] || 'application/octet-stream';
 }
 
 async function downloadFile(filePath, filename) {
@@ -3617,7 +5122,15 @@ function switchPanelTab(tabId, el) {
   document.querySelectorAll('.panel-tab').forEach(t => t.classList.remove('active'));
   document.querySelectorAll('.panel-tab-content').forEach(t => t.classList.remove('active'));
   el.classList.add('active');
-  document.getElementById('tab-' + tabId).classList.add('active');
+  const tabEl = document.getElementById('tab-' + tabId);
+  if (tabEl) tabEl.classList.add('active');
+}
+
+function switchCPRightTab(tabId, el) {
+  document.querySelectorAll('#cpRightTabs .cp-sub-tab').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('cpTab-msgs').style.display = tabId === 'msgs' ? 'block' : 'none';
+  document.getElementById('cpTab-history').style.display = tabId === 'history' ? 'block' : 'none';
 }
 
 /* ═══════════════════════════════════════
@@ -4324,10 +5837,10 @@ function create3DBarChart() {
   const monthlyData = getMonthlyCases();
 
   const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(35, w/h, 0.1, 100);
-  const cx = (monthlyData.length - 1) * 0.9 / 2;
-  camera.position.set(cx, 5, 9);
-  camera.lookAt(cx, 0.8, 0);
+  const camera = new THREE.PerspectiveCamera(32, w/h, 0.1, 100);
+  const cx = (monthlyData.length - 1) * 1.1 / 2;
+  camera.position.set(cx, 5.5, 12);
+  camera.lookAt(cx, 1.0, 0);
 
   const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
   renderer.setSize(w, h);
@@ -4339,41 +5852,78 @@ function create3DBarChart() {
   dl.position.set(4, 6, 5);
   scene.add(dl);
 
-  const grid = new THREE.GridHelper(10, 10, 0xDDDDDD, 0xEEEEEE);
+  const grid = new THREE.GridHelper(12, 12, 0xDDDDDD, 0xEEEEEE);
   grid.position.set(cx, 0, 0);
   scene.add(grid);
 
   const maxVal = Math.max(...monthlyData.map(m => Math.max(m.newCases, m.completed, 1)));
-  const bw = 0.3, bars = [];
+  const bw = 0.35, bars = [];
+  const spacing = 1.1;
 
   monthlyData.forEach((m, i) => {
-    const x = i * 0.9;
-    const h1 = (m.newCases / maxVal) * 2.5;
+    const x = i * spacing;
+    const h1 = Math.max((m.newCases / maxVal) * 3.2, 0.08);
     const g1 = new THREE.BoxGeometry(bw, 0.01, bw);
     const m1 = new THREE.MeshPhongMaterial({ color: 0xB8922F, shininess: 60 });
     const b1 = new THREE.Mesh(g1, m1);
-    b1.position.set(x - 0.18, 0, 0);
-    b1.userData = { targetH: h1, label: `${m.month}: ${m.newCases} νέες` };
+    b1.position.set(x - 0.22, 0, 0);
+    b1.userData = { targetH: h1, label: `${m.month}: ${m.newCases} νέες`, value: m.newCases };
     scene.add(b1); bars.push(b1);
 
-    const h2 = (m.completed / maxVal) * 2.5;
+    const h2 = Math.max((m.completed / maxVal) * 3.2, 0.08);
     const g2 = new THREE.BoxGeometry(bw, 0.01, bw);
     const m2 = new THREE.MeshPhongMaterial({ color: 0x2EAD6B, shininess: 60 });
     const b2 = new THREE.Mesh(g2, m2);
-    b2.position.set(x + 0.18, 0, 0);
-    b2.userData = { targetH: h2, label: `${m.month}: ${m.completed} ολοκλ.` };
+    b2.position.set(x + 0.22, 0, 0);
+    b2.userData = { targetH: h2, label: `${m.month}: ${m.completed} ολοκλ.`, value: m.completed };
     scene.add(b2); bars.push(b2);
   });
 
+  // HTML overlay: month labels under each bar pair + value labels on top
+  const labelsLayer = document.createElement('div');
+  labelsLayer.style.cssText = 'position:absolute;inset:0;pointer-events:none;overflow:hidden;';
+  labelsLayer.id = 'barChartLabels';
+  container.appendChild(labelsLayer);
+
+  function updateBarLabels() {
+    labelsLayer.innerHTML = '';
+    bars.forEach(b => {
+      // Project bar top to screen
+      const topPos = b.position.clone();
+      topPos.y = b.userData.targetH + 0.15;
+      topPos.project(camera);
+      const sx = (topPos.x * 0.5 + 0.5) * w;
+      const sy = (-topPos.y * 0.5 + 0.5) * h;
+      
+      if (b.userData.value > 0) {
+        const lbl = document.createElement('div');
+        lbl.style.cssText = `position:absolute;left:${sx}px;top:${sy - 6}px;transform:translate(-50%,-100%);font-size:12px;font-weight:700;color:var(--text-primary);pointer-events:none;text-shadow:0 1px 2px rgba(255,255,255,0.8);`;
+        lbl.textContent = b.userData.value;
+        labelsLayer.appendChild(lbl);
+      }
+    });
+    // Month labels under bar pairs
+    monthlyData.forEach((m, i) => {
+      const pos = new THREE.Vector3(i * spacing, -0.15, 0);
+      pos.project(camera);
+      const sx = (pos.x * 0.5 + 0.5) * w;
+      const sy = (-pos.y * 0.5 + 0.5) * h;
+      const lbl = document.createElement('div');
+      lbl.style.cssText = `position:absolute;left:${sx}px;top:${sy + 4}px;transform:translate(-50%,0);font-size:12px;font-weight:600;color:var(--text-secondary);pointer-events:none;white-space:nowrap;`;
+      lbl.textContent = m.month;
+      labelsLayer.appendChild(lbl);
+    });
+  }
+
   // Legend
   const leg = document.createElement('div');
-  leg.style.cssText = 'position:absolute;bottom:6px;left:10px;display:flex;gap:14px;';
-  leg.innerHTML = `<span style="font-size:12px;color:#5A5F72;display:flex;align-items:center;gap:4px;"><span style="width:8px;height:8px;border-radius:2px;background:#B8922F;display:inline-block;"></span>Νέες</span>
-    <span style="font-size:12px;color:#5A5F72;display:flex;align-items:center;gap:4px;"><span style="width:8px;height:8px;border-radius:2px;background:#2EAD6B;display:inline-block;"></span>Ολοκληρωμένες</span>`;
+  leg.style.cssText = 'position:absolute;bottom:8px;left:12px;display:flex;gap:16px;';
+  leg.innerHTML = `<span style="font-size:13px;color:#5A5F72;display:flex;align-items:center;gap:5px;font-weight:500"><span style="width:10px;height:10px;border-radius:2px;background:#B8922F;display:inline-block;"></span>Νέες</span>
+    <span style="font-size:13px;color:#5A5F72;display:flex;align-items:center;gap:5px;font-weight:500"><span style="width:10px;height:10px;border-radius:2px;background:#2EAD6B;display:inline-block;"></span>Ολοκληρωμένες</span>`;
   container.appendChild(leg);
 
   const tip = document.createElement('div');
-  tip.style.cssText = 'position:absolute;top:10px;right:10px;background:#1B2A4A;color:#E8E4DD;padding:5px 10px;border-radius:6px;font-size:11px;opacity:0;transition:opacity 0.2s;pointer-events:none;';
+  tip.style.cssText = 'position:absolute;top:10px;right:10px;background:#1B2A4A;color:#E8E4DD;padding:6px 12px;border-radius:6px;font-size:13px;font-weight:500;opacity:0;transition:opacity 0.2s;pointer-events:none;';
   container.appendChild(tip);
 
   const ray = new THREE.Raycaster();
@@ -4392,6 +5942,7 @@ function create3DBarChart() {
       const e = 1 - Math.pow(1-prog, 3);
       bars.forEach(b => { const th = b.userData.targetH*e; b.scale.y = th/0.01; b.position.y = th/2; });
     }
+    if (prog >= 1) updateBarLabels();
     ray.setFromCamera(mouse, camera);
     const hits = ray.intersectObjects(bars);
     if (hits.length > 0) {
@@ -4421,13 +5972,14 @@ function create3DStageTimeChart() {
     { stage: 'Ενέργεια', days: 8 }, { stage: 'Αναμονή', days: 25 },
     { stage: 'Νέα Ενέργ.', days: 6 }, { stage: 'Ολοκλήρ.', days: 3 }
   ];
-  const colors = ['#9BA3B2','#3B7DDD','#F39C12','#B8922F','#2EAD6B','#8E44AD','#E74C3C','#2EAD6B'];
+  const colors = ['#9BA3B2','#3B7DDD','#F39C12','#B8922F','#2EAD6B','#8E44AD','#E74C3C','#27AE60'];
 
   const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(35, w/h, 0.1, 100);
-  const cx = (stageData.length - 1) * 0.7 / 2;
-  camera.position.set(cx, 4.5, 9);
-  camera.lookAt(cx, 1, 0);
+  const camera = new THREE.PerspectiveCamera(32, w/h, 0.1, 100);
+  const spacing = 1.2;
+  const cx = (stageData.length - 1) * spacing / 2;
+  camera.position.set(cx, 5.5, 15);
+  camera.lookAt(cx, 1.2, 0);
 
   const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
   renderer.setSize(w, h);
@@ -4439,8 +5991,7 @@ function create3DStageTimeChart() {
   dl.position.set(3, 6, 5);
   scene.add(dl);
 
-  // Grid floor
-  const grid = new THREE.GridHelper(8, 8, 0xDDDDDD, 0xEEEEEE);
+  const grid = new THREE.GridHelper(14, 14, 0xDDDDDD, 0xEEEEEE);
   grid.position.set(cx, 0, 0);
   scene.add(grid);
 
@@ -4449,26 +6000,49 @@ function create3DStageTimeChart() {
   const barW = 0.45;
 
   stageData.forEach((s, i) => {
-    const barH = (s.days / maxDays) * 3.5;
+    const barH = Math.max((s.days / maxDays) * 3.8, 0.1);
     const geo = new THREE.BoxGeometry(barW, 0.01, barW);
     const mat = new THREE.MeshPhongMaterial({ color: new THREE.Color(colors[i]), shininess: 60 });
     const bar = new THREE.Mesh(geo, mat);
-    bar.position.set(i * 0.7, 0, 0);
-    bar.userData = { targetH: barH, label: `${s.stage}: ${s.days} ημέρες` };
+    bar.position.set(i * spacing, 0, 0);
+    bar.userData = { targetH: barH, label: `${s.stage}: ${s.days} ημέρες`, days: s.days, stage: s.stage, color: colors[i] };
     scene.add(bar);
     bars.push(bar);
   });
 
-  // HTML overlay labels at bottom
-  const labelsDiv = document.createElement('div');
-  labelsDiv.style.cssText = 'position:absolute;bottom:4px;left:0;right:0;display:flex;justify-content:center;gap:6px;flex-wrap:wrap;padding:0 8px;';
-  stageData.forEach((s, i) => {
-    const sp = document.createElement('span');
-    sp.style.cssText = `font-size:12px;color:#5A5F72;display:flex;align-items:center;gap:4px;font-weight:500;`;
-    sp.innerHTML = `<span style="width:8px;height:8px;border-radius:50%;background:${colors[i]};display:inline-block;flex-shrink:0;"></span>${s.stage} <strong style="color:#1A1D26">${s.days}d</strong>`;
-    labelsDiv.appendChild(sp);
-  });
-  container.appendChild(labelsDiv);
+  // HTML overlay for labels
+  const labelsLayer = document.createElement('div');
+  labelsLayer.style.cssText = 'position:absolute;inset:0;pointer-events:none;overflow:hidden;';
+  labelsLayer.id = 'stageChartLabels';
+  container.appendChild(labelsLayer);
+
+  function updateStageLabels() {
+    labelsLayer.innerHTML = '';
+    bars.forEach((b, i) => {
+      // Day value on top of bar
+      const topPos = b.position.clone();
+      topPos.y = b.userData.targetH + 0.2;
+      topPos.project(camera);
+      const tx = (topPos.x * 0.5 + 0.5) * w;
+      const ty = (-topPos.y * 0.5 + 0.5) * h;
+      
+      const dayLbl = document.createElement('div');
+      dayLbl.style.cssText = `position:absolute;left:${tx}px;top:${ty - 4}px;transform:translate(-50%,-100%);font-size:13px;font-weight:800;color:${b.userData.color};pointer-events:none;text-shadow:0 1px 3px rgba(255,255,255,0.9);`;
+      dayLbl.textContent = b.userData.days + 'μ';
+      labelsLayer.appendChild(dayLbl);
+
+      // Stage name under bar
+      const botPos = new THREE.Vector3(i * spacing, -0.15, 0);
+      botPos.project(camera);
+      const bx = (botPos.x * 0.5 + 0.5) * w;
+      const by = (-botPos.y * 0.5 + 0.5) * h;
+      
+      const stageLbl = document.createElement('div');
+      stageLbl.style.cssText = `position:absolute;left:${bx}px;top:${by + 2}px;transform:translate(-50%,0);font-size:11px;font-weight:600;color:var(--text-secondary);pointer-events:none;white-space:nowrap;`;
+      stageLbl.textContent = stageData[i].stage;
+      labelsLayer.appendChild(stageLbl);
+    });
+  }
 
   // Tooltip
   const tip = document.createElement('div');
@@ -4491,6 +6065,7 @@ function create3DStageTimeChart() {
       const e = 1 - Math.pow(1-prog, 3);
       bars.forEach(b => { const th = b.userData.targetH*e; b.scale.y = th/0.01; b.position.y = th/2; });
     }
+    if (prog >= 1) updateStageLabels();
     ray.setFromCamera(mouse, camera);
     const hits = ray.intersectObjects(bars);
     if (hits.length > 0) {
@@ -4512,6 +6087,797 @@ function create3DStageTimeChart() {
 /* ═══════════════════════════════════════
    LAWYER PERFORMANCE CARDS
    ═══════════════════════════════════════ */
+/* ═══════════════════════════════════════
+   LAWYER PROFILE DASHBOARD
+   ═══════════════════════════════════════ */
+let currentProfileLawyerId = null;
+
+function openLawyerProfile(lawyerId) {
+  currentProfileLawyerId = lawyerId;
+  
+  // Navigate to the profile page
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-lawyer-profile').classList.add('active');
+  
+  // Highlight sidebar (keep lawyers active)
+  document.querySelectorAll('.nav-item').forEach(n => {
+    n.classList.remove('active');
+    if (n.textContent.trim().startsWith('Δικηγόροι')) n.classList.add('active');
+  });
+  
+  document.getElementById('topbarActions').innerHTML = '';
+  document.getElementById('sidebar').classList.remove('open');
+  
+  renderLawyerProfile(lawyerId);
+}
+
+function renderLawyerProfile(lawyerId) {
+  const container = document.getElementById('lawyerProfileContent');
+  if (!container) return;
+  
+  const lawyer = allLawyers.find(l => l.id === lawyerId);
+  if (!lawyer) {
+    container.innerHTML = '<div class="lp-empty"><div class="lp-empty-icon">⚠️</div>Ο δικηγόρος δεν βρέθηκε.</div>';
+    return;
+  }
+  
+  // Gather data
+  const lawyerCases = allCases.filter(c => c.assigned_lawyer === lawyerId || c.lawyer_id === lawyerId);
+  const activeCases = lawyerCases.filter(c => c.status === 'active' && c.current_stage !== 8);
+  const completedCases = lawyerCases.filter(c => c.status === 'completed' || c.current_stage === 8);
+  const pendingActions = lawyerCases.filter(c => c.action_required);
+  
+  const stages = lawyerCases.map(c => c.current_stage || 1);
+  const avgStage = stages.length > 0 ? stages.reduce((a,b) => a+b, 0) / stages.length : 0;
+  const avgCompletion = Math.round((avgStage / 8) * 100);
+  
+  const name = lawyer.name || lawyer.full_name || 'Δικηγόρος';
+  const initials = name.split(' ').filter(w=>w).map(w => w[0]).join('').substring(0,2).toUpperCase() || 'ΔΚ';
+  const color = lawyer.color || '#1B2A4A';
+  const roleLabel = lawyer.role === 'admin' ? 'Διαχειριστής' : lawyer.role === 'secretary' ? 'Γραμματεία' : 'Δικηγόρος';
+  const roleClass = lawyer.role || 'lawyer';
+  
+  // Page title
+  document.getElementById('pageTitle').textContent = '⚖️ ' + name;
+  
+  // Stage distribution
+  const stageNames = ['Καταγραφή','Νομ. Έλεγχος','Έγγραφα','Επεξεργασία','Ενέργεια','Αναμονή','Νέα Ενέργ.','Ολοκλήρωση'];
+  const stageCounts = Array(8).fill(0);
+  const stageColors = ['#6C7A89','#3B7DDD','#F39C12','#8E44AD','#2EAD6B','#E67E22','#E74C3C','#27AE60'];
+  lawyerCases.forEach(c => {
+    const s = (c.current_stage || 1) - 1;
+    if (s >= 0 && s < 8) stageCounts[s]++;
+  });
+  const maxStageCount = Math.max(...stageCounts, 1);
+  
+  // Build recent activity from case_updates
+  let activityHTML = '';
+  const recentUpdates = [];
+  lawyerCases.forEach(c => {
+    if (c._updates && Array.isArray(c._updates)) {
+      c._updates.forEach(u => {
+        recentUpdates.push({ ...u, caseTitle: c.title || c.case_code || 'Υπόθεση' });
+      });
+    }
+  });
+  // Sort by date descending, take 8
+  recentUpdates.sort((a,b) => {
+    const da = a.created_at?.toDate ? a.created_at.toDate() : new Date(a.created_at || 0);
+    const db = b.created_at?.toDate ? b.created_at.toDate() : new Date(b.created_at || 0);
+    return db - da;
+  });
+  const topUpdates = recentUpdates.slice(0, 8);
+  
+  if (topUpdates.length > 0) {
+    activityHTML = topUpdates.map(u => {
+      const d = u.created_at?.toDate ? u.created_at.toDate() : new Date(u.created_at || Date.now());
+      const dateStr = d.toLocaleDateString('el-GR', { day:'numeric', month:'short', year:'numeric' });
+      const icon = u.stage === 8 ? '✅' : u.stage ? '📋' : '💬';
+      const note = u.update_note || u.note || ('Στάδιο → ' + (u.stage || ''));
+      return `
+        <div class="lp-timeline-item">
+          <div class="lp-timeline-dot">${icon}</div>
+          <div class="lp-timeline-content">
+            <div class="lp-timeline-text"><strong>${u.caseTitle}</strong> — ${escapeHtml(note)}</div>
+            <div class="lp-timeline-date">${dateStr}</div>
+          </div>
+        </div>`;
+    }).join('');
+  } else {
+    // Build from cases themselves if no _updates
+    const sortedCases = [...lawyerCases].sort((a,b) => {
+      const da = a.updated_at?.toDate ? a.updated_at.toDate() : new Date(a.updated_at || 0);
+      const db = b.updated_at?.toDate ? b.updated_at.toDate() : new Date(b.updated_at || 0);
+      return db - da;
+    }).slice(0, 8);
+    
+    if (sortedCases.length > 0) {
+      activityHTML = sortedCases.map(c => {
+        const d = c.updated_at?.toDate ? c.updated_at.toDate() : (c.created_at?.toDate ? c.created_at.toDate() : new Date());
+        const dateStr = d.toLocaleDateString('el-GR', { day:'numeric', month:'short', year:'numeric' });
+        const stg = c.current_stage || 1;
+        const icon = stg === 8 ? '✅' : stg >= 5 ? '⚡' : '📋';
+        return `
+          <div class="lp-timeline-item">
+            <div class="lp-timeline-dot">${icon}</div>
+            <div class="lp-timeline-content">
+              <div class="lp-timeline-text"><strong>${escapeHtml(c.title || c.case_code || 'Υπόθεση')}</strong> — Στάδιο ${stg}/8</div>
+              <div class="lp-timeline-date">${dateStr}</div>
+            </div>
+          </div>`;
+      }).join('');
+    } else {
+      activityHTML = '<div class="lp-empty"><div class="lp-empty-icon">📭</div>Δεν υπάρχει πρόσφατη δραστηριότητα.</div>';
+    }
+  }
+  
+  // Cases list HTML
+  let casesHTML = '';
+  if (lawyerCases.length > 0) {
+    const sortedLC = [...lawyerCases].sort((a,b) => {
+      if (a.status === 'active' && b.status !== 'active') return -1;
+      if (a.status !== 'active' && b.status === 'active') return 1;
+      return (b.current_stage || 1) - (a.current_stage || 1);
+    });
+    casesHTML = sortedLC.map(c => {
+      const stg = c.current_stage || 1;
+      const isCompleted = c.status === 'completed' || stg === 8;
+      const isPending = c.action_required;
+      const stgClass = isCompleted ? 'completed' : isPending ? 'pending' : 'active';
+      const statusLabel = isCompleted ? 'Ολοκλ.' : (c.status === 'active' ? 'Ενεργή' : c.status || 'Ενεργή');
+      const statusTagClass = isCompleted ? 'completed' : 'active';
+      const clientName = allClients.find(cl => cl.id === c.client_id);
+      const clientLabel = clientName ? (clientName.full_name || clientName.company_name || clientName.name || '') : '';
+      return `
+        <div class="lp-case-row" onclick="openCasePanel('${c.id}')">
+          <div class="lp-case-stage-indicator ${stgClass}">${stg}</div>
+          <div class="lp-case-info">
+            <div class="lp-case-title">${escapeHtml(c.title || c.case_code || '—')}</div>
+            <div class="lp-case-meta">${escapeHtml(clientLabel)}${c.case_type ? ' · ' + escapeHtml(c.case_type) : ''} · Στάδιο ${stg}/8</div>
+          </div>
+          ${isPending ? '<span class="action-badge">Εκκρεμεί</span>' : ''}
+          <span class="lp-case-status-tag ${statusTagClass}">${statusLabel}</span>
+        </div>`;
+    }).join('');
+  } else {
+    casesHTML = '<div class="lp-empty"><div class="lp-empty-icon">📂</div>Δεν υπάρχουν ανατεθειμένες υποθέσεις.</div>';
+  }
+  
+  // Stage breakdown bars
+  const stageBarsHTML = stageNames.map((sn, i) => {
+    const cnt = stageCounts[i];
+    const pct = maxStageCount > 0 ? (cnt / maxStageCount) * 100 : 0;
+    return `
+      <div class="lp-stage-bar-row">
+        <span class="lp-stage-bar-label">${i+1}. ${sn}</span>
+        <div class="lp-stage-bar-track"><div class="lp-stage-bar-fill" style="width:${pct}%;background:${stageColors[i]}"></div></div>
+        <span class="lp-stage-bar-count">${cnt}</span>
+      </div>`;
+  }).join('');
+  
+  // Donut segments for active vs completed
+  const totalCases = lawyerCases.length || 1;
+  const activePercent = Math.round((activeCases.length / totalCases) * 100);
+  const completedPercent = Math.round((completedCases.length / totalCases) * 100);
+  const circ = 2 * Math.PI * 54;
+  const activeArc = (activeCases.length / totalCases) * circ;
+  const completedArc = (completedCases.length / totalCases) * circ;
+  
+  // Render
+  container.innerHTML = `
+    <button class="lp-back-btn" onclick="navigateToLawyers()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
+      Πίσω στους Δικηγόρους
+    </button>
+    
+    <!-- Hero card -->
+    <div class="lp-hero">
+      <div class="lp-hero-banner" style="background:linear-gradient(135deg, ${color} 0%, ${adjustColor(color, 40)} 100%)">
+        <div class="lp-hero-banner-pattern"></div>
+      </div>
+      <div class="lp-hero-body">
+        <div class="lp-avatar" style="background:${color}">${initials}</div>
+        <div class="lp-info">
+          <div class="lp-name">${escapeHtml(name)}</div>
+          <span class="lp-role-badge ${roleClass}">${roleLabel}</span>
+          <div class="lp-contact-row">
+            ${lawyer.email ? `<div class="lp-contact-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 7l-10 7L2 7"/></svg>${escapeHtml(lawyer.email)}</div>` : ''}
+            ${lawyer.phone ? `<div class="lp-contact-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.362 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>${escapeHtml(lawyer.phone)}</div>` : ''}
+            <div class="lp-contact-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>Μέλος από ${lawyer.created_at?.toDate ? lawyer.created_at.toDate().toLocaleDateString('el-GR', {month:'short', year:'numeric'}) : '—'}</div>
+          </div>
+        </div>
+        <div class="lp-hero-actions">
+          <button class="btn btn-outline btn-sm" onclick="editLawyer('${lawyerId}')">✏️ Επεξεργασία</button>
+        </div>
+      </div>
+    </div>
+    
+    <!-- KPI row -->
+    <div class="lp-kpi-row">
+      <div class="lp-kpi kpi-active">
+        <div class="lp-kpi-value">${activeCases.length}</div>
+        <div class="lp-kpi-label">Ενεργές Υποθέσεις</div>
+      </div>
+      <div class="lp-kpi kpi-completed">
+        <div class="lp-kpi-value">${completedCases.length}</div>
+        <div class="lp-kpi-label">Ολοκληρωμένες</div>
+      </div>
+      <div class="lp-kpi kpi-avg">
+        <div class="lp-kpi-value">${avgCompletion}<span style="font-size:16px;font-weight:500">%</span></div>
+        <div class="lp-kpi-label">Μ.Ο. Ολοκλήρωσης</div>
+      </div>
+      <div class="lp-kpi kpi-pending">
+        <div class="lp-kpi-value">${pendingActions.length}</div>
+        <div class="lp-kpi-label">Εκκρεμότητες</div>
+      </div>
+    </div>
+    
+    <!-- Main grid -->
+    <div class="lp-grid">
+      <!-- Left: Cases list -->
+      <div class="lp-panel">
+        <div class="lp-panel-header">
+          <span class="lp-panel-title">Υποθέσεις (${lawyerCases.length})</span>
+          <div class="filter-chips" id="lpCaseFilters">
+            <span class="filter-chip active" onclick="filterLPCases('all', this)">Όλες</span>
+            <span class="filter-chip" onclick="filterLPCases('active', this)">Ενεργές (${activeCases.length})</span>
+            <span class="filter-chip" onclick="filterLPCases('completed', this)">Ολοκλ. (${completedCases.length})</span>
+            ${pendingActions.length > 0 ? `<span class="filter-chip" onclick="filterLPCases('pending', this)">Εκκρεμεί (${pendingActions.length})</span>` : ''}
+          </div>
+        </div>
+        <div class="lp-panel-body" id="lpCasesList">${casesHTML}</div>
+      </div>
+      
+      <!-- Right: Activity + Stats -->
+      <div style="display:flex;flex-direction:column;gap:20px">
+        <!-- Completion donut -->
+        <div class="lp-panel">
+          <div class="lp-panel-header">
+            <span class="lp-panel-title">Κατανομή Υποθέσεων</span>
+          </div>
+          <div class="lp-donut-wrap">
+            <div class="lp-donut-svg-wrap">
+              <svg viewBox="0 0 120 120">
+                <circle class="track" cx="60" cy="60" r="54"/>
+                <circle class="fill-ring" cx="60" cy="60" r="54" stroke="var(--accent-blue)"
+                  stroke-dasharray="${circ}" stroke-dashoffset="${circ}" data-target="${circ - activeArc}"/>
+                <circle class="fill-ring" cx="60" cy="60" r="54" stroke="var(--accent-green)"
+                  stroke-dasharray="${circ}" stroke-dashoffset="${circ}" data-target="${circ - completedArc}"
+                  style="transform:rotate(${(activeCases.length / totalCases) * 360}deg);transform-origin:center"/>
+              </svg>
+              <div class="lp-donut-center">
+                <div class="lp-donut-percent">${lawyerCases.length}</div>
+                <div class="lp-donut-sublabel">Σύνολο</div>
+              </div>
+            </div>
+            <div class="lp-donut-legend">
+              <div class="lp-donut-legend-item"><span class="dot" style="background:var(--accent-blue)"></span>Ενεργές ${activePercent}%</div>
+              <div class="lp-donut-legend-item"><span class="dot" style="background:var(--accent-green)"></span>Ολοκλ. ${completedPercent}%</div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Stage breakdown -->
+        <div class="lp-panel">
+          <div class="lp-panel-header">
+            <span class="lp-panel-title">Ανά Στάδιο</span>
+          </div>
+          <div class="lp-panel-body padded">${stageBarsHTML}</div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Activity timeline full width -->
+    <div class="lp-panel" style="margin-bottom:20px">
+      <div class="lp-panel-header">
+        <span class="lp-panel-title">Πρόσφατη Δραστηριότητα</span>
+      </div>
+      <div class="lp-timeline">${activityHTML}</div>
+    </div>
+  `;
+  
+  // Animate donut rings
+  setTimeout(() => {
+    container.querySelectorAll('.fill-ring').forEach(c => {
+      if (c.dataset.target) c.style.strokeDashoffset = c.dataset.target;
+    });
+  }, 300);
+}
+
+function navigateToLawyers() {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-lawyers').classList.add('active');
+  document.querySelectorAll('.nav-item').forEach(n => {
+    n.classList.remove('active');
+    if (n.textContent.trim().startsWith('Δικηγόροι')) n.classList.add('active');
+  });
+  document.getElementById('pageTitle').textContent = pageTitles['lawyers'];
+  document.getElementById('topbarActions').innerHTML = '';
+  currentProfileLawyerId = null;
+}
+
+function filterLPCases(filter, el) {
+  if (!currentProfileLawyerId) return;
+  const lawyerId = currentProfileLawyerId;
+  const lawyerCases = allCases.filter(c => c.assigned_lawyer === lawyerId || c.lawyer_id === lawyerId);
+  
+  // Update chips
+  document.querySelectorAll('#lpCaseFilters .filter-chip').forEach(c => c.classList.remove('active'));
+  if (el) el.classList.add('active');
+  
+  let filtered = lawyerCases;
+  if (filter === 'active') filtered = lawyerCases.filter(c => c.status === 'active' && c.current_stage !== 8);
+  else if (filter === 'completed') filtered = lawyerCases.filter(c => c.status === 'completed' || c.current_stage === 8);
+  else if (filter === 'pending') filtered = lawyerCases.filter(c => c.action_required);
+  
+  const listEl = document.getElementById('lpCasesList');
+  if (!listEl) return;
+  
+  if (filtered.length === 0) {
+    listEl.innerHTML = '<div class="lp-empty"><div class="lp-empty-icon">📂</div>Δεν βρέθηκαν υποθέσεις.</div>';
+    return;
+  }
+  
+  listEl.innerHTML = filtered.map(c => {
+    const stg = c.current_stage || 1;
+    const isCompleted = c.status === 'completed' || stg === 8;
+    const isPending = c.action_required;
+    const stgClass = isCompleted ? 'completed' : isPending ? 'pending' : 'active';
+    const statusLabel = isCompleted ? 'Ολοκλ.' : (c.status === 'active' ? 'Ενεργή' : c.status || 'Ενεργή');
+    const statusTagClass = isCompleted ? 'completed' : 'active';
+    const clientName = allClients.find(cl => cl.id === c.client_id);
+    const clientLabel = clientName ? (clientName.full_name || clientName.company_name || clientName.name || '') : '';
+    return `
+      <div class="lp-case-row" onclick="openCasePanel('${c.id}')">
+        <div class="lp-case-stage-indicator ${stgClass}">${stg}</div>
+        <div class="lp-case-info">
+          <div class="lp-case-title">${escapeHtml(c.title || c.case_code || '—')}</div>
+          <div class="lp-case-meta">${escapeHtml(clientLabel)}${c.case_type ? ' · ' + escapeHtml(c.case_type) : ''} · Στάδιο ${stg}/8</div>
+        </div>
+        ${isPending ? '<span class="action-badge">Εκκρεμεί</span>' : ''}
+        <span class="lp-case-status-tag ${statusTagClass}">${statusLabel}</span>
+      </div>`;
+  }).join('');
+}
+
+// Helper: lighten/darken color
+function adjustColor(hex, amount) {
+  hex = hex.replace('#', '');
+  const r = Math.min(255, parseInt(hex.substring(0,2), 16) + amount);
+  const g = Math.min(255, parseInt(hex.substring(2,4), 16) + amount);
+  const b = Math.min(255, parseInt(hex.substring(4,6), 16) + amount);
+  return '#' + [r,g,b].map(v => Math.max(0,v).toString(16).padStart(2,'0')).join('');
+}
+
+/* ═══════════════════════════════════════
+   SETTINGS PAGE LOGIC
+   ═══════════════════════════════════════ */
+const defaultCaseTypes = [
+  { name: 'Αστικό Δίκαιο', color: '#3B7DDD' },
+  { name: 'Ποινικό Δίκαιο', color: '#E74C3C' },
+  { name: 'Εμπορικό Δίκαιο', color: '#2EAD6B' },
+  { name: 'Εργατικό Δίκαιο', color: '#F39C12' },
+  { name: 'Διοικητικό Δίκαιο', color: '#8E44AD' },
+  { name: 'Οικογενειακό Δίκαιο', color: '#E67E22' },
+  { name: 'Κληρονομικό Δίκαιο', color: '#1ABC9C' },
+  { name: 'Φορολογικό Δίκαιο', color: '#6C7A89' },
+  { name: 'Ακίνητα / Εμπράγματο', color: '#B8922F' },
+  { name: 'Άλλο', color: '#95A5A6' }
+];
+
+function switchSettingsTab(tab, btn) {
+  document.querySelectorAll('.settings-section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.settings-nav-btn').forEach(b => b.classList.remove('active'));
+  const section = document.getElementById('settings-' + tab);
+  if (section) section.classList.add('active');
+  if (btn) btn.classList.add('active');
+  
+  // Load data for specific tabs
+  if (tab === 'profile') loadOfficeProfile();
+  if (tab === 'notifications') loadNotificationSettings();
+  if (tab === 'casetypes') renderCaseTypesList();
+  if (tab === 'security') loadSecuritySettings();
+}
+
+// ── Office Profile ──
+async function loadOfficeProfile() {
+  try {
+    const doc = await db.collection('settings').doc('office_profile').get();
+    if (doc.exists) {
+      const d = doc.data();
+      document.getElementById('sOfficeName').value = d.name || '';
+      document.getElementById('sOfficeSubtitle').value = d.subtitle || '';
+      document.getElementById('sOfficeEmail').value = d.email || '';
+      document.getElementById('sOfficePhone').value = d.phone || '';
+      document.getElementById('sOfficeAddress').value = d.address || '';
+      document.getElementById('sOfficeWebsite').value = d.website || '';
+      if (d.logo_url) {
+        document.getElementById('settingsLogoPreview').innerHTML = `<img src="${d.logo_url}" alt="Logo">`;
+      }
+    }
+  } catch (e) { console.error('Load office profile error:', e); }
+}
+
+async function saveOfficeProfile() {
+  try {
+    const data = {
+      name: document.getElementById('sOfficeName').value.trim(),
+      subtitle: document.getElementById('sOfficeSubtitle').value.trim(),
+      email: document.getElementById('sOfficeEmail').value.trim(),
+      phone: document.getElementById('sOfficePhone').value.trim(),
+      address: document.getElementById('sOfficeAddress').value.trim(),
+      website: document.getElementById('sOfficeWebsite').value.trim(),
+      updated_at: firebase.firestore.FieldValue.serverTimestamp()
+    };
+    
+    // Handle logo upload
+    const logoInput = document.getElementById('settingsLogoInput');
+    if (logoInput.files && logoInput.files[0]) {
+      const file = logoInput.files[0];
+      if (file.size > 512000) {
+        showToast('⚠️ Το λογότυπο πρέπει να είναι μέχρι 500KB.');
+        return;
+      }
+      const storageRef = firebase.storage().ref('settings/logo_' + Date.now() + '_' + file.name);
+      await storageRef.put(file);
+      data.logo_url = await storageRef.getDownloadURL();
+    }
+    
+    await db.collection('settings').doc('office_profile').set(data, { merge: true });
+    showToast('✅ Τα στοιχεία γραφείου αποθηκεύτηκαν.');
+  } catch (e) {
+    console.error(e);
+    showToast('❌ Σφάλμα: ' + e.message);
+  }
+}
+
+function previewSettingsLogo(input) {
+  if (input.files && input.files[0]) {
+    const reader = new FileReader();
+    reader.onload = e => {
+      document.getElementById('settingsLogoPreview').innerHTML = `<img src="${e.target.result}" alt="Logo">`;
+    };
+    reader.readAsDataURL(input.files[0]);
+  }
+}
+
+// ── Notification Settings ──
+async function loadNotificationSettings() {
+  try {
+    const doc = await db.collection('settings').doc('notifications').get();
+    if (doc.exists) {
+      const d = doc.data();
+      document.getElementById('sNotifStageChange').checked = d.stage_change !== false;
+      document.getElementById('sNotifActionRequired').checked = d.action_required !== false;
+      document.getElementById('sNotifNewDocument').checked = d.new_document !== false;
+      document.getElementById('sNotifNewMessage').checked = d.new_message === true;
+      document.getElementById('sNotifAdminClientMsg').checked = d.admin_client_msg !== false;
+      document.getElementById('sNotifAdminClientUpload').checked = d.admin_client_upload !== false;
+    }
+  } catch (e) { console.error('Load notifications error:', e); }
+}
+
+async function saveNotificationSettings() {
+  try {
+    const data = {
+      stage_change: document.getElementById('sNotifStageChange').checked,
+      action_required: document.getElementById('sNotifActionRequired').checked,
+      new_document: document.getElementById('sNotifNewDocument').checked,
+      new_message: document.getElementById('sNotifNewMessage').checked,
+      admin_client_msg: document.getElementById('sNotifAdminClientMsg').checked,
+      admin_client_upload: document.getElementById('sNotifAdminClientUpload').checked,
+      updated_at: firebase.firestore.FieldValue.serverTimestamp()
+    };
+    await db.collection('settings').doc('notifications').set(data, { merge: true });
+    showToast('✅ Οι ρυθμίσεις ειδοποιήσεων αποθηκεύτηκαν.');
+  } catch (e) {
+    console.error(e);
+    showToast('❌ Σφάλμα: ' + e.message);
+  }
+}
+
+// ── Case Types ──
+let settingsCaseTypes = [];
+
+async function loadCaseTypes() {
+  try {
+    const doc = await db.collection('settings').doc('case_types').get();
+    if (doc.exists && doc.data().types) {
+      settingsCaseTypes = doc.data().types;
+    } else {
+      settingsCaseTypes = [...defaultCaseTypes];
+      // Save defaults
+      await db.collection('settings').doc('case_types').set({ types: settingsCaseTypes });
+    }
+  } catch (e) {
+    console.error('Load case types error:', e);
+    settingsCaseTypes = [...defaultCaseTypes];
+  }
+}
+
+function renderCaseTypesList() {
+  const list = document.getElementById('sCaseTypesList');
+  if (!list) return;
+  
+  if (settingsCaseTypes.length === 0) {
+    loadCaseTypes().then(() => renderCaseTypesList());
+    return;
+  }
+  
+  list.innerHTML = settingsCaseTypes.map((t, i) => {
+    const usedCount = allCases.filter(c => c.case_type === t.name).length;
+    return `
+      <li class="s-type-item">
+        <span class="s-type-color" style="background:${t.color}"></span>
+        <span class="s-type-name">${t.name}</span>
+        <span class="s-type-count">${usedCount} υπόθ.</span>
+        <div class="s-type-actions">
+          <button class="s-type-btn" onclick="editCaseType(${i})" title="Επεξεργασία">✏️</button>
+          <button class="s-type-btn danger" onclick="deleteCaseType(${i})" title="Διαγραφή">🗑️</button>
+        </div>
+      </li>`;
+  }).join('');
+}
+
+async function addCaseType() {
+  const nameInput = document.getElementById('sNewCaseType');
+  const colorInput = document.getElementById('sNewCaseTypeColor');
+  const name = nameInput.value.trim();
+  if (!name) { showToast('⚠️ Εισάγετε όνομα τύπου.'); return; }
+  
+  if (settingsCaseTypes.some(t => t.name.toLowerCase() === name.toLowerCase())) {
+    showToast('⚠️ Αυτός ο τύπος υπάρχει ήδη.');
+    return;
+  }
+  
+  settingsCaseTypes.push({ name, color: colorInput.value });
+  await saveCaseTypesToFirestore();
+  nameInput.value = '';
+  renderCaseTypesList();
+  showToast('✅ Ο τύπος "' + name + '" προστέθηκε.');
+}
+
+function editCaseType(index) {
+  const t = settingsCaseTypes[index];
+  if (!t) return;
+  const newName = prompt('Νέο όνομα τύπου:', t.name);
+  if (newName && newName.trim()) {
+    settingsCaseTypes[index].name = newName.trim();
+    saveCaseTypesToFirestore();
+    renderCaseTypesList();
+    showToast('✅ Ο τύπος ενημερώθηκε.');
+  }
+}
+
+async function deleteCaseType(index) {
+  const t = settingsCaseTypes[index];
+  if (!t) return;
+  const usedCount = allCases.filter(c => c.case_type === t.name).length;
+  const msg = usedCount > 0 
+    ? `Ο τύπος "${t.name}" χρησιμοποιείται σε ${usedCount} υποθέσεις. Διαγραφή;`
+    : `Διαγραφή τύπου "${t.name}";`;
+  if (!confirm(msg)) return;
+  
+  settingsCaseTypes.splice(index, 1);
+  await saveCaseTypesToFirestore();
+  renderCaseTypesList();
+  showToast('✅ Ο τύπος διαγράφηκε.');
+}
+
+async function saveCaseTypesToFirestore() {
+  try {
+    await db.collection('settings').doc('case_types').set({ 
+      types: settingsCaseTypes,
+      updated_at: firebase.firestore.FieldValue.serverTimestamp()
+    });
+  } catch (e) {
+    console.error(e);
+    showToast('❌ Σφάλμα αποθήκευσης: ' + e.message);
+  }
+}
+
+// ── Security ──
+async function loadSecuritySettings() {
+  try {
+    const doc = await db.collection('settings').doc('security').get();
+    if (doc.exists) {
+      const d = doc.data();
+      document.getElementById('sSessionTimeout').value = d.session_timeout || '30';
+    }
+  } catch (e) { console.error('Load security error:', e); }
+}
+
+function checkPasswordStrength(password) {
+  const bar = document.getElementById('sPasswordBar');
+  if (!bar) return;
+  let strength = 0;
+  if (password.length >= 8) strength++;
+  if (password.length >= 12) strength++;
+  if (/[A-Z]/.test(password)) strength++;
+  if (/[0-9]/.test(password)) strength++;
+  if (/[^A-Za-z0-9]/.test(password)) strength++;
+  
+  const pct = Math.min((strength / 5) * 100, 100);
+  const colors = ['#E74C3C', '#E74C3C', '#F39C12', '#F39C12', '#2EAD6B', '#2EAD6B'];
+  bar.style.width = pct + '%';
+  bar.style.background = colors[strength] || '#E74C3C';
+}
+
+async function changeAdminPassword() {
+  const current = document.getElementById('sCurrentPassword').value;
+  const newPw = document.getElementById('sNewPassword').value;
+  const confirm = document.getElementById('sConfirmPassword').value;
+  
+  if (!current || !newPw) { showToast('⚠️ Συμπληρώστε όλα τα πεδία.'); return; }
+  if (newPw.length < 8) { showToast('⚠️ Ο νέος κωδικός πρέπει να έχει τουλάχιστον 8 χαρακτήρες.'); return; }
+  if (newPw !== confirm) { showToast('⚠️ Οι κωδικοί δεν ταιριάζουν.'); return; }
+  
+  try {
+    const user = firebase.auth().currentUser;
+    const credential = firebase.auth.EmailAuthCredential.credential(user.email, current);
+    await user.reauthenticateWithCredential(credential);
+    await user.updatePassword(newPw);
+    
+    document.getElementById('sCurrentPassword').value = '';
+    document.getElementById('sNewPassword').value = '';
+    document.getElementById('sConfirmPassword').value = '';
+    document.getElementById('sPasswordBar').style.width = '0';
+    
+    showToast('✅ Ο κωδικός άλλαξε επιτυχώς.');
+  } catch (e) {
+    console.error(e);
+    if (e.code === 'auth/wrong-password') showToast('❌ Λάθος τρέχων κωδικός.');
+    else showToast('❌ Σφάλμα: ' + e.message);
+  }
+}
+
+async function saveSecuritySettings() {
+  try {
+    const data = {
+      session_timeout: document.getElementById('sSessionTimeout').value,
+      updated_at: firebase.firestore.FieldValue.serverTimestamp()
+    };
+    await db.collection('settings').doc('security').set(data, { merge: true });
+    showToast('✅ Οι ρυθμίσεις ασφάλειας αποθηκεύτηκαν.');
+  } catch (e) {
+    console.error(e);
+    showToast('❌ Σφάλμα: ' + e.message);
+  }
+}
+
+// ── Export / Backup ──
+function exportData(type) {
+  let data = {};
+  const timestamp = new Date().toISOString().slice(0, 10);
+  let filename = '';
+  
+  if (type === 'clients' || type === 'all') {
+    data.clients = allClients.map(c => ({
+      id: c.id, full_name: c.full_name, company_name: c.company_name,
+      email: c.email, phone: c.phone, client_code: c.client_code
+    }));
+    filename = `zklaw_clients_${timestamp}.json`;
+  }
+  if (type === 'cases' || type === 'all') {
+    data.cases = allCases.map(c => ({
+      id: c.id, case_code: c.case_code, title: c.title, case_type: c.case_type,
+      current_stage: c.current_stage, status: c.status, client_id: c.client_id,
+      assigned_lawyer: c.assigned_lawyer, short_summary: c.short_summary,
+      next_step: c.next_step, action_required: c.action_required
+    }));
+    filename = `zklaw_cases_${timestamp}.json`;
+  }
+  if (type === 'all') {
+    data.lawyers = allLawyers.map(l => ({
+      id: l.id, name: l.name, email: l.email, role: l.role, phone: l.phone
+    }));
+    filename = `zklaw_full_backup_${timestamp}.json`;
+  }
+  
+  const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = filename;
+  a.click();
+  URL.revokeObjectURL(url);
+  showToast('✅ Η εξαγωγή ολοκληρώθηκε: ' + filename);
+}
+
+// ── Danger Zone ──
+async function dangerDeleteCompleted() {
+  const completed = allCases.filter(c => c.status === 'completed' || c.current_stage === 8);
+  if (completed.length === 0) { showToast('ℹ️ Δεν υπάρχουν ολοκληρωμένες υποθέσεις.'); return; }
+  
+  const confirmText = prompt(`Πληκτρολογήστε "ΔΙΑΓΡΑΦΗ" για να διαγράψετε ${completed.length} ολοκληρωμένες υποθέσεις:`);
+  if (confirmText !== 'ΔΙΑΓΡΑΦΗ') { showToast('Η ενέργεια ακυρώθηκε.'); return; }
+  
+  try {
+    const batch = db.batch();
+    completed.forEach(c => batch.delete(db.collection('cases').doc(c.id)));
+    await batch.commit();
+    showToast('✅ Διαγράφηκαν ' + completed.length + ' υποθέσεις.');
+  } catch (e) {
+    console.error(e);
+    showToast('❌ Σφάλμα: ' + e.message);
+  }
+}
+
+async function dangerDeleteMessages() {
+  const confirmText = prompt('Πληκτρολογήστε "ΔΙΑΓΡΑΦΗ" για να διαγράψετε ΟΛΑ τα μηνύματα:');
+  if (confirmText !== 'ΔΙΑΓΡΑΦΗ') { showToast('Η ενέργεια ακυρώθηκε.'); return; }
+  
+  try {
+    let count = 0;
+    for (const c of allCases) {
+      const msgs = await db.collection('cases').doc(c.id).collection('messages').get();
+      const batch = db.batch();
+      msgs.forEach(m => { batch.delete(m.ref); count++; });
+      if (!msgs.empty) await batch.commit();
+    }
+    showToast('✅ Διαγράφηκαν ' + count + ' μηνύματα.');
+  } catch (e) {
+    console.error(e);
+    showToast('❌ Σφάλμα: ' + e.message);
+  }
+}
+
+async function dangerResetAll() {
+  const confirmText = prompt('⚠️ ΠΡΟΣΟΧΗ: Αυτό θα διαγράψει ΟΛΑ τα δεδομένα.\nΠληκτρολογήστε "ΕΠΑΝΑΦΟΡΑ ΣΥΣΤΗΜΑΤΟΣ" για επιβεβαίωση:');
+  if (confirmText !== 'ΕΠΑΝΑΦΟΡΑ ΣΥΣΤΗΜΑΤΟΣ') { showToast('Η ενέργεια ακυρώθηκε.'); return; }
+  
+  const doubleConfirm = confirm('Τελευταία ευκαιρία. Είστε σίγουρος ότι θέλετε ΠΛΗΡΗ ΕΠΑΝΑΦΟΡΑ;');
+  if (!doubleConfirm) return;
+  
+  try {
+    showToast('⏳ Γίνεται διαγραφή δεδομένων...');
+    
+    // Delete cases + subcollections
+    for (const c of allCases) {
+      const subs = ['updates', 'documents', 'messages'];
+      for (const sub of subs) {
+        const snap = await db.collection('cases').doc(c.id).collection(sub).get();
+        const batch = db.batch();
+        snap.forEach(d => batch.delete(d.ref));
+        if (!snap.empty) await batch.commit();
+      }
+      await db.collection('cases').doc(c.id).delete();
+    }
+    
+    // Delete clients
+    const clientBatch = db.batch();
+    allClients.forEach(c => clientBatch.delete(db.collection('clients').doc(c.id)));
+    await clientBatch.commit();
+    
+    // Delete lawyers (except current admin)
+    const currentEmail = firebase.auth().currentUser?.email;
+    const lawyerBatch = db.batch();
+    allLawyers.forEach(l => {
+      if (l.email !== currentEmail) lawyerBatch.delete(db.collection('lawyers').doc(l.id));
+    });
+    await lawyerBatch.commit();
+    
+    showToast('✅ Η πλήρης επαναφορά ολοκληρώθηκε.');
+  } catch (e) {
+    console.error(e);
+    showToast('❌ Σφάλμα: ' + e.message);
+  }
+}
+
+// Init settings on first visit
+function initSettingsPage() {
+  loadOfficeProfile();
+  loadCaseTypes();
+}
+
+// Helper: escape HTML
+function escapeHtml(text) {
+  if (!text) return '';
+  const div = document.createElement('div');
+  div.textContent = text;
+  return div.innerHTML;
+}
+
 function renderLawyer3DCards() {
   const grid = document.getElementById('lawyersGrid3D');
   if (!grid) return;
@@ -4529,7 +6895,7 @@ function renderLawyer3DCards() {
     }).join('');
 
     return `
-    <div class="lawyer-card-3d">
+    <div class="lawyer-card-3d" onclick="openLawyerProfile('${l.id}')" title="Προβολή προφίλ">
       <div class="lawyer-header-3d">
         <div class="lawyer-avatar-3d" style="background:${l.color}">${l.initials}</div>
         <div><div class="lawyer-name-3d">${l.name}</div><div class="lawyer-role-3d">${l.role}</div></div>
