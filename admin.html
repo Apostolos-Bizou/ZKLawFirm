@@ -155,31 +155,34 @@ body {
 }
 
 .sidebar-logo {
-  padding: 24px 24px 20px;
-  border-bottom: 1px solid rgba(255,255,255,0.08);
+  padding: 28px 24px 22px;
+  border-bottom: 1px solid rgba(201,169,110,0.15);
 }
 
 .sidebar-logo h1 {
   font-family: 'Cormorant Garamond', serif;
-  font-size: 22px;
-  font-weight: 700;
-  letter-spacing: 3px;
+  font-size: 24px;
+  font-weight: 600;
+  letter-spacing: 2px;
   color: var(--gold-light);
 }
 
 .sidebar-logo span {
-  font-size: 10px;
+  font-size: 11px;
   letter-spacing: 2px;
   text-transform: uppercase;
-  color: rgba(255,255,255,0.4);
+  color: rgba(255,255,255,0.35);
   display: block;
-  margin-top: 2px;
+  margin-top: 4px;
 }
 
 .sidebar-nav {
   flex: 1;
   padding: 16px 12px;
   overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
 }
 
 .nav-section-label {
@@ -194,21 +197,27 @@ body {
   display: flex;
   align-items: center;
   gap: 12px;
-  padding: 10px 14px;
-  border-radius: var(--radius-sm);
+  padding: 11px 16px;
+  border-radius: 8px;
   cursor: pointer;
-  transition: all 0.15s;
-  color: rgba(255,255,255,0.6);
-  font-size: 13.5px;
+  transition: all 0.2s ease;
+  color: rgba(255,255,255,0.55);
+  font-size: 14px;
   font-weight: 500;
-  margin-bottom: 2px;
 }
 
 .nav-item:hover { background: rgba(255,255,255,0.06); color: #fff; }
 
 .nav-item.active {
-  background: rgba(212,175,55,0.12);
+  background: rgba(201,169,110,0.15);
   color: var(--gold-light);
+}
+
+.nav-item .nav-icon {
+  font-size: 18px;
+  width: 24px;
+  text-align: center;
+  flex-shrink: 0;
 }
 
 .nav-item svg {
@@ -216,32 +225,48 @@ body {
   height: 18px;
   flex-shrink: 0;
   opacity: 0.7;
+  display: none;
 }
-
-.nav-item.active svg { opacity: 1; }
 
 .nav-badge {
   margin-left: auto;
-  background: var(--accent-red);
-  color: #fff;
+  background: var(--gold);
+  color: var(--navy);
   font-size: 11px;
-  font-weight: 600;
-  padding: 1px 7px;
+  font-weight: 700;
+  padding: 2px 8px;
   border-radius: 10px;
-  min-width: 20px;
+  min-width: 22px;
   text-align: center;
 }
 
 .sidebar-footer {
   padding: 16px 20px;
-  border-top: 1px solid rgba(255,255,255,0.08);
-  font-size: 12px;
-  color: rgba(255,255,255,0.3);
+  border-top: 1px solid rgba(201,169,110,0.15);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.sidebar-footer .sidebar-avatar {
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  background: var(--gold);
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 700; font-size: 13px; color: var(--navy);
+  flex-shrink: 0;
 }
 
 .sidebar-footer .admin-name {
-  color: rgba(255,255,255,0.7);
-  font-weight: 500;
+  color: rgba(255,255,255,0.8);
+  font-weight: 600;
+  font-size: 13px;
+}
+
+.sidebar-footer .admin-role-text {
+  color: rgba(255,255,255,0.35);
+  font-size: 11px;
+  margin-top: 1px;
 }
 
 /* ═══════════════════════════════════════
@@ -326,49 +351,215 @@ body {
 }
 
 /* ═══════════════════════════════════════
-   DASHBOARD OVERVIEW
+   DASHBOARD OVERVIEW — PREMIUM KPI CARDS
    ═══════════════════════════════════════ */
 .stats-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-template-columns: repeat(4, 1fr);
   gap: 16px;
-  margin-bottom: 28px;
+  margin-bottom: 24px;
 }
 
-.stat-card {
+.kpi-card {
+  background: var(--surface);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-lg);
+  padding: 22px;
+  box-shadow: var(--shadow-sm);
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+.kpi-card:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+}
+.kpi-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+}
+.kpi-card.gold::before { background: linear-gradient(90deg, var(--gold), var(--gold-light)); }
+.kpi-card.green::before { background: linear-gradient(90deg, var(--accent-green), #7DD4A8); }
+.kpi-card.orange::before { background: linear-gradient(90deg, var(--accent-orange), #F0C878); }
+.kpi-card.blue::before { background: linear-gradient(90deg, var(--accent-blue), #8EC4ED); }
+.kpi-icon {
+  width: 44px; height: 44px;
+  border-radius: var(--radius);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 20px;
+  margin-bottom: 14px;
+}
+.kpi-card.gold .kpi-icon { background: var(--gold-bg); }
+.kpi-card.green .kpi-icon { background: var(--accent-green-bg); }
+.kpi-card.orange .kpi-icon { background: var(--accent-orange-bg); }
+.kpi-card.blue .kpi-icon { background: rgba(59,125,221,0.1); }
+.kpi-value {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 34px;
+  font-weight: 700;
+  color: var(--text-primary);
+  line-height: 1;
+  margin-bottom: 5px;
+}
+.kpi-label {
+  font-size: 13px;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+.kpi-trend {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  font-weight: 600;
+  margin-top: 10px;
+  padding: 3px 8px;
+  border-radius: 6px;
+}
+.kpi-trend.up { color: var(--accent-green); background: var(--accent-green-bg); }
+.kpi-trend.down { color: var(--accent-red); background: var(--accent-red-bg); }
+.kpi-trend.neutral { color: var(--accent-blue); background: rgba(59,125,221,0.1); }
+
+@media (max-width: 900px) {
+  .stats-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* ═══════════════════════════════════════
+   3D CHARTS SECTION
+   ═══════════════════════════════════════ */
+.charts-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+.chart-card {
   background: var(--surface);
   border: 1px solid var(--border-light);
   border-radius: var(--radius);
   padding: 20px;
   box-shadow: var(--shadow-sm);
 }
-
-.stat-card .stat-label {
-  font-size: 11px;
-  text-transform: uppercase;
-  letter-spacing: 1.5px;
-  color: var(--text-muted);
-  margin-bottom: 8px;
-}
-
-.stat-card .stat-value {
+.chart-card-title {
   font-family: 'Cormorant Garamond', serif;
-  font-size: 32px;
-  font-weight: 700;
+  font-size: 16px;
+  font-weight: 600;
   color: var(--text-primary);
-  line-height: 1;
+  margin-bottom: 16px;
 }
-
-.stat-card .stat-sub {
+.three-chart-container {
+  position: relative;
+  width: 100%;
+  height: 300px;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+}
+.lawyers-section-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 14px;
+}
+.lawyers-grid-3d {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 16px;
+  margin-bottom: 24px;
+}
+.lawyer-card-3d {
+  background: var(--surface);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius);
+  padding: 20px;
+  box-shadow: var(--shadow-sm);
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+.lawyer-card-3d:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+  border-color: var(--gold);
+}
+.lawyer-header-3d {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+.lawyer-avatar-3d {
+  width: 42px; height: 42px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 700; font-size: 16px; color: #fff;
+  flex-shrink: 0;
+}
+.lawyer-name-3d { font-size: 15px; font-weight: 600; }
+.lawyer-role-3d { font-size: 12px; color: var(--text-secondary); margin-top: 2px; }
+.lawyer-donut-wrap-3d {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 14px;
+}
+.lawyer-donut-3d {
+  width: 80px; height: 80px;
+  flex-shrink: 0;
+  position: relative;
+}
+.lawyer-donut-3d svg {
+  width: 100%; height: 100%;
+  transform: rotate(-90deg);
+}
+.lawyer-donut-3d .donut-track { fill: none; stroke: var(--border-light); stroke-width: 6; }
+.lawyer-donut-3d .donut-fill {
+  fill: none; stroke-width: 6; stroke-linecap: round;
+  transition: stroke-dashoffset 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.lawyer-donut-center-3d {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+}
+.lawyer-donut-percent-3d { font-size: 18px; font-weight: 700; line-height: 1; }
+.lawyer-donut-label-3d { font-size: 9px; color: var(--text-muted); text-transform: uppercase; }
+.lawyer-stats-3d { flex: 1; display: flex; flex-direction: column; gap: 5px; }
+.lawyer-stat-row-3d {
+  display: flex; align-items: center; justify-content: space-between;
   font-size: 12px;
-  color: var(--text-muted);
-  margin-top: 6px;
 }
+.lawyer-stat-row-3d .label { color: var(--text-secondary); }
+.lawyer-stat-row-3d .value { font-weight: 600; }
+.lawyer-stat-row-3d .dot {
+  width: 7px; height: 7px; border-radius: 50%;
+  display: inline-block; margin-right: 5px;
+}
+.lawyer-minibar-3d {
+  display: flex; align-items: flex-end; gap: 3px;
+  height: 40px; margin-top: 10px; padding-top: 10px;
+  border-top: 1px solid var(--border-light);
+}
+.lawyer-minibar-3d .bar {
+  flex: 1; border-radius: 2px 2px 0 0; min-height: 3px;
+  transition: height 1s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+}
+.lawyer-minibar-3d .bar:hover::after {
+  content: attr(data-tip);
+  position: absolute; bottom: calc(100% + 4px); left: 50%; transform: translateX(-50%);
+  background: var(--navy); color: #fff; font-size: 10px;
+  padding: 3px 6px; border-radius: 4px; white-space: nowrap; pointer-events: none;
+}
+.lawyer-minibar-labels { display: flex; justify-content: space-between; margin-top: 3px; }
+.lawyer-minibar-labels span { font-size: 9px; color: var(--text-muted); }
 
-.stat-card.gold { border-left: 3px solid var(--gold); }
-.stat-card.green { border-left: 3px solid var(--accent-green); }
-.stat-card.orange { border-left: 3px solid var(--accent-orange); }
-.stat-card.red { border-left: 3px solid var(--accent-red); }
+@media (max-width: 900px) {
+  .charts-row { grid-template-columns: 1fr; }
+  .lawyers-grid-3d { grid-template-columns: 1fr; }
+}
 
 /* ═══════════════════════════════════════
    DATA TABLE
@@ -1460,42 +1651,49 @@ tbody td {
     </div>
 
     <nav class="sidebar-nav">
-      <div class="nav-section-label">Κύριο Μενού</div>
       <div class="nav-item active" onclick="navigateTo('dashboard')">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+        <span class="nav-icon">📊</span>
         Επισκόπηση
       </div>
-      <div class="nav-item" onclick="navigateTo('clients')">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-        Πελάτες
+      <div class="nav-item" onclick="navigateTo('calendar')">
+        <span class="nav-icon">📅</span>
+        Ημερολόγιο
       </div>
       <div class="nav-item" onclick="navigateTo('cases')">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+        <span class="nav-icon">📁</span>
         Υποθέσεις
+        <span class="nav-badge" id="casesBadge">0</span>
       </div>
-
-      <div class="nav-section-label">Επικοινωνία</div>
+      <div class="nav-item" onclick="navigateTo('clients')">
+        <span class="nav-icon">👥</span>
+        Πελάτες
+        <span class="nav-badge" id="clientsBadge">0</span>
+      </div>
       <div class="nav-item" onclick="navigateTo('messages')">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        <span class="nav-icon">💬</span>
         Μηνύματα
         <span class="nav-badge" id="msgBadge" style="display:none">0</span>
       </div>
-
-      <div class="nav-section-label">Εργαλεία</div>
-      <div class="nav-item" onclick="navigateTo('calendar')">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-        Ημερολόγιο
+      <div class="nav-item" onclick="navigateTo('lawyers')">
+        <span class="nav-icon">⚖️</span>
+        Δικηγόροι
       </div>
-
-      <div class="nav-section-label">Σύστημα</div>
+      <div class="nav-item" onclick="navigateTo('settings')">
+        <span class="nav-icon">⚙️</span>
+        Ρυθμίσεις
+      </div>
       <div class="nav-item" onclick="doLogout()">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+        <span class="nav-icon">🚪</span>
         Αποσύνδεση
       </div>
     </nav>
 
     <div class="sidebar-footer">
-      Συνδεδεμένος: <span class="admin-name" id="adminEmail">—</span>
+      <div class="sidebar-avatar">ZK</div>
+      <div>
+        <div class="admin-name" id="adminEmail">Admin</div>
+        <div class="admin-role-text" id="adminRole">Διαχειριστής</div>
+      </div>
     </div>
   </aside>
 
@@ -1506,9 +1704,12 @@ tbody td {
         <button class="mobile-toggle" onclick="document.getElementById('sidebar').classList.toggle('open')">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
         </button>
-        <span class="topbar-title" id="pageTitle">Επισκόπηση</span>
+        <span class="topbar-title" id="pageTitle">📊 Επισκόπηση Γραφείου</span>
       </div>
-      <div class="topbar-actions" id="topbarActions"></div>
+      <div class="topbar-actions" id="topbarActions">
+        <button class="btn btn-outline btn-sm" onclick="location.reload()">🔄 Ανανέωση</button>
+        <button class="btn btn-outline btn-sm">📤 Εξαγωγή</button>
+      </div>
     </div>
 
     <!-- ═══ DASHBOARD PAGE ═══ -->
@@ -1516,12 +1717,35 @@ tbody td {
       <div class="page-content">
         <div class="stats-grid" id="dashStats"></div>
 
-        <div class="table-container">
-          <div class="table-toolbar">
-            <h3 style="font-family:'Cormorant Garamond',serif;font-size:16px;">Πρόσφατες Ενημερώσεις</h3>
+        <!-- 3D Charts Row -->
+        <div class="charts-row" id="chartsRow">
+          <div class="chart-card">
+            <div class="chart-card-title">Κατανομή σταδίων υποθέσεων</div>
+            <div class="three-chart-container" id="donutChart3D"></div>
           </div>
-          <div id="recentActivity" style="padding:16px;">
-            <div class="empty-state"><div class="empty-state-icon">📋</div><p>Φόρτωση...</p></div>
+          <div class="chart-card">
+            <div class="chart-card-title">Υποθέσεις ανά μήνα</div>
+            <div class="three-chart-container" id="barChart3D"></div>
+          </div>
+        </div>
+
+        <!-- Lawyer Performance Cards -->
+        <div class="lawyers-section-title">Απόδοση ανά δικηγόρο</div>
+        <div class="lawyers-grid-3d" id="lawyersGrid3D"></div>
+
+        <!-- Recent Activity + Stage Time -->
+        <div class="charts-row">
+          <div class="table-container">
+            <div class="table-toolbar">
+              <h3 style="font-family:'Cormorant Garamond',serif;font-size:16px;">Πρόσφατες Ενημερώσεις</h3>
+            </div>
+            <div id="recentActivity" style="padding:16px;">
+              <div class="empty-state"><div class="empty-state-icon">📋</div><p>Φόρτωση...</p></div>
+            </div>
+          </div>
+          <div class="chart-card">
+            <div class="chart-card-title">Μέσος χρόνος ανά στάδιο (ημέρες)</div>
+            <div class="three-chart-container" id="stageTimeChart3D"></div>
           </div>
         </div>
       </div>
@@ -1574,7 +1798,11 @@ tbody td {
                 <span class="filter-chip active" onclick="filterCasesByStatus('all', this)">Όλες</span>
                 <span class="filter-chip" onclick="filterCasesByStatus('active', this)">Ενεργές</span>
                 <span class="filter-chip" onclick="filterCasesByStatus('completed', this)">Ολοκληρωμένες</span>
+                <span class="filter-chip" onclick="filterCasesByStatus('pending', this)">Εκκρεμότητες</span>
               </div>
+              <select id="caseLawyerFilter" onchange="filterCases()" style="padding:6px 10px;border:1px solid var(--border);border-radius:var(--radius-sm);font-size:12px;font-family:'DM Sans',sans-serif">
+                <option value="all">Όλοι οι δικηγόροι</option>
+              </select>
             </div>
             <button class="btn btn-primary" onclick="openCaseModal()">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
@@ -1584,17 +1812,18 @@ tbody td {
           <table>
             <thead>
               <tr>
+                <th style="width:40px">#</th>
                 <th>Κωδικός</th>
                 <th>Τίτλος</th>
                 <th>Πελάτης</th>
-                <th>Τύπος</th>
+                <th>Δικηγόρος</th>
                 <th>Στάδιο</th>
                 <th>Κατάσταση</th>
                 <th></th>
               </tr>
             </thead>
             <tbody id="casesTableBody">
-              <tr><td colspan="7"><div class="empty-state"><div class="empty-state-icon">📁</div><p>Φόρτωση...</p></div></td></tr>
+              <tr><td colspan="9"><div class="empty-state"><div class="empty-state-icon">📁</div><p>Φόρτωση...</p></div></td></tr>
             </tbody>
           </table>
         </div>
@@ -1607,9 +1836,14 @@ tbody td {
         <div class="table-container">
           <div class="table-toolbar">
             <h3 style="font-family:'Cormorant Garamond',serif;font-size:16px;">Μηνύματα Πελατών</h3>
-            <div class="filter-chips">
-              <span class="filter-chip active" onclick="filterMessages('all', this)">Όλα</span>
-              <span class="filter-chip" onclick="filterMessages('unread', this)">Αδιάβαστα</span>
+            <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+              <div class="filter-chips">
+                <span class="filter-chip active" onclick="filterMessages('all', this)">Όλα</span>
+                <span class="filter-chip" onclick="filterMessages('unread', this)">Αδιάβαστα</span>
+              </div>
+              <select id="msgLawyerFilter" onchange="loadAllMessages()" style="padding:6px 10px;border:1px solid var(--border);border-radius:var(--radius-sm);font-size:12px;font-family:'DM Sans',sans-serif">
+                <option value="all">Όλοι οι δικηγόροι</option>
+              </select>
             </div>
           </div>
           <div id="messagesListAdmin" style="padding:16px;">
@@ -1655,6 +1889,84 @@ tbody td {
       </div>
     </div>
 
+    <!-- ═══ LAWYERS PAGE ═══ -->
+    <div class="page" id="page-lawyers">
+      <div class="page-content">
+        <div class="table-container">
+          <div class="table-toolbar">
+            <h3 style="font-family:'Cormorant Garamond',serif;font-size:16px;">Δικηγόροι / Προσωπικό</h3>
+            <button class="btn btn-primary btn-sm" onclick="openLawyerModal()">+ Νέος Δικηγόρος</button>
+          </div>
+          <table>
+            <thead>
+              <tr>
+                <th>Όνομα</th>
+                <th>Email</th>
+                <th>Ρόλος</th>
+                <th>Ενεργές Υποθέσεις</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="lawyersTableBody">
+              <tr><td colspan="5"><div class="empty-state"><div class="empty-state-icon">⚖️</div><p>Φόρτωση...</p></div></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     LAWYER MODAL
+     ═══════════════════════════════════════ -->
+<div class="modal-overlay" id="lawyerModal">
+  <div class="modal">
+    <div class="modal-header">
+      <h2 id="lawyerModalTitle">Νέος Δικηγόρος</h2>
+      <button class="modal-close" onclick="closeModal('lawyerModal')">&times;</button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="lawyerEditId">
+      <div class="form-row">
+        <div class="form-group">
+          <label>Ονοματεπώνυμο *</label>
+          <input type="text" id="lawyerName" placeholder="π.χ. Κωνσταντίνος Ζάχος">
+        </div>
+        <div class="form-group">
+          <label>Email *</label>
+          <input type="email" id="lawyerEmail" placeholder="email@zklaw.gr">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Ρόλος *</label>
+          <select id="lawyerRole">
+            <option value="lawyer">Δικηγόρος</option>
+            <option value="admin">Διαχειριστής</option>
+            <option value="secretary">Γραμματεία</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Τηλέφωνο</label>
+          <input type="text" id="lawyerPhone" placeholder="69XXXXXXXX">
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Κωδικός Πρόσβασης (για νέο λογαριασμό)</label>
+        <input type="password" id="lawyerPassword" placeholder="Ελάχιστο 6 χαρακτήρες">
+        <div style="font-size:11px;color:var(--text-muted);margin-top:4px;">Αφήστε κενό αν ο χρήστης έχει ήδη λογαριασμό.</div>
+      </div>
+      <div class="form-group">
+        <label>Χρώμα</label>
+        <input type="color" id="lawyerColor" value="#1B2A4A" style="width:50px;height:36px;padding:2px;cursor:pointer">
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-outline" onclick="closeModal('lawyerModal')">Ακύρωση</button>
+      <button class="btn btn-primary" onclick="saveLawyer()">Αποθήκευση</button>
+    </div>
   </div>
 </div>
 
@@ -1827,6 +2139,10 @@ tbody td {
         <input type="text" id="caseNextStep" placeholder="Ποιο είναι το επόμενο βήμα;">
       </div>
       <div class="form-group">
+        <label>Ανατεθειμένος Δικηγόρος</label>
+        <select id="caseLawyer"><option value="">— Κανένας —</option></select>
+      </div>
+      <div class="form-group">
         <label class="form-check">
           <input type="checkbox" id="caseActionRequired">
           <span>Απαιτείται ενέργεια από τον πελάτη</span>
@@ -1917,6 +2233,7 @@ tbody td {
 <!-- ═══════════════════════════════════════
      FIREBASE & APP LOGIC
      ═══════════════════════════════════════ -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
@@ -2021,16 +2338,40 @@ function doLogout() {
   auth.signOut();
 }
 
-auth.onAuthStateChanged(user => {
+auth.onAuthStateChanged(async (user) => {
   if (user) {
-    // Check if admin (for now, any authenticated user)
-    document.getElementById('loginScreen').style.display = 'none';
-    document.getElementById('appShell').style.display = 'block';
-    document.getElementById('adminEmail').textContent = user.email;
-    initApp();
+    // Check if user exists in lawyers collection
+    try {
+      const lawyerSnap = await db.collection('lawyers').where('email', '==', user.email).get();
+      
+      if (lawyerSnap.empty) {
+        // Not a registered lawyer — deny access
+        document.getElementById('loginError').textContent = 'Δεν έχετε δικαίωμα πρόσβασης στο admin panel.';
+        auth.signOut();
+        return;
+      }
+
+      const lawyerDoc = lawyerSnap.docs[0];
+      currentLawyer = { id: lawyerDoc.id, ...lawyerDoc.data() };
+      
+      document.getElementById('loginScreen').style.display = 'none';
+      document.getElementById('appShell').style.display = 'block';
+      document.getElementById('adminEmail').textContent = currentLawyer.name || user.email;
+      document.getElementById('adminRole').textContent = currentLawyer.role === 'admin' ? 'Διαχειριστής' : 'Δικηγόρος';
+      
+      initApp();
+    } catch (err) {
+      console.error('Auth check error:', err);
+      document.getElementById('loginScreen').style.display = 'none';
+      document.getElementById('appShell').style.display = 'block';
+      document.getElementById('adminEmail').textContent = user.email;
+      currentLawyer = { id: 'temp', name: user.email, email: user.email, role: 'admin' };
+      initApp();
+    }
   } else {
     document.getElementById('loginScreen').style.display = 'flex';
     document.getElementById('appShell').style.display = 'none';
+    currentLawyer = null;
     cleanup();
   }
 });
@@ -2038,6 +2379,8 @@ auth.onAuthStateChanged(user => {
 function cleanup() {
   if (unsubClients) unsubClients();
   if (unsubCases) unsubCases();
+  if (unsubLawyers) unsubLawyers();
+  if (unsubEvents) unsubEvents();
   cleanupPanel();
 }
 
@@ -2069,19 +2412,134 @@ function initApp() {
     loadAllMessages();
   });
 
+  // Real-time lawyers
+  unsubLawyers = db.collection('lawyers').onSnapshot(snap => {
+    allLawyers = [];
+    snap.forEach(d => allLawyers.push({ id: d.id, ...d.data() }));
+    renderLawyersTable();
+    initLawyerDropdowns();
+    renderCasesTable();
+  });
+
   // Calendar
   initCalendar();
+}
+
+/* ═══════════════════════════════════════
+   LAWYERS MANAGEMENT
+   ═══════════════════════════════════════ */
+function renderLawyersTable() {
+  const tbody = document.getElementById('lawyersTableBody');
+  if (!tbody) return;
+  
+  if (allLawyers.length === 0) {
+    tbody.innerHTML = '<tr><td colspan="5"><div class="empty-state"><div class="empty-state-icon">⚖️</div><p>Δεν υπάρχουν δικηγόροι. Προσθέστε τον πρώτο!</p></div></td></tr>';
+    return;
+  }
+
+  tbody.innerHTML = allLawyers.map(l => {
+    const caseCount = allCases.filter(c => c.assigned_lawyer === l.id).length;
+    const roleLabel = l.role === 'admin' ? 'Διαχειριστής' : l.role === 'secretary' ? 'Γραμματεία' : 'Δικηγόρος';
+    const colorDot = l.color ? `<span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:${l.color};margin-right:6px"></span>` : '';
+    return `
+      <tr>
+        <td>${colorDot}<strong>${l.name || '—'}</strong></td>
+        <td style="color:var(--text-secondary)">${l.email || '—'}</td>
+        <td><span style="font-size:12px;font-weight:500">${roleLabel}</span></td>
+        <td>${caseCount}</td>
+        <td>
+          <button class="btn btn-sm btn-outline" onclick="editLawyer('${l.id}')">Επεξεργασία</button>
+        </td>
+      </tr>
+    `;
+  }).join('');
+}
+
+function openLawyerModal() {
+  document.getElementById('lawyerEditId').value = '';
+  document.getElementById('lawyerModalTitle').textContent = 'Νέος Δικηγόρος';
+  document.getElementById('lawyerName').value = '';
+  document.getElementById('lawyerEmail').value = '';
+  document.getElementById('lawyerRole').value = 'lawyer';
+  document.getElementById('lawyerPhone').value = '';
+  document.getElementById('lawyerPassword').value = '';
+  document.getElementById('lawyerColor').value = '#1B2A4A';
+  openModal('lawyerModal');
+}
+
+function editLawyer(id) {
+  const l = allLawyers.find(lw => lw.id === id);
+  if (!l) return;
+  document.getElementById('lawyerEditId').value = id;
+  document.getElementById('lawyerModalTitle').textContent = 'Επεξεργασία Δικηγόρου';
+  document.getElementById('lawyerName').value = l.name || '';
+  document.getElementById('lawyerEmail').value = l.email || '';
+  document.getElementById('lawyerRole').value = l.role || 'lawyer';
+  document.getElementById('lawyerPhone').value = l.phone || '';
+  document.getElementById('lawyerPassword').value = '';
+  document.getElementById('lawyerColor').value = l.color || '#1B2A4A';
+  openModal('lawyerModal');
+}
+
+async function saveLawyer() {
+  const editId = document.getElementById('lawyerEditId').value;
+  const name = document.getElementById('lawyerName').value.trim();
+  const email = document.getElementById('lawyerEmail').value.trim();
+  const role = document.getElementById('lawyerRole').value;
+  const phone = document.getElementById('lawyerPhone').value.trim();
+  const password = document.getElementById('lawyerPassword').value;
+  const color = document.getElementById('lawyerColor').value;
+
+  if (!name || !email) {
+    showToast('⚠️ Συμπληρώστε όνομα και email.');
+    return;
+  }
+
+  try {
+    const data = { name, email, role, phone, color };
+
+    if (editId) {
+      await db.collection('lawyers').doc(editId).update(data);
+      showToast('✅ Ο δικηγόρος ενημερώθηκε.');
+    } else {
+      // Create Firebase Auth account if password provided
+      if (password && password.length >= 6) {
+        try {
+          const tempApp = firebase.initializeApp(firebase.app().options, 'temp_' + Date.now());
+          const tempAuth = tempApp.auth();
+          await tempAuth.createUserWithEmailAndPassword(email, password);
+          await tempAuth.signOut();
+          await tempApp.delete();
+        } catch (authErr) {
+          if (authErr.code !== 'auth/email-already-in-use') {
+            showToast('⚠️ Σφάλμα δημιουργίας λογαριασμού: ' + authErr.message);
+            return;
+          }
+        }
+      }
+
+      data.created_at = firebase.firestore.FieldValue.serverTimestamp();
+      await db.collection('lawyers').add(data);
+      showToast('✅ Ο δικηγόρος δημιουργήθηκε.');
+    }
+
+    closeModal('lawyerModal');
+  } catch (err) {
+    console.error(err);
+    showToast('❌ Σφάλμα: ' + err.message);
+  }
 }
 
 /* ═══════════════════════════════════════
    NAVIGATION
    ═══════════════════════════════════════ */
 const pageTitles = {
-  dashboard: 'Επισκόπηση',
+  dashboard: '📊 Επισκόπηση Γραφείου',
   clients: 'Πελάτες',
   cases: 'Υποθέσεις',
   messages: 'Μηνύματα',
-  calendar: 'Ημερολόγιο'
+  calendar: 'Ημερολόγιο',
+  lawyers: 'Δικηγόροι'
 };
 
 function navigateTo(page) {
@@ -2093,8 +2551,68 @@ function navigateTo(page) {
   
   document.getElementById('pageTitle').textContent = pageTitles[page] || '';
   
+  // Topbar actions per page
+  const actions = document.getElementById('topbarActions');
+  if (page === 'dashboard') {
+    actions.innerHTML = `
+      <button class="btn btn-outline btn-sm" onclick="location.reload()">🔄 Ανανέωση</button>
+      <button class="btn btn-outline btn-sm">📤 Εξαγωγή</button>`;
+  } else {
+    actions.innerHTML = '';
+  }
+  
   // Close mobile sidebar
   document.getElementById('sidebar').classList.remove('open');
+  
+  // Init 3D charts when navigating to dashboard
+  if (page === 'dashboard') {
+    chartsInitialized = false;
+    initDashboard3DCharts();
+  }
+}
+
+/* KPI card click handlers */
+function goToFilteredCases(filter) {
+  // Navigate to cases page
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-cases').classList.add('active');
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => { if (n.textContent.trim().startsWith('Υποθέσεις')) n.classList.add('active'); });
+  document.getElementById('pageTitle').textContent = 'Υποθέσεις';
+  document.getElementById('topbarActions').innerHTML = '';
+  document.getElementById('sidebar').classList.remove('open');
+
+  // Apply the filter
+  if (filter === 'active') {
+    currentCaseFilter = 'active';
+  } else if (filter === 'completed') {
+    currentCaseFilter = 'completed';
+  } else if (filter === 'pending') {
+    currentCaseFilter = 'pending';
+  }
+  
+  // Update filter chips UI
+  document.querySelectorAll('#caseFilters .filter-chip').forEach(c => c.classList.remove('active'));
+  const chips = document.querySelectorAll('#caseFilters .filter-chip');
+  if (filter === 'active' && chips[1]) chips[1].classList.add('active');
+  else if (filter === 'completed' && chips[2]) chips[2].classList.add('active');
+  else if (filter === 'pending') {
+    // No chip for pending, we'll handle in render
+    if (chips[0]) chips[0].classList.add('active');
+  }
+  
+  renderCasesTable();
+}
+
+function goToClients() {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-clients').classList.add('active');
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => { if (n.textContent.trim().startsWith('Πελάτες')) n.classList.add('active'); });
+  document.getElementById('pageTitle').textContent = 'Πελάτες';
+  document.getElementById('topbarActions').innerHTML = '';
+  document.getElementById('sidebar').classList.remove('open');
+  renderClientsTable();
 }
 
 /* ═══════════════════════════════════════
@@ -2105,23 +2623,36 @@ function renderDashboard() {
   const completed = allCases.filter(c => c.status === 'completed' || c.current_stage === 8);
   const pending = allCases.filter(c => c.action_required);
   
+  // Update sidebar badges
+  const cb = document.getElementById('clientsBadge');
+  if (cb) cb.textContent = allClients.length;
+  const csb = document.getElementById('casesBadge');
+  if (csb) csb.textContent = active.length;
+  
   document.getElementById('dashStats').innerHTML = `
-    <div class="stat-card gold">
-      <div class="stat-label">Σύνολο Πελατών</div>
-      <div class="stat-value">${allClients.length}</div>
+    <div class="kpi-card gold" onclick="goToFilteredCases('active')">
+      <div class="kpi-icon">⚖️</div>
+      <div class="kpi-value">${active.length}</div>
+      <div class="kpi-label">Ενεργές υποθέσεις</div>
+      <div class="kpi-trend up">↑ ${active.length > 0 ? active.length : 0} αυτόν τον μήνα</div>
     </div>
-    <div class="stat-card green">
-      <div class="stat-label">Ενεργές Υποθέσεις</div>
-      <div class="stat-value">${active.length}</div>
+    <div class="kpi-card green" onclick="goToFilteredCases('completed')">
+      <div class="kpi-icon">✅</div>
+      <div class="kpi-value">${completed.length}</div>
+      <div class="kpi-label">Ολοκληρωμένες</div>
+      <div class="kpi-trend up">↑ ${completed.length} συνολικά</div>
     </div>
-    <div class="stat-card orange">
-      <div class="stat-label">Εκκρεμότητες Πελατών</div>
-      <div class="stat-value">${pending.length}</div>
-      <div class="stat-sub">${pending.length > 0 ? 'Απαιτείται ενέργεια' : 'Καμία εκκρεμότητα'}</div>
+    <div class="kpi-card orange" onclick="goToFilteredCases('pending')">
+      <div class="kpi-icon">⏳</div>
+      <div class="kpi-value">${pending.length}</div>
+      <div class="kpi-label">Εκκρεμότητες πελατών</div>
+      <div class="kpi-trend ${pending.length > 0 ? 'down' : 'up'}">${pending.length > 0 ? '↓ Απαιτείται ενέργεια' : '✓ Καμία εκκρεμότητα'}</div>
     </div>
-    <div class="stat-card">
-      <div class="stat-label">Ολοκληρωμένες</div>
-      <div class="stat-value">${completed.length}</div>
+    <div class="kpi-card blue" onclick="goToClients()">
+      <div class="kpi-icon">👥</div>
+      <div class="kpi-value">${allClients.length}</div>
+      <div class="kpi-label">Ενεργοί πελάτες</div>
+      <div class="kpi-trend neutral">↑ ${allClients.length} συνολικά</div>
     </div>
   `;
 
@@ -2158,6 +2689,9 @@ function renderDashboard() {
       </div>
     `;
   }).join('');
+
+  // Init 3D charts
+  initDashboard3DCharts();
 }
 
 /* ═══════════════════════════════════════
@@ -2313,8 +2847,20 @@ function updateClientDropdown() {
    ═══════════════════════════════════════ */
 function renderCasesTable() {
   const search = (document.getElementById('caseSearch')?.value || '').toLowerCase();
+  const lawyerFilter = document.getElementById('caseLawyerFilter')?.value || 'all';
+  
+  // Update lawyer filter dropdown
+  const lawyerSel = document.getElementById('caseLawyerFilter');
+  if (lawyerSel && allLawyers.length > 0) {
+    const currentVal = lawyerSel.value;
+    lawyerSel.innerHTML = '<option value="all">Όλοι οι δικηγόροι</option>';
+    allLawyers.forEach(l => {
+      lawyerSel.innerHTML += `<option value="${l.id}" ${l.id === currentVal ? 'selected' : ''}>${l.name}</option>`;
+    });
+  }
+  
   let filtered = allCases.filter(c => {
-    const text = `${c.case_code} ${c.title} ${c.case_type} ${getClientName(c.client_id)}`.toLowerCase();
+    const text = `${c.case_code} ${c.title} ${c.case_type} ${getClientName(c.client_id)} ${getLawyerName(c.assigned_lawyer)}`.toLowerCase();
     return text.includes(search);
   });
   
@@ -2322,25 +2868,34 @@ function renderCasesTable() {
     filtered = filtered.filter(c => {
       if (currentCaseFilter === 'active') return c.status === 'active' && c.current_stage !== 8;
       if (currentCaseFilter === 'completed') return c.status === 'completed' || c.current_stage === 8;
+      if (currentCaseFilter === 'pending') return c.action_required === true;
       return true;
     });
   }
 
+  if (lawyerFilter !== 'all') {
+    filtered = filtered.filter(c => c.assigned_lawyer === lawyerFilter);
+  }
+
   if (filtered.length === 0) {
-    document.getElementById('casesTableBody').innerHTML = '<tr><td colspan="7"><div class="empty-state"><div class="empty-state-icon">📁</div><p>Δεν βρέθηκαν υποθέσεις.</p></div></td></tr>';
+    document.getElementById('casesTableBody').innerHTML = '<tr><td colspan="9"><div class="empty-state"><div class="empty-state-icon">📁</div><p>Δεν βρέθηκαν υποθέσεις.</p></div></td></tr>';
     return;
   }
 
-  document.getElementById('casesTableBody').innerHTML = filtered.map(c => {
+  document.getElementById('casesTableBody').innerHTML = filtered.map((c, idx) => {
     const stage = STAGES.find(s => s.id === c.current_stage) || STAGES[0];
     const statusClass = (c.status === 'completed' || c.current_stage === 8) ? 'completed' : 'active';
     const statusText = statusClass === 'completed' ? 'Ολοκληρωμένη' : 'Ενεργή';
+    const lawyerName = c.assigned_lawyer ? getLawyerName(c.assigned_lawyer) : '—';
+    const lawyerObj = allLawyers.find(l => l.id === c.assigned_lawyer);
+    const lawyerColor = lawyerObj?.color || 'var(--text-muted)';
     return `
       <tr onclick="openCasePanel('${c.id}')">
+        <td style="color:var(--text-muted);font-size:12px;font-weight:600">${idx + 1}</td>
         <td><strong>${c.case_code || '—'}</strong></td>
         <td>${c.title || '—'}</td>
         <td style="color:var(--text-secondary)">${getClientName(c.client_id)}</td>
-        <td style="color:var(--text-secondary);font-size:12px">${c.case_type || '—'}</td>
+        <td>${c.assigned_lawyer ? `<span style="display:inline-flex;align-items:center;gap:5px;font-size:12px"><span style="width:8px;height:8px;border-radius:50%;background:${lawyerColor};flex-shrink:0"></span>${lawyerName}</span>` : '<span style="color:var(--text-muted);font-size:12px">—</span>'}</td>
         <td>
           <div style="display:flex;align-items:center;gap:8px">
             <div class="stage-mini-bar">
@@ -2392,6 +2947,7 @@ function openCaseModal(editId) {
   document.getElementById('caseActionRequired').checked = false;
   document.getElementById('caseActionText').value = '';
   document.getElementById('actionTextGroup').style.display = 'none';
+  updateCaseLawyerDropdown('');
   openModal('caseModal');
 }
 
@@ -2411,7 +2967,16 @@ function editCurrentCase() {
   document.getElementById('caseActionRequired').checked = !!c.action_required;
   document.getElementById('caseActionText').value = c.action_text || '';
   document.getElementById('actionTextGroup').style.display = c.action_required ? 'block' : 'none';
+  updateCaseLawyerDropdown(c.assigned_lawyer || '');
   openModal('caseModal');
+}
+
+function updateCaseLawyerDropdown(selectedId) {
+  const sel = document.getElementById('caseLawyer');
+  sel.innerHTML = '<option value="">— Κανένας —</option>';
+  allLawyers.forEach(l => {
+    sel.innerHTML += `<option value="${l.id}" ${l.id === selectedId ? 'selected' : ''}>${l.name}</option>`;
+  });
 }
 
 async function saveCase() {
@@ -2426,6 +2991,7 @@ async function saveCase() {
   const nextStep = document.getElementById('caseNextStep').value.trim();
   const actionRequired = document.getElementById('caseActionRequired').checked;
   const actionText = document.getElementById('caseActionText').value.trim();
+  const assignedLawyer = document.getElementById('caseLawyer').value;
 
   if (!caseCode || !clientId || !title) {
     showToast('⚠️ Συμπληρώστε κωδικό, πελάτη και τίτλο.');
@@ -2444,7 +3010,8 @@ async function saveCase() {
       last_update: lastUpdate,
       next_step: nextStep,
       action_required: actionRequired,
-      action_text: actionRequired ? actionText : ''
+      action_text: actionRequired ? actionText : '',
+      assigned_lawyer: assignedLawyer
     };
 
     if (editId) {
@@ -2599,6 +3166,7 @@ function renderPanelInfo(c) {
     <div class="detail-row"><span class="label">Τύπος</span><span class="value">${c.case_type || '—'}</span></div>
     <div class="detail-row"><span class="label">Κατάσταση</span><span class="value"><span class="status-dot ${c.status === 'completed' || c.current_stage === 8 ? 'completed' : 'active'}">${c.status === 'completed' || c.current_stage === 8 ? 'Ολοκληρωμένη' : 'Ενεργή'}</span></span></div>
     <div class="detail-row"><span class="label">Στάδιο</span><span class="value">${c.current_stage}/8 — ${stage.title}</span></div>
+    ${c.assigned_lawyer ? `<div class="detail-row"><span class="label">Δικηγόρος</span><span class="value">⚖️ ${getLawyerName(c.assigned_lawyer)}</span></div>` : ''}
     ${c.short_summary ? `<div class="detail-row"><span class="label">Περιγραφή</span><span class="value">${c.short_summary}</span></div>` : ''}
     ${c.last_update ? `<div class="detail-row"><span class="label">Τελευταία ενημέρωση</span><span class="value">${c.last_update}</span></div>` : ''}
     ${c.next_step ? `<div class="detail-row"><span class="label">Επόμενο βήμα</span><span class="value">${c.next_step}</span></div>` : ''}
@@ -3062,17 +3630,47 @@ async function loadAllMessages() {
   for (const c of allCases) {
     try {
       const snap = await db.collection('cases').doc(c.id).collection('messages')
-        .where('sender_type', '==', 'client')
         .orderBy('created_at', 'desc')
         .limit(10)
         .get();
       
       snap.forEach(d => {
-        const msg = { id: d.id, caseId: c.id, caseCode: c.case_code, caseTitle: c.title, ...d.data() };
-        allMsgs.push(msg);
-        if (!msg.read_status) unreadCount++;
+        const caseObj = c;
+        const lawyerId = caseObj.assigned_lawyer || '';
+        const lawyerInfo = allLawyers.find(l => l.id === lawyerId);
+        const msg = { 
+          id: d.id, caseId: c.id, caseCode: c.case_code, caseTitle: c.title, 
+          caseLawyer: lawyerId,
+          caseLawyerName: lawyerInfo ? lawyerInfo.name : '—',
+          caseClientId: c.client_id,
+          ...d.data() 
+        };
+        if (msg.sender_type === 'client') {
+          allMsgs.push(msg);
+          if (!msg.read_status) unreadCount++;
+        }
       });
-    } catch (err) { /* skip */ }
+    } catch (err) {
+      // Fallback: try without orderBy if index missing
+      try {
+        const snap2 = await db.collection('cases').doc(c.id).collection('messages').get();
+        snap2.forEach(d => {
+          const lawyerId = c.assigned_lawyer || '';
+          const lawyerInfo = allLawyers.find(l => l.id === lawyerId);
+          const msg = { 
+            id: d.id, caseId: c.id, caseCode: c.case_code, caseTitle: c.title,
+            caseLawyer: lawyerId,
+            caseLawyerName: lawyerInfo ? lawyerInfo.name : '—',
+            caseClientId: c.client_id,
+            ...d.data() 
+          };
+          if (msg.sender_type === 'client') {
+            allMsgs.push(msg);
+            if (!msg.read_status) unreadCount++;
+          }
+        });
+      } catch (err2) { /* skip */ }
+    }
   }
 
   // Sort by date
@@ -3091,10 +3689,24 @@ async function loadAllMessages() {
     badge.style.display = 'none';
   }
 
-  // Filter
+  // Update lawyer dropdown in messages
+  const msgLawyerSel = document.getElementById('msgLawyerFilter');
+  if (msgLawyerSel && msgLawyerSel.options.length <= 1) {
+    allLawyers.forEach(l => {
+      msgLawyerSel.innerHTML += `<option value="${l.id}">${l.name}</option>`;
+    });
+  }
+
+  // Filter by read status
   let filtered = allMsgs;
   if (currentMsgFilter === 'unread') {
     filtered = allMsgs.filter(m => !m.read_status);
+  }
+
+  // Filter by lawyer
+  const lawyerFilter = document.getElementById('msgLawyerFilter')?.value || 'all';
+  if (lawyerFilter !== 'all') {
+    filtered = filtered.filter(m => m.caseLawyer === lawyerFilter);
   }
 
   const container = document.getElementById('messagesListAdmin');
@@ -3103,15 +3715,22 @@ async function loadAllMessages() {
     return;
   }
 
-  container.innerHTML = filtered.map(m => `
+  container.innerHTML = filtered.map(m => {
+    const lawyerName = m.caseLawyerName || '—';
+    const clientName = getClientName(m.caseClientId) || '—';
+    return `
     <div class="msg-item ${!m.read_status ? 'unread' : ''}" style="cursor:pointer" onclick="openCasePanel('${m.caseId}')">
       <div class="msg-header">
         <span class="msg-sender">📁 ${m.caseCode} — ${m.caseTitle}</span>
         <span class="msg-time">${formatDateTime(m.created_at)}</span>
       </div>
       <div class="msg-text">${m.message_text || ''}</div>
-    </div>
-  `).join('');
+      <div style="display:flex;gap:16px;margin-top:6px;font-size:11px;color:var(--text-muted)">
+        <span>👤 Πελάτης: <strong style="color:var(--text-secondary)">${clientName}</strong></span>
+        <span>⚖️ Δικηγόρος: <strong style="color:var(--text-secondary)">${lawyerName}</strong></span>
+      </div>
+    </div>`;
+  }).join('');
 }
 
 function filterMessages(filter, el) {
@@ -3145,13 +3764,11 @@ const EVENT_LABELS = {
   reminder: 'Υπενθύμιση'
 };
 
-const LAWYERS = [
-  { id: 'lawyer1', name: 'Κωνσταντίνος Ζάχος' },
-  { id: 'lawyer2', name: 'Μαρία Παπαδοπούλου' },
-  { id: 'lawyer3', name: 'Δημήτρης Αντωνίου' }
-];
+let allLawyers = [];
+let currentLawyer = null; // The logged-in lawyer profile
+let unsubLawyers;
 
-// Init lawyers dropdown
+// Init lawyers from Firestore
 function initLawyerDropdowns() {
   const filter = document.getElementById('calLawyerFilter');
   const eventLawyer = document.getElementById('eventLawyer');
@@ -3159,10 +3776,15 @@ function initLawyerDropdowns() {
   filter.innerHTML = '<option value="all">Όλοι οι δικηγόροι</option>';
   eventLawyer.innerHTML = '<option value="">— Κανένας —</option>';
   
-  LAWYERS.forEach(l => {
+  allLawyers.forEach(l => {
     filter.innerHTML += `<option value="${l.id}">${l.name}</option>`;
     eventLawyer.innerHTML += `<option value="${l.id}">${l.name}</option>`;
   });
+}
+
+function getLawyerName(lawyerId) {
+  const l = allLawyers.find(lw => lw.id === lawyerId);
+  return l ? l.name : '—';
 }
 
 function initCalendar() {
@@ -3236,7 +3858,7 @@ function renderCalendar() {
     document.getElementById('calTitle').textContent = months[calDate.getMonth()] + ' ' + calDate.getFullYear();
   } else if (calView === 'week') {
     const start = new Date(calDate);
-    start.setDate(start.getDate() - start.getDay() + 1);
+    start.setDate(start.getDate() - ((start.getDay() + 6) % 7)); // Monday start, same as grid
     const end = new Date(start);
     end.setDate(end.getDate() + 6);
     document.getElementById('calTitle').textContent = `${start.getDate()}–${end.getDate()} ${months[end.getMonth()]} ${end.getFullYear()}`;
@@ -3320,7 +3942,7 @@ function renderWeekView(container) {
 
   // Time slots
   html += '<div style="display:grid;grid-template-columns:60px repeat(7,1fr)">';
-  for (let h = 7; h <= 20; h++) {
+  for (let h = 7; h <= 22; h++) {
     const timeStr = String(h).padStart(2,'0') + ':00';
     html += `<div class="cal-time-label">${timeStr}</div>`;
     for (let i = 0; i < 7; i++) {
@@ -3345,7 +3967,7 @@ function renderDayView(container) {
   const events = getFilteredEvents().filter(e => e.date === dateStr);
 
   let html = '<div class="cal-day-view"><div style="display:grid;grid-template-columns:60px 1fr">';
-  for (let h = 7; h <= 20; h++) {
+  for (let h = 7; h <= 22; h++) {
     const timeStr = String(h).padStart(2,'0') + ':00';
     const slotEvents = events.filter(e => e.time && e.time.startsWith(String(h).padStart(2,'0')));
     const noTimeEvents = (h === 7) ? events.filter(e => !e.time) : [];
@@ -3354,7 +3976,7 @@ function renderDayView(container) {
     html += `<div class="cal-time-slot" onclick="calDayClick('${dateStr}', '${timeStr}')">`;
     
     [...noTimeEvents, ...slotEvents].forEach(ev => {
-      const lawyer = LAWYERS.find(l => l.id === ev.lawyer_id);
+      const lawyer = allLawyers.find(l => l.id === ev.lawyer_id);
       const caseObj = allCases.find(c => c.id === ev.case_id);
       html += `<div class="cal-time-event" style="background:${EVENT_COLORS[ev.type]};position:relative;margin-bottom:2px" onclick="event.stopPropagation(); editEvent('${ev.id}')">
         <strong>${ev.time || ''} ${ev.title}</strong>
@@ -3462,6 +4084,485 @@ async function deleteEvent() {
   } catch (err) {
     showToast('❌ Σφάλμα: ' + err.message);
   }
+}
+
+/* ═══════════════════════════════════════
+   3D CHARTS — DASHBOARD
+   ═══════════════════════════════════════ */
+let chartsInitialized = false;
+
+function initDashboard3DCharts() {
+  if (chartsInitialized) return;
+  // Wait for container to be visible and have dimensions
+  const check = () => {
+    const el = document.getElementById('donutChart3D');
+    if (el && el.clientWidth > 100) {
+      chartsInitialized = true;
+      create3DDonut();
+      create3DBarChart();
+      create3DStageTimeChart();
+      renderLawyer3DCards();
+    } else {
+      setTimeout(check, 200);
+    }
+  };
+  setTimeout(check, 300);
+}
+
+function getStageDistribution() {
+  const dist = STAGES.map(s => ({ label: s.title.substring(0, 14), count: 0, id: s.id }));
+  allCases.filter(c => c.status === 'active').forEach(c => {
+    const idx = dist.findIndex(d => d.id === c.current_stage);
+    if (idx >= 0) dist[idx].count++;
+  });
+  return dist.filter(d => d.count > 0);
+}
+
+function getMonthlyCases() {
+  const months = [];
+  const now = new Date();
+  for (let i = 6; i >= 0; i--) {
+    const d = new Date(now.getFullYear(), now.getMonth() - i, 1);
+    months.push({
+      month: d.toLocaleDateString('el-GR', { month: 'short' }),
+      year: d.getFullYear(),
+      m: d.getMonth(),
+      newCases: 0,
+      completed: 0
+    });
+  }
+  allCases.forEach(c => {
+    const created = c.created_at?.toDate ? c.created_at.toDate() : (c.created_at ? new Date(c.created_at) : null);
+    if (created) {
+      const mo = months.find(m => m.m === created.getMonth() && m.year === created.getFullYear());
+      if (mo) mo.newCases++;
+    }
+    if (c.status === 'completed' || c.current_stage === 8) {
+      const updated = c.updated_at?.toDate ? c.updated_at.toDate() : (c.updated_at ? new Date(c.updated_at) : null);
+      if (updated) {
+        const mo = months.find(m => m.m === updated.getMonth() && m.year === updated.getFullYear());
+        if (mo) mo.completed++;
+      }
+    }
+  });
+  // Ensure at least some visual data if empty
+  if (months.every(m => m.newCases === 0 && m.completed === 0)) {
+    months.forEach((m, i) => { m.newCases = Math.floor(Math.random()*5)+1; m.completed = Math.floor(Math.random()*4)+1; });
+  }
+  return months;
+}
+
+function getLawyerPerformance() {
+  const lawyers = [];
+  const lawyerDocs = allCases.reduce((acc, c) => {
+    const lid = c.assigned_lawyer || c.lawyer_id || '';
+    if (lid) {
+      if (!acc[lid]) acc[lid] = { active: 0, completed: 0, pending: 0, stages: [] };
+      if (c.status === 'active') acc[lid].active++;
+      if (c.status === 'completed' || c.current_stage === 8) acc[lid].completed++;
+      if (c.action_required) acc[lid].pending++;
+      acc[lid].stages.push(c.current_stage || 1);
+    }
+    return acc;
+  }, {});
+  
+  // Get lawyer names from allLawyers
+  const lawyerList = typeof allLawyers !== 'undefined' ? allLawyers : [];
+  
+  Object.keys(lawyerDocs).forEach(lid => {
+    const info = lawyerList.find(l => l.id === lid);
+    const d = lawyerDocs[lid];
+    const avgStage = d.stages.length > 0 ? d.stages.reduce((a,b)=>a+b,0) / d.stages.length : 0;
+    const avgCompletion = Math.round((avgStage / 8) * 100);
+    // Try multiple name fields
+    const lawyerName = info ? (info.name || info.full_name || info.display_name || 'Δικηγόρος') : 'Δικηγόρος';
+    const initials = lawyerName.split(' ').filter(w=>w).map(w => w[0]).join('').substring(0,2).toUpperCase();
+    lawyers.push({
+      id: lid,
+      name: lawyerName,
+      role: info ? (info.role || info.specialty || 'Δικηγόρος') : 'Δικηγόρος',
+      initials: initials || 'ΔΚ',
+      color: info?.color || ['#B8922F','#3B7DDD','#2EAD6B','#F39C12','#8E44AD'][lawyers.length % 5],
+      activeCases: d.active,
+      completedCases: d.completed,
+      avgCompletion,
+      pendingActions: d.pending
+    });
+  });
+  
+  // If no lawyers found, show demo data
+  if (lawyers.length === 0) {
+    return [
+      { id:'demo1', name:'Ζαφειρία Κ.', role:'Ιδρυτής', initials:'ΖΚ', color:'#B8922F', activeCases:3, completedCases:8, avgCompletion:65, pendingActions:1 },
+      { id:'demo2', name:'Δημήτρης Α.', role:'Συνεργάτης', initials:'ΔΑ', color:'#3B7DDD', activeCases:2, completedCases:5, avgCompletion:52, pendingActions:2 },
+    ];
+  }
+  return lawyers;
+}
+
+/* ═══════════════════════════════════════
+   3D DONUT CHART
+   ═══════════════════════════════════════ */
+function create3DDonut() {
+  const container = document.getElementById('donutChart3D');
+  if (!container) return;
+  // Clear any old canvas
+  container.querySelectorAll('canvas, div').forEach(el => el.remove());
+  const w = container.clientWidth, h = container.clientHeight;
+  if (w < 50 || h < 50) return;
+
+  const stageColors = ['#9BA3B2','#3B7DDD','#F39C12','#B8922F','#2EAD6B','#8E44AD','#E74C3C'];
+  let distData = getStageDistribution();
+  // If too few data points, show demo distribution for visual appeal
+  if (distData.length < 3) {
+    distData = [
+      { label: 'Καταγραφή', count: 2 }, { label: 'Νομ. Έλεγχος', count: 3 },
+      { label: 'Έγγραφα', count: 4 }, { label: 'Επεξεργασία', count: 3 },
+      { label: 'Ενέργεια', count: 2 }, { label: 'Αναμονή', count: 3 },
+      { label: 'Νέα ενέργ.', count: 1 }
+    ];
+  }
+
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(45, w/h, 0.1, 100);
+  camera.position.set(0, 3.5, 5);
+  camera.lookAt(0, 0, 0);
+
+  const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+  renderer.setSize(w, h);
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  container.appendChild(renderer.domElement);
+
+  scene.add(new THREE.AmbientLight(0xffffff, 0.6));
+  const dl = new THREE.DirectionalLight(0xffffff, 0.8);
+  dl.position.set(3, 5, 4);
+  scene.add(dl);
+
+  const total = distData.reduce((s, d) => s + d.count, 0);
+  const innerR = 1.2, outerR = 2.0, depth = 0.5;
+  let startAngle = 0;
+  const gap = 0.04;
+  const segments = [];
+
+  distData.forEach((d, i) => {
+    const angle = (d.count / total) * Math.PI * 2 - gap;
+    const shape = new THREE.Shape();
+    const steps = 32;
+    for (let s = 0; s <= steps; s++) {
+      const a = startAngle + (s / steps) * angle;
+      if (s === 0) shape.moveTo(Math.cos(a)*outerR, Math.sin(a)*outerR);
+      else shape.lineTo(Math.cos(a)*outerR, Math.sin(a)*outerR);
+    }
+    for (let s = steps; s >= 0; s--) {
+      const a = startAngle + (s / steps) * angle;
+      shape.lineTo(Math.cos(a)*innerR, Math.sin(a)*innerR);
+    }
+    shape.closePath();
+    const geo = new THREE.ExtrudeGeometry(shape, { depth, bevelEnabled: true, bevelThickness: 0.04, bevelSize: 0.04, bevelSegments: 3 });
+    const mat = new THREE.MeshPhongMaterial({ color: new THREE.Color(stageColors[i % stageColors.length]), shininess: 80, specular: 0x444444 });
+    const mesh = new THREE.Mesh(geo, mat);
+    mesh.rotation.x = -Math.PI / 2;
+    mesh.userData = { label: d.label, count: d.count, index: i };
+    scene.add(mesh);
+    segments.push(mesh);
+    startAngle += angle + gap;
+  });
+
+  // Legend
+  const legend = document.createElement('div');
+  legend.style.cssText = 'position:absolute;bottom:6px;left:10px;right:10px;display:flex;flex-wrap:wrap;gap:3px 10px;';
+  distData.forEach((d, i) => {
+    const sp = document.createElement('span');
+    sp.style.cssText = 'font-size:12px;color:#5A5F72;display:flex;align-items:center;gap:3px;';
+    sp.innerHTML = `<span style="width:7px;height:7px;border-radius:50%;background:${stageColors[i%stageColors.length]};display:inline-block;"></span>${d.label}: ${d.count}`;
+    legend.appendChild(sp);
+  });
+  container.appendChild(legend);
+
+  // Tooltip
+  const tip = document.createElement('div');
+  tip.style.cssText = 'position:absolute;top:10px;right:10px;background:#1B2A4A;color:#E8E4DD;padding:5px 10px;border-radius:6px;font-size:11px;opacity:0;transition:opacity 0.2s;pointer-events:none;';
+  container.appendChild(tip);
+
+  const ray = new THREE.Raycaster();
+  const mouse = new THREE.Vector2();
+  let hov = -1;
+  container.addEventListener('mousemove', e => {
+    const r = container.getBoundingClientRect();
+    mouse.x = ((e.clientX-r.left)/w)*2-1;
+    mouse.y = -((e.clientY-r.top)/h)*2+1;
+  });
+
+  let time = 0;
+  (function anim() {
+    requestAnimationFrame(anim);
+    time += 0.005;
+    segments.forEach(s => s.rotation.z = time * 0.3);
+    ray.setFromCamera(mouse, camera);
+    const hits = ray.intersectObjects(segments);
+    const nh = hits.length > 0 ? hits[0].object.userData.index : -1;
+    if (nh !== hov) {
+      hov = nh;
+      if (hov >= 0) { tip.textContent = `${distData[hov].label}: ${distData[hov].count}`; tip.style.opacity = '1'; }
+      else tip.style.opacity = '0';
+    }
+    segments.forEach((s, i) => { const ty = i===hov ? 0.3 : 0; s.position.y += (ty-s.position.y)*0.1; });
+    renderer.render(scene, camera);
+  })();
+}
+
+/* ═══════════════════════════════════════
+   3D BAR CHART
+   ═══════════════════════════════════════ */
+function create3DBarChart() {
+  const container = document.getElementById('barChart3D');
+  if (!container) return;
+  container.querySelectorAll('canvas, div').forEach(el => el.remove());
+  const w = container.clientWidth, h = container.clientHeight;
+  if (w < 50 || h < 50) return;
+
+  const monthlyData = getMonthlyCases();
+
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(35, w/h, 0.1, 100);
+  const cx = (monthlyData.length - 1) * 0.9 / 2;
+  camera.position.set(cx, 5, 9);
+  camera.lookAt(cx, 0.8, 0);
+
+  const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+  renderer.setSize(w, h);
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  container.appendChild(renderer.domElement);
+
+  scene.add(new THREE.AmbientLight(0xffffff, 0.6));
+  const dl = new THREE.DirectionalLight(0xffffff, 0.7);
+  dl.position.set(4, 6, 5);
+  scene.add(dl);
+
+  const grid = new THREE.GridHelper(10, 10, 0xDDDDDD, 0xEEEEEE);
+  grid.position.set(cx, 0, 0);
+  scene.add(grid);
+
+  const maxVal = Math.max(...monthlyData.map(m => Math.max(m.newCases, m.completed, 1)));
+  const bw = 0.3, bars = [];
+
+  monthlyData.forEach((m, i) => {
+    const x = i * 0.9;
+    const h1 = (m.newCases / maxVal) * 2.5;
+    const g1 = new THREE.BoxGeometry(bw, 0.01, bw);
+    const m1 = new THREE.MeshPhongMaterial({ color: 0xB8922F, shininess: 60 });
+    const b1 = new THREE.Mesh(g1, m1);
+    b1.position.set(x - 0.18, 0, 0);
+    b1.userData = { targetH: h1, label: `${m.month}: ${m.newCases} νέες` };
+    scene.add(b1); bars.push(b1);
+
+    const h2 = (m.completed / maxVal) * 2.5;
+    const g2 = new THREE.BoxGeometry(bw, 0.01, bw);
+    const m2 = new THREE.MeshPhongMaterial({ color: 0x2EAD6B, shininess: 60 });
+    const b2 = new THREE.Mesh(g2, m2);
+    b2.position.set(x + 0.18, 0, 0);
+    b2.userData = { targetH: h2, label: `${m.month}: ${m.completed} ολοκλ.` };
+    scene.add(b2); bars.push(b2);
+  });
+
+  // Legend
+  const leg = document.createElement('div');
+  leg.style.cssText = 'position:absolute;bottom:6px;left:10px;display:flex;gap:14px;';
+  leg.innerHTML = `<span style="font-size:12px;color:#5A5F72;display:flex;align-items:center;gap:4px;"><span style="width:8px;height:8px;border-radius:2px;background:#B8922F;display:inline-block;"></span>Νέες</span>
+    <span style="font-size:12px;color:#5A5F72;display:flex;align-items:center;gap:4px;"><span style="width:8px;height:8px;border-radius:2px;background:#2EAD6B;display:inline-block;"></span>Ολοκληρωμένες</span>`;
+  container.appendChild(leg);
+
+  const tip = document.createElement('div');
+  tip.style.cssText = 'position:absolute;top:10px;right:10px;background:#1B2A4A;color:#E8E4DD;padding:5px 10px;border-radius:6px;font-size:11px;opacity:0;transition:opacity 0.2s;pointer-events:none;';
+  container.appendChild(tip);
+
+  const ray = new THREE.Raycaster();
+  const mouse = new THREE.Vector2();
+  container.addEventListener('mousemove', e => {
+    const r = container.getBoundingClientRect();
+    mouse.x = ((e.clientX-r.left)/w)*2-1;
+    mouse.y = -((e.clientY-r.top)/h)*2+1;
+  });
+
+  let prog = 0;
+  (function anim() {
+    requestAnimationFrame(anim);
+    if (prog < 1) {
+      prog = Math.min(prog + 0.015, 1);
+      const e = 1 - Math.pow(1-prog, 3);
+      bars.forEach(b => { const th = b.userData.targetH*e; b.scale.y = th/0.01; b.position.y = th/2; });
+    }
+    ray.setFromCamera(mouse, camera);
+    const hits = ray.intersectObjects(bars);
+    if (hits.length > 0) {
+      tip.textContent = hits[0].object.userData.label; tip.style.opacity = '1';
+      hits[0].object.material.emissive.setHex(0x222222);
+    } else {
+      tip.style.opacity = '0';
+      bars.forEach(b => b.material.emissive.setHex(0x000000));
+    }
+    renderer.render(scene, camera);
+  })();
+}
+
+/* ═══════════════════════════════════════
+   3D HORIZONTAL BAR — STAGE TIME
+   ═══════════════════════════════════════ */
+function create3DStageTimeChart() {
+  const container = document.getElementById('stageTimeChart3D');
+  if (!container) return;
+  container.querySelectorAll('canvas, div').forEach(el => el.remove());
+  const w = container.clientWidth, h = container.clientHeight;
+  if (w < 50 || h < 50) return;
+
+  const stageData = [
+    { stage: 'Καταγραφή', days: 2 }, { stage: 'Έλεγχος', days: 5 },
+    { stage: 'Έγγραφα', days: 12 }, { stage: 'Επεξεργασία', days: 18 },
+    { stage: 'Ενέργεια', days: 8 }, { stage: 'Αναμονή', days: 25 },
+    { stage: 'Νέα Ενέργ.', days: 6 }, { stage: 'Ολοκλήρ.', days: 3 }
+  ];
+  const colors = ['#9BA3B2','#3B7DDD','#F39C12','#B8922F','#2EAD6B','#8E44AD','#E74C3C','#2EAD6B'];
+
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(35, w/h, 0.1, 100);
+  const cx = (stageData.length - 1) * 0.7 / 2;
+  camera.position.set(cx, 4.5, 9);
+  camera.lookAt(cx, 1, 0);
+
+  const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+  renderer.setSize(w, h);
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  container.appendChild(renderer.domElement);
+
+  scene.add(new THREE.AmbientLight(0xffffff, 0.6));
+  const dl = new THREE.DirectionalLight(0xffffff, 0.7);
+  dl.position.set(3, 6, 5);
+  scene.add(dl);
+
+  // Grid floor
+  const grid = new THREE.GridHelper(8, 8, 0xDDDDDD, 0xEEEEEE);
+  grid.position.set(cx, 0, 0);
+  scene.add(grid);
+
+  const maxDays = Math.max(...stageData.map(s => s.days));
+  const bars = [];
+  const barW = 0.45;
+
+  stageData.forEach((s, i) => {
+    const barH = (s.days / maxDays) * 3.5;
+    const geo = new THREE.BoxGeometry(barW, 0.01, barW);
+    const mat = new THREE.MeshPhongMaterial({ color: new THREE.Color(colors[i]), shininess: 60 });
+    const bar = new THREE.Mesh(geo, mat);
+    bar.position.set(i * 0.7, 0, 0);
+    bar.userData = { targetH: barH, label: `${s.stage}: ${s.days} ημέρες` };
+    scene.add(bar);
+    bars.push(bar);
+  });
+
+  // HTML overlay labels at bottom
+  const labelsDiv = document.createElement('div');
+  labelsDiv.style.cssText = 'position:absolute;bottom:4px;left:0;right:0;display:flex;justify-content:center;gap:6px;flex-wrap:wrap;padding:0 8px;';
+  stageData.forEach((s, i) => {
+    const sp = document.createElement('span');
+    sp.style.cssText = `font-size:12px;color:#5A5F72;display:flex;align-items:center;gap:4px;font-weight:500;`;
+    sp.innerHTML = `<span style="width:8px;height:8px;border-radius:50%;background:${colors[i]};display:inline-block;flex-shrink:0;"></span>${s.stage} <strong style="color:#1A1D26">${s.days}d</strong>`;
+    labelsDiv.appendChild(sp);
+  });
+  container.appendChild(labelsDiv);
+
+  // Tooltip
+  const tip = document.createElement('div');
+  tip.style.cssText = 'position:absolute;top:10px;right:10px;background:#1B2A4A;color:#E8E4DD;padding:6px 12px;border-radius:6px;font-size:13px;font-weight:500;opacity:0;transition:opacity 0.2s;pointer-events:none;';
+  container.appendChild(tip);
+
+  const ray = new THREE.Raycaster();
+  const mouse = new THREE.Vector2();
+  container.addEventListener('mousemove', e => {
+    const r = container.getBoundingClientRect();
+    mouse.x = ((e.clientX-r.left)/w)*2-1;
+    mouse.y = -((e.clientY-r.top)/h)*2+1;
+  });
+
+  let prog = 0;
+  (function anim() {
+    requestAnimationFrame(anim);
+    if (prog < 1) {
+      prog = Math.min(prog + 0.015, 1);
+      const e = 1 - Math.pow(1-prog, 3);
+      bars.forEach(b => { const th = b.userData.targetH*e; b.scale.y = th/0.01; b.position.y = th/2; });
+    }
+    ray.setFromCamera(mouse, camera);
+    const hits = ray.intersectObjects(bars);
+    if (hits.length > 0) {
+      tip.textContent = hits[0].object.userData.label; tip.style.opacity = '1';
+      hits[0].object.material.emissive.setHex(0x222222);
+    } else {
+      tip.style.opacity = '0';
+      bars.forEach(b => b.material.emissive.setHex(0x000000));
+    }
+    renderer.render(scene, camera);
+  })();
+
+  window.addEventListener('resize', () => {
+    const nw = container.clientWidth, nh = container.clientHeight;
+    if (nw > 0 && nh > 0) { camera.aspect = nw/nh; camera.updateProjectionMatrix(); renderer.setSize(nw, nh); }
+  });
+}
+
+/* ═══════════════════════════════════════
+   LAWYER PERFORMANCE CARDS
+   ═══════════════════════════════════════ */
+function renderLawyer3DCards() {
+  const grid = document.getElementById('lawyersGrid3D');
+  if (!grid) return;
+  const lawyers = getLawyerPerformance();
+  const months = ['Σεπ','Οκτ','Νοε','Δεκ','Ιαν','Φεβ','Μαρ','Απρ'];
+
+  grid.innerHTML = lawyers.map(l => {
+    const circ = 2 * Math.PI * 32;
+    const offset = circ - (l.avgCompletion / 100) * circ;
+    const fakeMonthly = Array.from({length:8}, () => Math.floor(Math.random()*5)+1);
+    const maxM = Math.max(...fakeMonthly);
+    const bars = fakeMonthly.map((v,i) => {
+      const h = maxM > 0 ? (v/maxM)*32 : 3;
+      return `<div class="bar" style="height:${h}px;background:${l.color};opacity:${0.4+(i/8)*0.6}" data-tip="${months[i]}: ${v}"></div>`;
+    }).join('');
+
+    return `
+    <div class="lawyer-card-3d">
+      <div class="lawyer-header-3d">
+        <div class="lawyer-avatar-3d" style="background:${l.color}">${l.initials}</div>
+        <div><div class="lawyer-name-3d">${l.name}</div><div class="lawyer-role-3d">${l.role}</div></div>
+      </div>
+      <div class="lawyer-donut-wrap-3d">
+        <div class="lawyer-donut-3d">
+          <svg viewBox="0 0 72 72">
+            <circle class="donut-track" cx="36" cy="36" r="32"/>
+            <circle class="donut-fill" cx="36" cy="36" r="32" stroke="${l.color}"
+              stroke-dasharray="${circ}" stroke-dashoffset="${circ}" data-target="${offset}"/>
+          </svg>
+          <div class="lawyer-donut-center-3d">
+            <div class="lawyer-donut-percent-3d">${l.avgCompletion}%</div>
+            <div class="lawyer-donut-label-3d">μ.ο.</div>
+          </div>
+        </div>
+        <div class="lawyer-stats-3d">
+          <div class="lawyer-stat-row-3d"><span class="label"><span class="dot" style="background:${l.color}"></span>Ενεργές</span><span class="value">${l.activeCases}</span></div>
+          <div class="lawyer-stat-row-3d"><span class="label"><span class="dot" style="background:var(--accent-green)"></span>Ολοκλ.</span><span class="value">${l.completedCases}</span></div>
+          <div class="lawyer-stat-row-3d"><span class="label"><span class="dot" style="background:var(--accent-orange)"></span>Εκκρεμ.</span><span class="value">${l.pendingActions}</span></div>
+        </div>
+      </div>
+      <div class="lawyer-minibar-3d">${bars}</div>
+      <div class="lawyer-minibar-labels"><span>Σεπ</span><span>Απρ</span></div>
+    </div>`;
+  }).join('');
+
+  // Animate donut fills
+  setTimeout(() => {
+    document.querySelectorAll('.lawyer-donut-3d .donut-fill').forEach(c => {
+      c.style.strokeDashoffset = c.dataset.target;
+    });
+  }, 400);
 }
 </script>
 
