@@ -510,7 +510,7 @@ tbody td {
   position: fixed;
   inset: 0;
   background: rgba(0,0,0,0.35);
-  z-index: 1000;
+  z-index: 2000;
   animation: fadeIn 0.2s;
 }
 
@@ -673,7 +673,7 @@ tbody td {
 
 .slide-panel-body {
   padding: 28px 32px;
-  max-width: 900px;
+  max-width: 760px;
   margin: 0 auto;
 }
 
@@ -694,21 +694,21 @@ tbody td {
 
 .detail-row {
   display: flex;
-  justify-content: space-between;
   align-items: flex-start;
-  padding: 8px 0;
+  padding: 6px 0;
   font-size: 13.5px;
+  gap: 12px;
 }
 
 .detail-row .label {
   color: var(--text-muted);
   font-weight: 500;
-  min-width: 130px;
+  min-width: 150px;
+  flex-shrink: 0;
 }
 
 .detail-row .value {
   color: var(--text-primary);
-  text-align: right;
   flex: 1;
 }
 
@@ -1447,7 +1447,7 @@ tbody td {
 <!-- ═══════════════════════════════════════
      CASE DETAIL SLIDE PANEL
      ═══════════════════════════════════════ -->
-<div class="modal-overlay" id="caseDetailOverlay" onclick="closeCasePanel()"></div>
+<div class="modal-overlay" id="caseDetailOverlay" style="display:none!important"></div>
 <div class="slide-panel" id="caseDetailPanel">
   <div class="slide-panel-header">
     <div>
@@ -2320,6 +2320,7 @@ function renderPanelDocs(docs) {
         <span class="doc-visibility ${d.visible_to_client ? 'client' : 'internal'}">${d.visible_to_client ? 'Πελάτης' : 'Εσωτερικό'}</span>
         <button class="btn btn-sm btn-outline" onclick="downloadFile('${d.file_path}', '${d.filename}')">↓</button>
         <button class="btn btn-sm btn-outline" onclick="toggleDocVisibility('${d.id}', ${!d.visible_to_client})" title="Αλλαγή ορατότητας">👁</button>
+        <button class="btn btn-sm btn-outline" onclick="deleteDocument('${d.id}', '${d.file_path}')" title="Διαγραφή" style="color:var(--accent-red)">✕</button>
       </div>
     </div>
   `).join('');
@@ -2387,6 +2388,22 @@ async function toggleDocVisibility(docId, newVisibility) {
     showToast(newVisibility ? '👁 Ορατό στον πελάτη' : '🔒 Εσωτερικό μόνο');
   } catch (err) {
     showToast('❌ Σφάλμα.');
+  }
+}
+
+async function deleteDocument(docId, filePath) {
+  if (!confirm('Σίγουρα θέλετε να διαγράψετε αυτό το αρχείο;')) return;
+  try {
+    // Delete from Storage
+    if (filePath) {
+      try { await storage.ref(filePath).delete(); } catch (e) { /* file may not exist */ }
+    }
+    // Delete from Firestore
+    await db.collection('cases').doc(currentPanelCaseId).collection('documents').doc(docId).delete();
+    showToast('🗑️ Το αρχείο διαγράφηκε.');
+  } catch (err) {
+    console.error(err);
+    showToast('❌ Σφάλμα διαγραφής.');
   }
 }
 
