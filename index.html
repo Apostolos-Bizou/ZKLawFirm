@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ZK Law Firm — Client Portal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy-deep: #0B1120; --navy: #111B2E; --navy-mid: #162035; --navy-light: #1C2A45; --navy-lighter: #243352;
+  --gold: #C9A96E; --gold-light: #DCBF8A; --gold-dim: #A08650;
+  --gold-glow: rgba(201,169,110,0.12); --gold-glow-strong: rgba(201,169,110,0.25);
+  --text-primary: #E8E4DD; --text-secondary: #9BA3B2; --text-muted: #6B7385; --white: #FFFFFF;
+  --success: #4CAF82; --success-bg: rgba(76,175,130,0.12);
+  --warning: #E8A848; --warning-bg: rgba(232,168,72,0.12);
+  --danger: #D65A5A; --danger-bg: rgba(214,90,90,0.12);
+  --info: #5B9FD6; --info-bg: rgba(91,159,214,0.12);
+  --border: rgba(201,169,110,0.08); --border-gold: rgba(201,169,110,0.2);
+  --glass: rgba(17,27,46,0.85);
+  --radius-sm: 6px; --radius: 10px; --radius-lg: 16px; --radius-xl: 24px;
+  --shadow: 0 4px 24px rgba(0,0,0,0.3); --shadow-lg: 0 8px 48px rgba(0,0,0,0.4);
+  --shadow-gold: 0 4px 24px rgba(201,169,110,0.15);
+  --font-display: 'Cormorant Garamond', Georgia, serif;
+  --font-body: 'DM Sans', -apple-system, sans-serif;
+  --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: var(--font-body); background: var(--navy-deep); color: var(--text-primary); line-height: 1.6; min-height: 100vh; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+body::before { content: ''; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: radial-gradient(ellipse at 20% 0%, rgba(201,169,110,0.04) 0%, transparent 60%), radial-gradient(ellipse at 80% 100%, rgba(91,159,214,0.03) 0%, transparent 60%); pointer-events: none; z-index: 0; }
+a { color: var(--gold); text-decoration: none; transition: var(--transition); }
+a:hover { color: var(--gold-light); }
+.screen { display: none; position: relative; z-index: 1; }
+.screen.active { display: block; }
+
+/* Loading */
+.loading-screen { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 24px; }
+.loading-logo { font-family: var(--font-display); font-size: 36px; font-weight: 600; color: var(--gold); letter-spacing: 6px; }
+.loading-spinner { width: 32px; height: 32px; border: 2px solid var(--border-gold); border-top-color: var(--gold); border-radius: 50%; animation: spin 0.8s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* Login */
+.login-screen { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 24px; }
+.login-container { width: 100%; max-width: 420px; animation: fadeUp 0.8s ease-out; }
+.login-logo { text-align: center; margin-bottom: 48px; }
+.login-logo-mark { font-family: var(--font-display); font-size: 42px; font-weight: 600; color: var(--gold); letter-spacing: 6px; margin-bottom: 8px; }
+.login-logo-sub { font-size: 11px; letter-spacing: 4px; text-transform: uppercase; color: var(--text-muted); }
+.login-card { background: var(--navy); border: 1px solid var(--border-gold); border-radius: var(--radius-lg); padding: 40px 36px; box-shadow: var(--shadow-lg); position: relative; overflow: hidden; }
+.login-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, transparent, var(--gold), transparent); }
+.login-title { font-family: var(--font-display); font-size: 26px; font-weight: 500; color: var(--text-primary); margin-bottom: 8px; }
+.login-subtitle { font-size: 14px; color: var(--text-secondary); margin-bottom: 32px; }
+.form-group { margin-bottom: 20px; }
+.form-label { display: block; font-size: 12px; font-weight: 500; letter-spacing: 1px; text-transform: uppercase; color: var(--text-secondary); margin-bottom: 8px; }
+.form-input { width: 100%; padding: 14px 16px; background: var(--navy-deep); border: 1px solid var(--border-gold); border-radius: var(--radius); color: var(--text-primary); font-family: var(--font-body); font-size: 15px; transition: var(--transition); outline: none; }
+.form-input:focus { border-color: var(--gold); box-shadow: 0 0 0 3px var(--gold-glow); }
+.form-input::placeholder { color: var(--text-muted); }
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 14px 28px; border: none; border-radius: var(--radius); font-family: var(--font-body); font-size: 14px; font-weight: 600; letter-spacing: 0.5px; cursor: pointer; transition: var(--transition); outline: none; }
+.btn-primary { width: 100%; background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dim) 100%); color: var(--navy-deep); box-shadow: var(--shadow-gold); }
+.btn-primary:hover { transform: translateY(-1px); box-shadow: 0 6px 32px rgba(201,169,110,0.25); }
+.btn-primary:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+.login-divider { display: flex; align-items: center; gap: 16px; margin: 24px 0; color: var(--text-muted); font-size: 12px; letter-spacing: 1px; }
+.login-divider::before, .login-divider::after { content: ''; flex: 1; height: 1px; background: var(--border-gold); }
+.magic-link-btn { width: 100%; padding: 14px; background: transparent; border: 1px solid var(--border-gold); border-radius: var(--radius); color: var(--gold); font-family: var(--font-body); font-size: 14px; font-weight: 500; cursor: pointer; transition: var(--transition); display: flex; align-items: center; justify-content: center; gap: 10px; }
+.magic-link-btn:hover { background: var(--gold-glow); border-color: var(--gold); }
+.login-error { background: var(--danger-bg); border: 1px solid rgba(214,90,90,0.3); border-radius: var(--radius-sm); padding: 12px 16px; font-size: 13px; color: var(--danger); margin-bottom: 20px; display: none; }
+.login-success { background: var(--success-bg); border: 1px solid rgba(76,175,130,0.3); border-radius: var(--radius-sm); padding: 12px 16px; font-size: 13px; color: var(--success); margin-bottom: 20px; display: none; }
+.login-footer { text-align: center; margin-top: 24px; font-size: 13px; color: var(--text-muted); }
+
+/* App layout */
+.app-layout { min-height: 100vh; }
+.app-header { position: sticky; top: 0; z-index: 100; background: var(--glass); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-bottom: 1px solid var(--border-gold); }
+.header-inner { max-width: 1200px; margin: 0 auto; padding: 0 24px; height: 64px; display: flex; align-items: center; justify-content: space-between; }
+.header-brand { display: flex; align-items: center; gap: 12px; }
+.header-logo { font-family: var(--font-display); font-size: 22px; font-weight: 600; color: var(--gold); letter-spacing: 3px; }
+.header-sep { width: 1px; height: 24px; background: var(--border-gold); }
+.header-portal-label { font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: var(--text-muted); }
+.header-user { display: flex; align-items: center; gap: 16px; }
+.header-user-name { font-size: 14px; color: var(--text-secondary); display: none; }
+.header-logout { padding: 8px 16px; background: transparent; border: 1px solid var(--border); border-radius: var(--radius-sm); color: var(--text-muted); font-family: var(--font-body); font-size: 13px; cursor: pointer; transition: var(--transition); }
+.header-logout:hover { border-color: var(--danger); color: var(--danger); }
+.main-content { max-width: 1200px; margin: 0 auto; padding: 32px 24px 64px; }
+
+/* Welcome & Banner */
+.welcome-section { margin-bottom: 36px; animation: fadeUp 0.6s ease-out; }
+.welcome-greeting { font-family: var(--font-display); font-size: 32px; font-weight: 500; color: var(--text-primary); margin-bottom: 4px; }
+.welcome-sub { font-size: 15px; color: var(--text-secondary); }
+.action-banner { background: linear-gradient(135deg, rgba(232,168,72,0.08) 0%, rgba(214,90,90,0.06) 100%); border: 1px solid rgba(232,168,72,0.25); border-radius: var(--radius-lg); padding: 20px 24px; margin-bottom: 32px; display: flex; align-items: flex-start; gap: 16px; cursor: pointer; animation: fadeUp 0.6s ease-out 0.1s both; }
+.action-banner-icon { width: 44px; height: 44px; border-radius: 50%; background: var(--warning-bg); display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 20px; }
+.action-banner-content h3 { font-family: var(--font-display); font-size: 18px; font-weight: 600; color: var(--warning); margin-bottom: 4px; }
+.action-banner-content p { font-size: 14px; color: var(--text-secondary); line-height: 1.5; }
+.action-banner.hidden { display: none; }
+.section-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; }
+.section-title { font-family: var(--font-display); font-size: 22px; font-weight: 500; color: var(--text-primary); }
+
+/* Case cards */
+.case-cards { display: grid; gap: 16px; }
+.case-card { background: var(--navy); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 24px; cursor: pointer; transition: var(--transition); position: relative; overflow: hidden; animation: fadeUp 0.5s ease-out both; }
+.case-card::before { content: ''; position: absolute; top: 0; left: 0; width: 3px; height: 100%; background: var(--gold); opacity: 0; transition: var(--transition); }
+.case-card:hover { border-color: var(--border-gold); transform: translateY(-2px); box-shadow: var(--shadow); }
+.case-card:hover::before { opacity: 1; }
+.case-card-top { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 16px; }
+.case-card-title { font-family: var(--font-display); font-size: 20px; font-weight: 600; color: var(--text-primary); margin-bottom: 4px; }
+.case-card-code { font-size: 12px; color: var(--text-muted); letter-spacing: 1px; }
+.case-status-badge { padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 600; letter-spacing: 0.5px; white-space: nowrap; }
+.badge-active { background: var(--success-bg); color: var(--success); border: 1px solid rgba(76,175,130,0.2); }
+.badge-pending { background: var(--warning-bg); color: var(--warning); border: 1px solid rgba(232,168,72,0.2); }
+.badge-completed { background: var(--gold-glow); color: var(--gold); border: 1px solid rgba(201,169,110,0.2); }
+.case-card-stage { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; font-size: 14px; color: var(--text-secondary); }
+.stage-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--gold); flex-shrink: 0; box-shadow: 0 0 8px var(--gold-glow-strong); }
+.case-card-update { font-size: 13px; color: var(--text-muted); display: flex; align-items: center; gap: 6px; }
+.case-action-flag { display: inline-flex; align-items: center; gap: 6px; margin-top: 12px; padding: 6px 12px; background: var(--warning-bg); border: 1px solid rgba(232,168,72,0.2); border-radius: var(--radius-sm); font-size: 12px; font-weight: 600; color: var(--warning); }
+
+/* Detail */
+.detail-screen { animation: fadeUp 0.5s ease-out; }
+.back-btn { display: inline-flex; align-items: center; gap: 8px; padding: 8px 0; background: none; border: none; color: var(--text-muted); font-family: var(--font-body); font-size: 14px; cursor: pointer; transition: var(--transition); margin-bottom: 24px; }
+.back-btn:hover { color: var(--gold); }
+.detail-header { margin-bottom: 32px; }
+.detail-title { font-family: var(--font-display); font-size: 30px; font-weight: 600; color: var(--text-primary); margin-bottom: 6px; }
+.detail-meta { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+.detail-meta-item { font-size: 13px; color: var(--text-muted); display: flex; align-items: center; gap: 6px; }
+.detail-action-card { background: linear-gradient(135deg, rgba(232,168,72,0.1) 0%, rgba(232,168,72,0.04) 100%); border: 1px solid rgba(232,168,72,0.25); border-radius: var(--radius-lg); padding: 24px; margin-bottom: 28px; }
+.detail-action-card h3 { font-family: var(--font-display); font-size: 18px; font-weight: 600; color: var(--warning); margin-bottom: 8px; display: flex; align-items: center; gap: 8px; }
+.detail-action-card p { font-size: 14px; color: var(--text-secondary); line-height: 1.6; }
+.info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 32px; }
+.info-card { background: var(--navy); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px; }
+.info-card-label { font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 8px; }
+.info-card-value { font-family: var(--font-display); font-size: 17px; font-weight: 500; color: var(--text-primary); line-height: 1.5; }
+.info-card-value.gold { color: var(--gold); }
+
+/* Timeline */
+.progress-section { margin-bottom: 36px; }
+.progress-section-title { font-family: var(--font-display); font-size: 20px; font-weight: 500; color: var(--text-primary); margin-bottom: 20px; }
+.timeline { position: relative; padding-left: 32px; }
+.timeline::before { content: ''; position: absolute; left: 11px; top: 8px; bottom: 8px; width: 2px; background: var(--navy-lighter); }
+.timeline-item { position: relative; padding-bottom: 28px; }
+.timeline-item:last-child { padding-bottom: 0; }
+.timeline-dot { position: absolute; left: -32px; top: 4px; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; z-index: 1; }
+.timeline-dot.completed { background: var(--success); color: var(--white); }
+.timeline-dot.active { background: var(--gold); color: var(--navy-deep); box-shadow: 0 0 0 4px var(--gold-glow-strong), 0 0 16px var(--gold-glow); animation: pulse-gold 2s infinite; }
+.timeline-dot.upcoming { background: var(--navy-lighter); color: var(--text-muted); border: 2px solid var(--navy-lighter); }
+.timeline-content h4 { font-family: var(--font-display); font-size: 16px; font-weight: 600; margin-bottom: 2px; }
+.timeline-content h4.completed { color: var(--success); }
+.timeline-content h4.active { color: var(--gold); }
+.timeline-content h4.upcoming { color: var(--text-muted); }
+.timeline-content p { font-size: 13px; color: var(--text-secondary); line-height: 1.5; }
+.timeline-date { font-size: 12px; color: var(--text-muted); margin-top: 4px; }
+
+/* Tabs */
+.tabs { display: flex; border-bottom: 1px solid var(--border); margin-bottom: 24px; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+.tab-btn { padding: 12px 20px; background: none; border: none; border-bottom: 2px solid transparent; color: var(--text-muted); font-family: var(--font-body); font-size: 14px; font-weight: 500; cursor: pointer; transition: var(--transition); white-space: nowrap; }
+.tab-btn:hover { color: var(--text-secondary); }
+.tab-btn.active { color: var(--gold); border-bottom-color: var(--gold); }
+.tab-content { display: none; }
+.tab-content.active { display: block; animation: fadeIn 0.3s ease; }
+
+/* Documents */
+.doc-list { display: flex; flex-direction: column; gap: 10px; }
+.doc-item { display: flex; align-items: center; justify-content: space-between; padding: 14px 18px; background: var(--navy-mid); border: 1px solid var(--border); border-radius: var(--radius); transition: var(--transition); }
+.doc-item:hover { border-color: var(--border-gold); }
+.doc-info { display: flex; align-items: center; gap: 12px; }
+.doc-icon { width: 40px; height: 40px; border-radius: var(--radius-sm); background: var(--gold-glow); display: flex; align-items: center; justify-content: center; color: var(--gold); font-size: 18px; flex-shrink: 0; }
+.doc-name { font-size: 14px; font-weight: 500; color: var(--text-primary); margin-bottom: 2px; }
+.doc-meta { font-size: 12px; color: var(--text-muted); }
+.doc-download { padding: 8px 16px; background: transparent; border: 1px solid var(--border-gold); border-radius: var(--radius-sm); color: var(--gold); font-family: var(--font-body); font-size: 13px; cursor: pointer; transition: var(--transition); }
+.doc-download:hover { background: var(--gold-glow); }
+
+/* Upload */
+.upload-area { border: 2px dashed var(--border-gold); border-radius: var(--radius-lg); padding: 40px 24px; text-align: center; margin-top: 20px; transition: var(--transition); cursor: pointer; }
+.upload-area:hover { border-color: var(--gold); background: var(--gold-glow); }
+.upload-icon { font-size: 36px; margin-bottom: 12px; opacity: 0.6; }
+.upload-text { font-size: 14px; color: var(--text-secondary); margin-bottom: 4px; }
+.upload-hint { font-size: 12px; color: var(--text-muted); }
+
+/* Messages */
+.messages-list { display: flex; flex-direction: column; gap: 12px; margin-bottom: 24px; max-height: 400px; overflow-y: auto; padding-right: 8px; }
+.message-bubble { max-width: 85%; padding: 14px 18px; border-radius: var(--radius-lg); font-size: 14px; line-height: 1.5; }
+.message-bubble.client { align-self: flex-end; background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dim) 100%); color: var(--navy-deep); border-bottom-right-radius: 4px; }
+.message-bubble.office { align-self: flex-start; background: var(--navy-mid); border: 1px solid var(--border); color: var(--text-primary); border-bottom-left-radius: 4px; }
+.message-time { font-size: 11px; opacity: 0.7; margin-top: 6px; }
+.message-compose { display: flex; gap: 12px; }
+.message-input { flex: 1; padding: 14px 16px; background: var(--navy-deep); border: 1px solid var(--border-gold); border-radius: var(--radius); color: var(--text-primary); font-family: var(--font-body); font-size: 14px; outline: none; transition: var(--transition); resize: none; min-height: 48px; }
+.message-input:focus { border-color: var(--gold); box-shadow: 0 0 0 3px var(--gold-glow); }
+.message-send { padding: 14px 24px; background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dim) 100%); border: none; border-radius: var(--radius); color: var(--navy-deep); font-family: var(--font-body); font-size: 14px; font-weight: 600; cursor: pointer; transition: var(--transition); white-space: nowrap; }
+.message-send:hover { transform: translateY(-1px); box-shadow: var(--shadow-gold); }
+
+/* History */
+.history-list { display: flex; flex-direction: column; gap: 12px; }
+.history-item { display: flex; gap: 14px; padding: 14px 0; border-bottom: 1px solid var(--border); }
+.history-item:last-child { border-bottom: none; }
+.history-date-col { width: 80px; flex-shrink: 0; text-align: right; }
+.history-date { font-size: 13px; font-weight: 500; color: var(--text-secondary); }
+.history-time { font-size: 11px; color: var(--text-muted); }
+.history-desc { font-size: 14px; color: var(--text-primary); line-height: 1.5; }
+.history-badge { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 600; margin-right: 6px; }
+.history-badge.stage { background: var(--gold-glow); color: var(--gold); }
+.history-badge.note { background: var(--info-bg); color: var(--info); }
+.history-badge.doc { background: var(--success-bg); color: var(--success); }
+
+/* Empty & Toast */
+.empty-state { text-align: center; padding: 48px 24px; color: var(--text-muted); }
+.empty-state-icon { font-size: 48px; margin-bottom: 16px; opacity: 0.4; }
+.empty-state p { font-size: 14px; }
+.toast { position: fixed; bottom: 24px; right: 24px; padding: 16px 24px; background: var(--navy); border: 1px solid var(--success); border-radius: var(--radius); color: var(--success); font-size: 14px; font-weight: 500; box-shadow: var(--shadow-lg); z-index: 1000; transform: translateY(100px); opacity: 0; transition: var(--transition); display: flex; align-items: center; gap: 10px; }
+.toast.show { transform: translateY(0); opacity: 1; }
+
+/* Animations */
+@keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes pulse-gold { 0%, 100% { box-shadow: 0 0 0 4px var(--gold-glow-strong), 0 0 16px var(--gold-glow); } 50% { box-shadow: 0 0 0 8px rgba(201,169,110,0.1), 0 0 24px var(--gold-glow); } }
+
+/* Responsive */
+@media (min-width: 640px) { .header-user-name { display: block; } }
+@media (max-width: 768px) { .info-grid { grid-template-columns: 1fr; } .welcome-greeting { font-size: 26px; } .detail-title { font-size: 24px; } .message-compose { flex-direction: column; } .message-send { width: 100%; } }
+@media (max-width: 480px) { .login-card { padding: 28px 20px; } .main-content { padding: 20px 16px 48px; } .case-card { padding: 18px; } .tab-btn { padding: 10px 14px; font-size: 13px; } }
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--navy-lighter); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--gold-dim); }
+</style>
+</head>
+<body>
+
+<div id="loadingScreen" class="screen active"><div class="loading-screen"><div class="loading-logo">ZK LAW</div><div class="loading-spinner"></div></div></div>
+
+<div id="loginScreen" class="screen">
+  <div class="login-screen"><div class="login-container">
+    <div class="login-logo"><div class="login-logo-mark">ZK LAW</div><div class="login-logo-sub">Client Portal</div></div>
+    <div class="login-card">
+      <h2 class="login-title">Καλώς ήρθατε</h2>
+      <p class="login-subtitle">Συνδεθείτε για να δείτε την πορεία της υπόθεσής σας.</p>
+      <div id="loginError" class="login-error"></div>
+      <div id="loginSuccess" class="login-success"></div>
+      <div class="form-group"><label class="form-label">Email</label><input type="email" id="loginEmail" class="form-input" placeholder="you@email.com"></div>
+      <div class="form-group"><label class="form-label">Κωδικός</label><input type="password" id="loginPassword" class="form-input" placeholder="••••••••"></div>
+      <button id="loginBtn" class="btn btn-primary" onclick="handleLogin()">Σύνδεση</button>
+      <div class="login-divider">ή</div>
+      <button class="magic-link-btn" onclick="handleMagicLink()">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><polyline points="3 7 12 13 21 7"/></svg>
+        Σύνδεση με Magic Link
+      </button>
+      <p class="login-footer">Δεν έχετε λογαριασμό; Επικοινωνήστε με το γραφείο.</p>
+    </div>
+  </div></div>
+</div>
+
+<div id="dashboardScreen" class="screen">
+  <div class="app-layout">
+    <header class="app-header"><div class="header-inner"><div class="header-brand"><div class="header-logo">ZK LAW</div><div class="header-sep"></div><div class="header-portal-label">Client Portal</div></div><div class="header-user"><span class="header-user-name" id="headerUserName"></span><button class="header-logout" onclick="handleLogout()">Αποσύνδεση</button></div></div></header>
+    <main class="main-content">
+      <div class="welcome-section"><h1 class="welcome-greeting" id="welcomeName"></h1><p class="welcome-sub">Παρακολουθήστε την εξέλιξη των υποθέσεών σας.</p></div>
+      <div id="actionBanner" class="action-banner hidden"><div class="action-banner-icon">&#9889;</div><div class="action-banner-content"><h3>Απαιτείται ενέργεια</h3><p id="actionBannerText"></p></div></div>
+      <div class="section-header"><h2 class="section-title">Οι υποθέσεις μου</h2></div>
+      <div class="case-cards" id="casesList"></div>
+    </main>
+  </div>
+</div>
+
+<div id="caseDetailScreen" class="screen">
+  <div class="app-layout">
+    <header class="app-header"><div class="header-inner"><div class="header-brand"><div class="header-logo">ZK LAW</div><div class="header-sep"></div><div class="header-portal-label">Client Portal</div></div><div class="header-user"><span class="header-user-name" id="headerUserName2"></span><button class="header-logout" onclick="handleLogout()">Αποσύνδεση</button></div></div></header>
+    <main class="main-content"><div class="detail-screen">
+      <button class="back-btn" onclick="showDashboard()"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg> Πίσω στις υποθέσεις</button>
+      <div class="detail-header"><h1 class="detail-title" id="detailTitle"></h1><div class="detail-meta"><span class="detail-meta-item" id="detailCode"></span><span class="detail-meta-item" id="detailType"></span><span class="detail-meta-item" id="detailStatus"></span></div></div>
+      <div id="detailAction" class="detail-action-card" style="display:none"><h3>&#9889; Απαιτείται ενέργεια από εσάς</h3><p id="detailActionText"></p></div>
+      <div class="info-grid">
+        <div class="info-card"><div class="info-card-label">Τρέχον Στάδιο</div><div class="info-card-value gold" id="detailStage"></div></div>
+        <div class="info-card"><div class="info-card-label">Τελευταία Ενημέρωση</div><div class="info-card-value" id="detailLastUpdate"></div></div>
+        <div class="info-card" style="grid-column:1/-1;"><div class="info-card-label">Επόμενο Βήμα</div><div class="info-card-value" id="detailNextStep"></div></div>
+      </div>
+      <div class="progress-section"><h3 class="progress-section-title">Πορεία υπόθεσης</h3><div class="timeline" id="timeline"></div></div>
+      <div class="tabs">
+        <button class="tab-btn active" onclick="switchTab('documents',this)">Έγγραφα</button>
+        <button class="tab-btn" onclick="switchTab('upload',this)">Ανέβασμα</button>
+        <button class="tab-btn" onclick="switchTab('messages',this)">Μηνύματα</button>
+        <button class="tab-btn" onclick="switchTab('history',this)">Ιστορικό</button>
+      </div>
+      <div id="tab-documents" class="tab-content active"><div class="doc-list" id="docList"></div></div>
+      <div id="tab-upload" class="tab-content">
+        <p style="font-size:14px;color:var(--text-secondary);margin-bottom:16px;">Ανεβάστε τα έγγραφα που σας ζητήθηκαν από το γραφείο.</p>
+        <div class="upload-area" id="uploadArea"><div class="upload-icon">&#128206;</div><p class="upload-text">Σύρετε αρχεία εδώ ή πατήστε για επιλογή</p><p class="upload-hint">PDF, DOC, JPG, PNG — Μέγιστο 10MB</p></div>
+        <input type="file" id="fileInput" style="display:none" multiple accept=".pdf,.doc,.docx,.jpg,.jpeg,.png">
+        <div id="uploadedFiles" style="margin-top:16px"></div>
+      </div>
+      <div id="tab-messages" class="tab-content">
+        <div class="messages-list" id="messagesList"></div>
+        <div class="message-compose"><textarea class="message-input" id="messageInput" placeholder="Γράψτε μήνυμα προς το γραφείο..." rows="2"></textarea><button class="message-send" onclick="sendMessage()">Αποστολή</button></div>
+      </div>
+      <div id="tab-history" class="tab-content"><div class="history-list" id="historyList"></div></div>
+    </div></main>
+  </div>
+</div>
+
+<div id="toast" class="toast"></div>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-storage-compat.js"></script>
+
+<script>
+/* ═══════════════════════════════════════ FIREBASE ═══════════════════════════════════════ */
+firebase.initializeApp({
+  apiKey: "AIzaSyBugITgkk96dJe-1m9NoDEqTCM8C-JyLYE",
+  authDomain: "zklawfirm-9bd34.firebaseapp.com",
+  projectId: "zklawfirm-9bd34",
+  storageBucket: "zklawfirm-9bd34.firebasestorage.app",
+  messagingSenderId: "393334141252",
+  appId: "1:393334141252:web:48ed2f586cdcdf30d76711",
+  measurementId: "G-C91LES9H3E"
+});
+const auth = firebase.auth();
+const db = firebase.firestore();
+const storage = firebase.storage();
+
+/* ═══════════════════════════════════════ STAGES ═══════════════════════════════════════ */
+const STAGES = [
+  { id: 1, label: 'Η υπόθεση καταγράφηκε', description: 'Η υπόθεσή σας καταχωρίστηκε στο γραφείο.' },
+  { id: 2, label: 'Αρχικός νομικός έλεγχος', description: 'Εξετάζουμε τα στοιχεία και τη νομική βάση της υπόθεσης.' },
+  { id: 3, label: 'Συγκέντρωση εγγράφων', description: 'Συγκεντρώνονται τα απαραίτητα έγγραφα.' },
+  { id: 4, label: 'Νομική επεξεργασία', description: 'Επεξεργαζόμαστε την υπόθεσή σας και προετοιμάζουμε την επόμενη ενέργεια.' },
+  { id: 5, label: 'Νομική ενέργεια', description: 'Η απαιτούμενη νομική ενέργεια πραγματοποιήθηκε.' },
+  { id: 6, label: 'Αναμονή εξέλιξης', description: 'Αναμένουμε απάντηση ή εξέλιξη από τον αρμόδιο φορέα.' },
+  { id: 7, label: 'Απαιτείται νέα ενέργεια', description: 'Υπάρχει νέο βήμα για την εξέλιξη της υπόθεσης.' },
+  { id: 8, label: 'Ολοκλήρωση', description: 'Η υπόθεσή σας έχει ολοκληρωθεί.' },
+];
+
+/* ═══════════════════════════════════════ STATE ═══════════════════════════════════════ */
+let currentUser = null, clientProfile = null, currentCaseId = null, currentCaseData = null;
+let unsub = { cases: null, detail: null, msgs: null, docs: null, updates: null };
+
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0, 0);
+}
+
+/* ═══════════════════════════════════════ AUTH ═══════════════════════════════════════ */
+auth.onAuthStateChanged(async (user) => {
+  if (user) {
+    currentUser = user;
+    await loadClientProfile(user.uid, user.email);
+    if (clientProfile) {
+      renderDashboard();
+      showScreen('dashboardScreen');
+      listenToCases();
+    } else {
+      showScreen('loginScreen');
+      showLoginError('Ο λογαριασμός σας δεν συνδέεται με προφίλ πελάτη. Επικοινωνήστε με το γραφείο.');
+    }
+  } else {
+    currentUser = null; clientProfile = null;
+    cleanupAll();
+    showScreen('loginScreen');
+  }
+});
+
+async function loadClientProfile(uid, email) {
+  try {
+    let doc = await db.collection('clients').doc(uid).get();
+    if (doc.exists) { clientProfile = { id: doc.id, ...doc.data() }; return; }
+    const snap = await db.collection('clients').where('email', '==', email).limit(1).get();
+    if (!snap.empty) { clientProfile = { id: snap.docs[0].id, ...snap.docs[0].data() }; return; }
+    clientProfile = null;
+  } catch (e) { console.error('Profile load error:', e); clientProfile = null; }
+}
+
+async function handleLogin() {
+  const email = document.getElementById('loginEmail').value.trim();
+  const pw = document.getElementById('loginPassword').value;
+  if (!email || !pw) { showLoginError('Παρακαλώ συμπληρώστε email και κωδικό.'); return; }
+  const btn = document.getElementById('loginBtn');
+  btn.disabled = true; btn.textContent = 'Σύνδεση...'; hideLoginMessages();
+  try { await auth.signInWithEmailAndPassword(email, pw); }
+  catch (e) {
+    let msg = 'Σφάλμα σύνδεσης.';
+    if (['auth/user-not-found','auth/wrong-password','auth/invalid-credential'].includes(e.code)) msg = 'Λανθασμένο email ή κωδικός.';
+    else if (e.code === 'auth/too-many-requests') msg = 'Πολλές προσπάθειες. Δοκιμάστε αργότερα.';
+    showLoginError(msg);
+  } finally { btn.disabled = false; btn.textContent = 'Σύνδεση'; }
+}
+
+async function handleMagicLink() {
+  const email = document.getElementById('loginEmail').value.trim();
+  if (!email) { showLoginError('Εισάγετε το email σας.'); return; }
+  hideLoginMessages();
+  try {
+    await auth.sendSignInLinkToEmail(email, { url: window.location.href, handleCodeInApp: true });
+    localStorage.setItem('emailForSignIn', email);
+    showLoginSuccess('Σύνδεσμος στάλθηκε στο ' + email + '. Ελέγξτε τα εισερχόμενά σας.');
+  } catch (e) { showLoginError('Σφάλμα αποστολής. Δοκιμάστε ξανά.'); }
+}
+
+if (auth.isSignInWithEmailLink(window.location.href)) {
+  let email = localStorage.getItem('emailForSignIn') || prompt('Email για επιβεβαίωση:');
+  if (email) auth.signInWithEmailLink(email, window.location.href).then(() => { localStorage.removeItem('emailForSignIn'); history.replaceState(null, '', location.pathname); }).catch(console.error);
+}
+
+function handleLogout() { cleanupAll(); auth.signOut(); }
+function cleanupAll() { Object.keys(unsub).forEach(k => { if (unsub[k]) unsub[k](); unsub[k] = null; }); }
+function showLoginError(m) { const e = document.getElementById('loginError'); e.textContent = m; e.style.display = 'block'; document.getElementById('loginSuccess').style.display = 'none'; }
+function showLoginSuccess(m) { const e = document.getElementById('loginSuccess'); e.textContent = m; e.style.display = 'block'; document.getElementById('loginError').style.display = 'none'; }
+function hideLoginMessages() { document.getElementById('loginError').style.display = 'none'; document.getElementById('loginSuccess').style.display = 'none'; }
+
+/* ═══════════════════════════════════════ DASHBOARD ═══════════════════════════════════════ */
+function renderDashboard() {
+  const name = clientProfile.full_name || clientProfile.company_name || currentUser.email;
+  document.getElementById('welcomeName').textContent = 'Γεια σας, ' + name.split(' ')[0];
+  document.getElementById('headerUserName').textContent = name;
+  document.getElementById('headerUserName2').textContent = name;
+}
+
+function listenToCases() {
+  if (unsub.cases) unsub.cases();
+  unsub.cases = db.collection('cases').where('client_id', '==', clientProfile.id).orderBy('created_at', 'desc')
+    .onSnapshot(snap => {
+      const cases = []; snap.forEach(d => cases.push({ id: d.id, ...d.data() }));
+      renderCaseCards(cases);
+    }, console.error);
+}
+
+function renderCaseCards(cases) {
+  const container = document.getElementById('casesList');
+  const banner = document.getElementById('actionBanner');
+  if (!cases.length) { container.innerHTML = '<div class="empty-state"><div class="empty-state-icon">&#128209;</div><p>Δεν υπάρχουν υποθέσεις.</p></div>'; banner.classList.add('hidden'); return; }
+  const withAction = cases.filter(c => c.action_required);
+  if (withAction.length) { banner.classList.remove('hidden'); document.getElementById('actionBannerText').textContent = `Εκκρεμότητα σε ${withAction.length} υπόθεση${withAction.length > 1 ? 'ς' : ''}.`; banner.onclick = () => openCase(withAction[0].id); }
+  else banner.classList.add('hidden');
+  container.innerHTML = cases.map((c, i) => {
+    const stage = STAGES.find(s => s.id === c.current_stage) || STAGES[0];
+    const sl = c.status === 'active' ? 'Ενεργή' : c.status === 'completed' ? 'Ολοκληρωμένη' : 'Σε αναμονή';
+    const bc = c.status === 'active' ? 'badge-active' : c.status === 'completed' ? 'badge-completed' : 'badge-pending';
+    return `<div class="case-card" onclick="openCase('${c.id}')" style="animation-delay:${0.15+i*0.1}s">
+      <div class="case-card-top"><div><div class="case-card-title">${c.title||''}</div><div class="case-card-code">${c.case_code||''} &bull; ${c.case_type||''}</div></div><span class="case-status-badge ${bc}">${sl}</span></div>
+      <div class="case-card-stage"><span class="stage-dot"></span>${stage.label}</div>
+      <div class="case-card-update"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Ενημέρωση: ${c.last_update_date ? fmtDate(c.last_update_date) : '—'}</div>
+      ${c.action_required ? '<div class="case-action-flag">&#9889; Απαιτείται ενέργεια</div>' : ''}
+    </div>`;
+  }).join('');
+}
+
+/* ═══════════════════════════════════════ CASE DETAIL ═══════════════════════════════════════ */
+function openCase(id) {
+  currentCaseId = id;
+  ['detail','msgs','docs','updates'].forEach(k => { if (unsub[k]) unsub[k](); });
+  unsub.detail = db.collection('cases').doc(id).onSnapshot(d => { if (!d.exists) return; currentCaseData = { id: d.id, ...d.data() }; renderDetail(currentCaseData); });
+  unsub.docs = db.collection('cases').doc(id).collection('documents').where('visible_to_client','==',true).orderBy('created_at','desc').onSnapshot(s => { const a=[]; s.forEach(d=>a.push({id:d.id,...d.data()})); renderDocs(a); });
+  unsub.msgs = db.collection('cases').doc(id).collection('messages').orderBy('created_at','asc').onSnapshot(s => { const a=[]; s.forEach(d=>a.push({id:d.id,...d.data()})); renderMsgs(a); });
+  unsub.updates = db.collection('cases').doc(id).collection('updates').where('visible_to_client','==',true).orderBy('created_at','desc').onSnapshot(s => { const a=[]; s.forEach(d=>a.push({id:d.id,...d.data()})); renderHist(a); });
+  switchTab('documents', document.querySelector('#caseDetailScreen .tab-btn'));
+  showScreen('caseDetailScreen');
+}
+
+function renderDetail(c) {
+  const stage = STAGES.find(s => s.id === c.current_stage) || STAGES[0];
+  document.getElementById('detailTitle').textContent = c.title || '';
+  document.getElementById('detailCode').innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg> ${c.case_code||''}`;
+  document.getElementById('detailType').textContent = c.case_type || '';
+  const sl = c.status === 'active' ? 'Ενεργή' : 'Ολοκληρωμένη';
+  document.getElementById('detailStatus').innerHTML = `<span class="case-status-badge ${c.status==='active'?'badge-active':'badge-completed'}">${sl}</span>`;
+  document.getElementById('detailStage').textContent = stage.label;
+  document.getElementById('detailLastUpdate').textContent = c.last_update || '—';
+  document.getElementById('detailNextStep').textContent = c.next_step || '—';
+  if (c.action_required) { document.getElementById('detailAction').style.display = 'block'; document.getElementById('detailActionText').textContent = c.action_text || ''; }
+  else document.getElementById('detailAction').style.display = 'none';
+  // Timeline
+  const tl = document.getElementById('timeline');
+  const sh = c.stage_history || [];
+  const cIds = sh.map(s => s.stage);
+  tl.innerHTML = STAGES.map(s => {
+    let st = s.id === c.current_stage ? 'active' : (cIds.includes(s.id) && s.id < c.current_stage) ? 'completed' : 'upcoming';
+    const he = sh.find(h => h.stage === s.id);
+    return `<div class="timeline-item"><div class="timeline-dot ${st}">${st==='completed'?'&#10003;':s.id}</div><div class="timeline-content"><h4 class="${st}">${s.label}</h4><p>${s.description}</p>${he&&he.date?`<div class="timeline-date">${he.date}</div>`:''}</div></div>`;
+  }).join('');
+}
+
+function renderDocs(docs) {
+  const c = document.getElementById('docList');
+  if (!docs.length) { c.innerHTML = '<div class="empty-state"><div class="empty-state-icon">&#128196;</div><p>Δεν υπάρχουν έγγραφα.</p></div>'; return; }
+  c.innerHTML = docs.map(d => {
+    const ext = (d.filename||'').split('.').pop().toLowerCase();
+    return `<div class="doc-item"><div class="doc-info"><div class="doc-icon">${ext==='pdf'?'&#128213;':'&#128212;'}</div><div><div class="doc-name">${d.filename||'Αρχείο'}</div><div class="doc-meta">${d.file_size||''} &bull; ${d.created_at?fmtDate(d.created_at):''}</div></div></div><button class="doc-download" onclick="event.stopPropagation();dlDoc('${d.file_path||''}','${d.filename||''}')">Λήψη</button></div>`;
+  }).join('');
+}
+
+async function dlDoc(path, name) {
+  if (!path) { showToast('&#10060; Μη διαθέσιμο.'); return; }
+  try { const url = await storage.ref(path).getDownloadURL(); const a = document.createElement('a'); a.href = url; a.target = '_blank'; a.download = name; a.click(); showToast('&#128229; ' + name); }
+  catch (e) { showToast('&#10060; Σφάλμα λήψης.'); }
+}
+
+function renderMsgs(msgs) {
+  const c = document.getElementById('messagesList');
+  if (!msgs.length) { c.innerHTML = '<div class="empty-state"><div class="empty-state-icon">&#128172;</div><p>Δεν υπάρχουν μηνύματα.</p></div>'; return; }
+  c.innerHTML = msgs.map(m => `<div class="message-bubble ${m.sender_type==='client'?'client':'office'}"><div>${m.message_text||''}</div><div class="message-time">${m.created_at?fmtDateTime(m.created_at):''}</div></div>`).join('');
+  c.scrollTop = c.scrollHeight;
+}
+
+async function sendMessage() {
+  const inp = document.getElementById('messageInput'); const t = inp.value.trim();
+  if (!t || !currentCaseId) return;
+  try { await db.collection('cases').doc(currentCaseId).collection('messages').add({ sender_type: 'client', sender_id: clientProfile.id, message_text: t, read_status: false, created_at: firebase.firestore.FieldValue.serverTimestamp() }); inp.value = ''; showToast('&#10003; Μήνυμα στάλθηκε'); }
+  catch (e) { showToast('&#10060; Σφάλμα αποστολής.'); }
+}
+
+function renderHist(updates) {
+  const c = document.getElementById('historyList');
+  if (!updates.length) { c.innerHTML = '<div class="empty-state"><div class="empty-state-icon">&#128197;</div><p>Δεν υπάρχει ιστορικό.</p></div>'; return; }
+  c.innerHTML = updates.map(h => {
+    const tp = h.type||'note'; const tl = tp==='stage'?'Στάδιο':tp==='doc'?'Αρχείο':'Σημείωση';
+    return `<div class="history-item"><div class="history-date-col"><div class="history-date">${h.created_at?fmtDate(h.created_at):''}</div><div class="history-time">${h.created_at?fmtTime(h.created_at):''}</div></div><div class="history-desc"><span class="history-badge ${tp}">${tl}</span>${h.update_note||''}</div></div>`;
+  }).join('');
+}
+
+/* ═══════════════════════════════════════ UPLOAD ═══════════════════════════════════════ */
+document.addEventListener('DOMContentLoaded', () => {
+  const ua = document.getElementById('uploadArea'), fi = document.getElementById('fileInput');
+  ua.addEventListener('click', () => fi.click());
+  ['dragenter','dragover'].forEach(e => ua.addEventListener(e, ev => { ev.preventDefault(); ua.style.borderColor='var(--gold)'; ua.style.background='var(--gold-glow)'; }));
+  ['dragleave','drop'].forEach(e => ua.addEventListener(e, ev => { ev.preventDefault(); ua.style.borderColor=''; ua.style.background=''; }));
+  ua.addEventListener('drop', ev => { ev.preventDefault(); if (ev.dataTransfer.files.length) uploadFiles(ev.dataTransfer.files); });
+  fi.addEventListener('change', ev => { if (ev.target.files.length) uploadFiles(ev.target.files); ev.target.value = ''; });
+});
+
+async function uploadFiles(files) {
+  if (!currentCaseId) return;
+  const cont = document.getElementById('uploadedFiles');
+  for (const f of files) {
+    if (f.size > 10*1024*1024) { showToast('&#10060; ' + f.name + ' > 10MB'); continue; }
+    const sz = f.size > 1048576 ? (f.size/1048576).toFixed(1)+' MB' : (f.size/1024).toFixed(0)+' KB';
+    const uid = 'u'+Date.now();
+    cont.innerHTML += `<div class="doc-item" style="margin-bottom:8px" id="${uid}"><div class="doc-info"><div class="doc-icon">&#128206;</div><div><div class="doc-name">${f.name}</div><div class="doc-meta">${sz} &bull; Ανέβασμα...</div></div></div><span style="color:var(--warning);font-size:13px;font-weight:600">&#8635;</span></div>`;
+    try {
+      const fp = `cases/${currentCaseId}/client-uploads/${Date.now()}_${f.name}`;
+      await storage.ref(fp).put(f);
+      await db.collection('cases').doc(currentCaseId).collection('documents').add({ filename: f.name, file_path: fp, file_size: sz, uploaded_by: 'client', visible_to_client: true, created_at: firebase.firestore.FieldValue.serverTimestamp() });
+      const el = document.getElementById(uid);
+      if (el) { el.querySelector('.doc-meta').textContent = sz+' \u2022 Ανέβηκε'; el.querySelector('span:last-child').innerHTML = '<span style="color:var(--success)">&#10003;</span>'; }
+      showToast('&#10003; Ανέβηκε: ' + f.name);
+    } catch (e) { const el = document.getElementById(uid); if (el) el.querySelector('span:last-child').innerHTML = '<span style="color:var(--danger)">&#10060;</span>'; showToast('&#10060; Σφάλμα.'); }
+  }
+}
+
+/* ═══════════════════════════════════════ NAV & UTILS ═══════════════════════════════════════ */
+function showDashboard() { ['detail','msgs','docs','updates'].forEach(k=>{if(unsub[k])unsub[k]();unsub[k]=null;}); currentCaseId=null; showScreen('dashboardScreen'); }
+function switchTab(id, btn) { const p = btn ? btn.closest('.screen') || document : document; p.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active')); p.querySelectorAll('.tab-content').forEach(t=>t.classList.remove('active')); if(btn)btn.classList.add('active'); document.getElementById('tab-'+id).classList.add('active'); }
+function fmtDate(ts) { if(!ts)return''; const d=ts.toDate?ts.toDate():new Date(ts); return d.toLocaleDateString('el-GR',{day:'2-digit',month:'2-digit',year:'numeric'}); }
+function fmtTime(ts) { if(!ts)return''; const d=ts.toDate?ts.toDate():new Date(ts); return d.toLocaleTimeString('el-GR',{hour:'2-digit',minute:'2-digit'}); }
+function fmtDateTime(ts) { return fmtDate(ts)+' '+fmtTime(ts); }
+function showToast(m) { const t=document.getElementById('toast'); t.innerHTML=m; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),3000); }
+document.addEventListener('keydown', e => { if(e.key==='Enter'&&document.querySelector('.screen.active').id==='loginScreen') handleLogin(); });
+</script>
+</body>
+</html>
