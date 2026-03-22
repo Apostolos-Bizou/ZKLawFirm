@@ -647,14 +647,12 @@ tbody td {
   display: none;
   position: fixed;
   top: 0;
+  left: 0;
   right: 0;
   bottom: 0;
-  width: 680px;
-  max-width: 100vw;
-  background: var(--surface);
-  box-shadow: -4px 0 30px rgba(0,0,0,0.12);
+  background: var(--bg);
   z-index: 1001;
-  animation: slideIn 0.3s;
+  animation: fadeIn 0.25s;
   overflow-y: auto;
 }
 
@@ -664,15 +662,20 @@ tbody td {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 20px 28px;
+  padding: 20px 32px;
   border-bottom: 1px solid var(--border-light);
   position: sticky;
   top: 0;
   background: var(--surface);
   z-index: 2;
+  box-shadow: var(--shadow-sm);
 }
 
-.slide-panel-body { padding: 24px 28px; }
+.slide-panel-body {
+  padding: 28px 32px;
+  max-width: 900px;
+  margin: 0 auto;
+}
 
 .detail-section {
   margin-bottom: 28px;
@@ -1619,11 +1622,30 @@ function renderClientsTable() {
 
 function filterClients() { renderClientsTable(); }
 
+function generateClientCode() {
+  const existing = allClients.map(c => {
+    const m = (c.client_code || '').match(/ZK-C(\d+)/);
+    return m ? parseInt(m[1]) : 0;
+  });
+  const next = Math.max(0, ...existing) + 1;
+  return 'ZK-C' + String(next).padStart(3, '0');
+}
+
+function generateCaseCode() {
+  const year = new Date().getFullYear();
+  const existing = allCases.map(c => {
+    const m = (c.case_code || '').match(/ZK-\d{4}-(\d+)/);
+    return m ? parseInt(m[1]) : 0;
+  });
+  const next = Math.max(0, ...existing) + 1;
+  return 'ZK-' + year + '-' + String(next).padStart(4, '0');
+}
+
 function openClientModal(editId) {
   document.getElementById('clientEditId').value = '';
   document.getElementById('clientModalTitle').textContent = 'Νέος Πελάτης';
   document.getElementById('clientName').value = '';
-  document.getElementById('clientCode').value = '';
+  document.getElementById('clientCode').value = generateClientCode();
   document.getElementById('clientEmail').value = '';
   document.getElementById('clientPhone').value = '';
   document.getElementById('clientPassword').value = '';
@@ -1778,7 +1800,7 @@ document.getElementById('caseActionRequired').addEventListener('change', functio
 function openCaseModal(editId) {
   document.getElementById('caseEditId').value = '';
   document.getElementById('caseModalTitle').textContent = 'Νέα Υπόθεση';
-  document.getElementById('caseCode').value = '';
+  document.getElementById('caseCode').value = generateCaseCode();
   document.getElementById('caseClient').value = '';
   document.getElementById('caseTitle').value = '';
   document.getElementById('caseType').value = 'Αστικό Δίκαιο';
